@@ -1,29 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_talkie/app/features/auth/providers/login_provider.dart';
+import 'package:flutter_talkie/app/features/auth/controllers/auth_controller.dart';
+import 'package:get/get.dart';
 import 'package:flutter_talkie/app/shared/widgets/custom_button.dart';
 import 'package:flutter_talkie/app/shared/widgets/custom_text_field.dart';
 
-class LoginScreen extends ConsumerStatefulWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
   @override
-  LoginScreenState createState() => LoginScreenState();
+  State<LoginScreen> createState() => _LoginScreenState();
 }
 
-class LoginScreenState extends ConsumerState<LoginScreen> {
+class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      ref.read(loginProvider.notifier).initData();
-    });
   }
+
+  final authController = Get.put(AuthController());
 
   @override
   Widget build(BuildContext context) {
-    final loginState = ref.watch(loginProvider);
-
     return Scaffold(
       body: CustomScrollView(
         slivers: [
@@ -49,32 +46,36 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                   const SizedBox(
                     height: 24,
                   ),
-                  CustomTextField(
-                    label: 'Email',
-                    hintText: 'Your email',
-                    value: loginState.email,
-                    onChanged: (value) {
-                      ref.read(loginProvider.notifier).changeEmail(value);
-                    },
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.emailAddress,
+                  Obx(
+                    () => CustomTextField(
+                      label: 'Email',
+                      hintText: 'Your email',
+                      value: authController.email.value,
+                      onChanged: (value) {
+                        authController.changeEmail(value);
+                      },
+                      textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.emailAddress,
+                    ),
                   ),
                   const SizedBox(
                     height: 36,
                   ),
-                  CustomTextField(
-                    label: 'Password',
-                    hintText: 'Password',
-                    value: loginState.password,
-                    onChanged: (value) {
-                      ref.read(loginProvider.notifier).changePassword(value);
-                    },
-                    textInputAction: TextInputAction.done,
-                    keyboardType: TextInputType.visiblePassword,
-                    isPassword: true,
-                    onFieldSubmitted: (value) {
-                      ref.read(loginProvider.notifier).login();
-                    },
+                  Obx(
+                    () => CustomTextField(
+                      label: 'Password',
+                      hintText: 'Password',
+                      value: authController.password.value,
+                      onChanged: (value) {
+                        authController.changePassword(value);
+                      },
+                      textInputAction: TextInputAction.done,
+                      keyboardType: TextInputType.visiblePassword,
+                      isPassword: true,
+                      onFieldSubmitted: (value) {
+                        authController.login();
+                      },
+                    ),
                   ),
                   const SizedBox(
                     height: 80,
@@ -82,7 +83,7 @@ class LoginScreenState extends ConsumerState<LoginScreen> {
                   CustomButton(
                     text: 'Log In',
                     onPressed: () {
-                      ref.read(loginProvider.notifier).login();
+                      authController.login();
                     },
                   ),
                   const Spacer(),

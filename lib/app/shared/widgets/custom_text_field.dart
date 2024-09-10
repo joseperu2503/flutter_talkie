@@ -119,7 +119,7 @@ class CustomTextFieldState extends ConsumerState<CustomTextField> {
                 ),
               ),
               TextFormField(
-                style: TextStyle(
+                style: const TextStyle(
                   color: AppColors.textYankeesBlue,
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
