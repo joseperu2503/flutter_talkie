@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_talkie/app/core/constants/app_colors.dart';
 
-class CustomButton extends ConsumerStatefulWidget {
+class CustomButton extends StatefulWidget {
   const CustomButton({
     super.key,
     this.onPressed,
@@ -17,10 +16,10 @@ class CustomButton extends ConsumerStatefulWidget {
   final Widget? iconLeft;
 
   @override
-  CustomButtonState createState() => CustomButtonState();
+  State<CustomButton> createState() => _CustomButtonState();
 }
 
-class CustomButtonState extends ConsumerState<CustomButton> {
+class _CustomButtonState extends State<CustomButton> {
   @override
   Widget build(BuildContext context) {
     return Container(

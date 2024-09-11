@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_talkie/app/core/constants/app_colors.dart';
 import 'package:flutter_talkie/app/shared/plugins/formx/formx.dart';
 
-class CustomTextField extends ConsumerStatefulWidget {
+class CustomTextField extends StatefulWidget {
   const CustomTextField({
     super.key,
     required this.value,
@@ -36,10 +35,10 @@ class CustomTextField extends ConsumerStatefulWidget {
   final bool isPassword;
 
   @override
-  CustomTextFieldState createState() => CustomTextFieldState();
+  State<CustomTextField> createState() => _CustomTextFieldState();
 }
 
-class CustomTextFieldState extends ConsumerState<CustomTextField> {
+class _CustomTextFieldState extends State<CustomTextField> {
   final TextEditingController _controller = TextEditingController();
   final FocusNode _focusNode = FocusNode();
 
