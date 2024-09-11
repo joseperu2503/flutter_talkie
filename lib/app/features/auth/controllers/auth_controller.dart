@@ -1,32 +1,55 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_talkie/app/core/routes/app_router.dart';
-import 'package:flutter_talkie/app/shared/plugins/formx/formx.dart';
+import 'dart:async';
+
+import 'package:flutter_talkie/app/core/core.dart';
+import 'package:flutter_talkie/app/features/auth/models/auth_user.dart';
+import 'package:flutter_talkie/app/features/auth/services/auth_service.dart';
+import 'package:flutter_talkie/app/shared/services/snackbar_service.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
-  Rx<FormxInput<String>> email = FormxInput<String>(
-    value: '',
-    validators: [Validators.required<String>(), Validators.email()],
-  ).obs;
+  Rx<AuthUser?> user = null.obs;
 
-  Rx<FormxInput<String>> password = FormxInput<String>(
-    value: '',
-    validators: [Validators.required()],
-  ).obs;
+  Future<void> getUser() async {
+    try {
+      final (validToken, _) = await AuthService.verifyToken();
+      if (!validToken) return;
 
-  Rx<bool> loading = false.obs;
-  Rx<bool> rememberMe = false.obs;
+      final AuthUser user = await AuthService.getUser();
 
-  changeEmail(FormxInput<String> value) {
-    email.value = value;
+      setuser(user);
+    } catch (e) {
+      SnackBarService.show(e);
+    }
   }
 
-  changePassword(FormxInput<String> value) {
-    password.value = value;
+  setuser(AuthUser? value) {
+    user.value = value;
   }
 
-  login() async {
-    FocusManager.instance.primaryFocus?.unfocus();
-    appRouter.go('/chats');
+  Timer? _timer;
+
+  _cancelTimer() {
+    if (_timer != null) {
+      _timer!.cancel();
+    }
+  }
+
+  initAutoLogout() async {
+    getUser();
+    _cancelTimer();
+    final (validToken, timeRemainingInSeconds) =
+        await AuthService.verifyToken();
+
+    if (validToken) {
+      _timer = Timer(Duration(seconds: timeRemainingInSeconds), () {
+        logout();
+      });
+    }
+  }
+
+  logout() async {
+    await StorageService.remove(StorageKeys.token);
+    _cancelTimer();
+    appRouter.go('/');
   }
 }

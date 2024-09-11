@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_talkie/app/core/routes/app_router.dart';
+import 'package:flutter_talkie/app/core/constants/environment.dart';
+import 'package:flutter_talkie/app/core/router/app_router.dart';
 import 'package:flutter_talkie/app/core/theme/app_theme.dart';
 
-void main() {
+void main() async {
+  await Environment.initEnvironment();
+
   runApp(const MainApp());
 }
 

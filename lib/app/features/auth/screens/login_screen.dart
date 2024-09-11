@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_talkie/app/features/auth/controllers/auth_controller.dart';
+import 'package:flutter_talkie/app/features/auth/controllers/login_controller.dart';
 import 'package:get/get.dart';
 import 'package:flutter_talkie/app/shared/widgets/custom_button.dart';
 import 'package:flutter_talkie/app/shared/widgets/custom_text_field.dart';
@@ -17,7 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
-  final authController = Get.put(AuthController());
+  final authController = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +36,7 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  Spacer(),
+                  const Spacer(),
                   Center(
                     child: Image.asset(
                       'assets/images/logo.png',
