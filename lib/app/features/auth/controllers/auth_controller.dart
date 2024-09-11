@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_talkie/app/core/routes/app_router.dart';
 import 'package:flutter_talkie/app/shared/plugins/formx/formx.dart';
 import 'package:get/get.dart';
 
@@ -26,5 +27,6 @@ class AuthController extends GetxController {
 
   login() async {
     FocusManager.instance.primaryFocus?.unfocus();
+    appRouter.go('/chats');
   }
 }
