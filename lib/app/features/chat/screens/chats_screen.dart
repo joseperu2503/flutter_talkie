@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_talkie/app/core/constants/app_colors.dart';
+import 'package:flutter_talkie/app/features/chat/controllers/chat_controller.dart';
+import 'package:flutter_talkie/app/features/chat/widgets/chat_item.dart';
+import 'package:get/get.dart';
 
 class ChatsScreen extends StatefulWidget {
   const ChatsScreen({super.key});
@@ -9,6 +12,13 @@ class ChatsScreen extends StatefulWidget {
 }
 
 class _ChatsScreenState extends State<ChatsScreen> {
+  final chatController = Get.put(ChatController());
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,62 +48,18 @@ class _ChatsScreenState extends State<ChatsScreen> {
               ),
             ),
           ),
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-            ),
-            sliver: SliverList.builder(
-              itemBuilder: (context, index) {
-                return SizedBox(
-                  height: 90,
-                  child: Row(
-                    children: [
-                      ClipOval(
-                        child: Image.network(
-                          'https://randomuser.me/api/portraits/women/23.jpg',
-                          width: 60,
-                          height: 60,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 8,
-                      ),
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'James Heatfield',
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.textYankeesBlue,
-                              height: 1.2,
-                              leadingDistribution: TextLeadingDistribution.even,
-                            ),
-                          ),
-                          SizedBox(
-                            height: 8,
-                          ),
-                          Text(
-                            'Don’t miss to attend the meeting.',
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.textYankeesBlue,
-                              height: 1.2,
-                              leadingDistribution: TextLeadingDistribution.even,
-                            ),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                );
-              },
-              itemCount: 4,
-            ),
-          )
+          Obx(() => SliverPadding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                ),
+                sliver: SliverList.builder(
+                  itemBuilder: (context, index) {
+                    final chat = chatController.chats[index];
+                    return ChatItem(chat: chat);
+                  },
+                  itemCount: chatController.chats.length,
+                ),
+              )),
         ],
       ),
     );
