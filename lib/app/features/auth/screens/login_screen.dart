@@ -17,7 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
     super.initState();
   }
 
-  final authController = Get.put(LoginController());
+  final loginController = Get.put(LoginController());
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +50,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     () => CustomTextField(
                       label: 'Email',
                       hintText: 'Your email',
-                      value: authController.email.value,
+                      value: loginController.email.value,
                       onChanged: (value) {
-                        authController.changeEmail(value);
+                        loginController.changeEmail(value);
                       },
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.emailAddress,
@@ -65,15 +65,15 @@ class _LoginScreenState extends State<LoginScreen> {
                     () => CustomTextField(
                       label: 'Password',
                       hintText: 'Password',
-                      value: authController.password.value,
+                      value: loginController.password.value,
                       onChanged: (value) {
-                        authController.changePassword(value);
+                        loginController.changePassword(value);
                       },
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.visiblePassword,
                       isPassword: true,
                       onFieldSubmitted: (value) {
-                        authController.login();
+                        loginController.login();
                       },
                     ),
                   ),
@@ -83,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   CustomButton(
                     text: 'Log In',
                     onPressed: () {
-                      authController.login();
+                      loginController.login();
                     },
                   ),
                   const Spacer(),

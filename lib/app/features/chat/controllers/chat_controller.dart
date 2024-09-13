@@ -1,6 +1,8 @@
 import 'package:flutter_talkie/app/core/core.dart';
+import 'package:flutter_talkie/app/features/auth/services/auth_service.dart';
 import 'package:flutter_talkie/app/features/chat/models/chat.dart';
 import 'package:flutter_talkie/app/features/chat/services/chat_service.dart';
+import 'package:flutter_talkie/app/features/chat/sockets/chat_socket.dart';
 import 'package:flutter_talkie/app/shared/enums/loading_status.dart';
 import 'package:flutter_talkie/app/shared/services/snackbar_service.dart';
 import 'package:get/get.dart';
@@ -16,7 +18,6 @@ class ChatController extends GetxController {
   }
 
   getChats() async {
-    print('assd');
     loading.value = LoadingStatus.loading;
 
     try {
@@ -28,5 +29,21 @@ class ChatController extends GetxController {
 
       SnackBarService.show(e.message);
     }
+  }
+
+  ChatSocket? socket;
+
+  connectSocket() async {
+    disconnectSocket();
+    final (validToken, _) = await AuthService.verifyToken();
+
+    if (!validToken) return;
+    socket = ChatSocket();
+
+    await socket?.connect();
+  }
+
+  disconnectSocket() {
+    socket?.disconnect();
   }
 }

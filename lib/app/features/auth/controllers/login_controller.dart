@@ -50,10 +50,6 @@ class LoginController extends GetxController {
       _setRemember();
       appRouter.go('/chats');
 
-      if (!Get.isRegistered<AuthController>()) {
-        Get.lazyPut<AuthController>(() => AuthController());
-      }
-
       final AuthController authController = Get.find<AuthController>();
       authController.initAutoLogout();
 

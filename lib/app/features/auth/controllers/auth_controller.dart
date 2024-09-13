@@ -7,7 +7,7 @@ import 'package:flutter_talkie/app/shared/services/snackbar_service.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
-  Rx<AuthUser?> user = null.obs;
+  Rx<AuthUser?> user = Rx<AuthUser?>(null);
 
   Future<void> getUser() async {
     try {
