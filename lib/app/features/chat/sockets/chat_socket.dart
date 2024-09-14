@@ -1,10 +1,14 @@
 import 'package:flutter_talkie/app/core/core.dart';
+import 'package:flutter_talkie/app/features/chat/models/message_received.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class ChatSocket {
   late io.Socket socket;
+  final void Function(MessagesReceived messageReceived) onMessageReceived;
 
-  ChatSocket();
+  ChatSocket({
+    required this.onMessageReceived,
+  });
 
   Future<void> connect() async {
     final token = await StorageService.get<String>(StorageKeys.token);
@@ -28,8 +32,10 @@ class ChatSocket {
     });
 
     //** Escuchar Socket */
-    socket.on('emitMessageReceived', (dynamic data) {
-      print('emitMessageReceived $data');
+    socket.on('messageReceived', (dynamic data) {
+      print('messageReceived $data');
+      MessagesReceived messageReceived = MessagesReceived.fromJson(data);
+      onMessageReceived(messageReceived);
     });
 
     //** Errores de conexión */

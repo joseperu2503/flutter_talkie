@@ -1,14 +1,18 @@
+import 'package:flutter_talkie/app/features/chat/models/messages_response.dart';
+
 class Chat {
-  final int id;
-  final String name;
-  final LastMessage lastMessage;
-  final List<Sender> users;
+  int id;
+  String name;
+  LastMessage lastMessage;
+  List<Sender> users;
+  List<Message> messages;
 
   Chat({
     required this.id,
     required this.name,
     required this.lastMessage,
     required this.users,
+    required this.messages,
   });
 
   factory Chat.fromJson(Map<String, dynamic> json) => Chat(
@@ -16,14 +20,10 @@ class Chat {
         name: json["name"],
         lastMessage: LastMessage.fromJson(json["lastMessage"]),
         users: List<Sender>.from(json["users"].map((x) => Sender.fromJson(x))),
+        messages: json["messages"] != null
+            ? List<Message>.from(json["users"].map((x) => Message.fromJson(x)))
+            : [],
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-        "lastMessage": lastMessage.toJson(),
-        "users": List<dynamic>.from(users.map((x) => x.toJson())),
-      };
 }
 
 class LastMessage {
@@ -45,13 +45,6 @@ class LastMessage {
         timestamp: DateTime.parse(json["timestamp"]),
         sender: Sender.fromJson(json["sender"]),
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "content": content,
-        "timestamp": timestamp.toIso8601String(),
-        "sender": sender.toJson(),
-      };
 }
 
 class Sender {
@@ -67,9 +60,4 @@ class Sender {
         id: json["id"],
         name: json["name"],
       );
-
-  Map<String, dynamic> toJson() => {
-        "id": id,
-        "name": name,
-      };
 }

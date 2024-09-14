@@ -44,5 +44,11 @@ GoRouter appRouter = GoRouter(
       parentNavigatorKey: rootNavigatorKey,
       redirect: protectedRoute,
     ),
+    GoRoute(
+      path: '/chat',
+      builder: (context, state) => const ChatsScreen(),
+      parentNavigatorKey: rootNavigatorKey,
+      redirect: protectedRoute,
+    ),
   ],
 );
