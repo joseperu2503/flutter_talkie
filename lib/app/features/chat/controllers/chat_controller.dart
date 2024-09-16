@@ -1,4 +1,5 @@
 import 'package:flutter_talkie/app/core/core.dart';
+import 'package:flutter_talkie/app/features/auth/controllers/auth_controller.dart';
 import 'package:flutter_talkie/app/features/auth/services/auth_service.dart';
 import 'package:flutter_talkie/app/features/chat/models/chat.dart';
 import 'package:flutter_talkie/app/features/chat/models/messages_response.dart';
@@ -11,12 +12,6 @@ import 'package:get/get.dart';
 class ChatController extends GetxController {
   Rx<LoadingStatus> loading = LoadingStatus.none.obs;
   RxList<Chat> chats = <Chat>[].obs;
-
-  @override
-  void onInit() {
-    super.onInit();
-    getChats();
-  }
 
   getChats() async {
     loading.value = LoadingStatus.loading;
@@ -63,26 +58,46 @@ class ChatController extends GetxController {
     if (!validToken) return;
     socket = ChatSocket(
       onMessageReceived: (messageReceived) {
-        final int index =
-            chats.indexWhere((chat) => chat.id == messageReceived.chatId);
-        if (index < 0) {
-          return;
-        }
-
-        List<Message> messages = chats[index].messages;
-
-        messages.insert(0, messageReceived.message);
-        chats[index].messages = messages;
-        chats.refresh();
+        addMessageToChat(
+          messageReceived.message,
+          messageReceived.chatId,
+        );
       },
     );
 
     await socket?.connect();
   }
 
-  sendMessage(String content, int recipientId) {
+  addMessageToChat(Message message, int chatId) {
+    final int index = chats.indexWhere((chat) => chat.id == chatId);
+    if (index < 0) {
+      return;
+    }
+
+    List<Message> messages = chats[index].messages;
+
+    messages.insert(0, message);
+    chats[index].messages = messages;
+    chats.refresh();
+  }
+
+  sendMessage(String content, int recipientId, int chatId) async {
     print(content);
+    final authController = Get.find<AuthController>();
+    final user = authController.user.value;
+    if (user == null) return;
+
     socket?.sendMessage(content: content, recipientId: recipientId);
+    addMessageToChat(
+      Message(
+        id: DateTime.now().millisecondsSinceEpoch,
+        content: content,
+        timestamp: DateTime.now(),
+        sender: Sender(id: user.id, name: user.name),
+        isSender: true,
+      ),
+      chatId,
+    );
   }
 
   disconnectSocket() {

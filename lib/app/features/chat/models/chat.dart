@@ -46,18 +46,3 @@ class LastMessage {
         sender: Sender.fromJson(json["sender"]),
       );
 }
-
-class Sender {
-  final int id;
-  final String name;
-
-  Sender({
-    required this.id,
-    required this.name,
-  });
-
-  factory Sender.fromJson(Map<String, dynamic> json) => Sender(
-        id: json["id"],
-        name: json["name"],
-      );
-}

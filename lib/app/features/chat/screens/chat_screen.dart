@@ -129,7 +129,11 @@ class _ChatScreenState extends State<ChatScreen> {
 
                     return TextButton(
                       onPressed: () {
-                        chatController.sendMessage('hola', chat.users[0].id);
+                        chatController.sendMessage(
+                          'hola',
+                          chat.users[0].id,
+                          chat.id,
+                        );
                       },
                       child: const Text('S'),
                     );

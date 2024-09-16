@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_talkie/app/core/core.dart';
 import 'package:flutter_talkie/app/features/auth/controllers/auth_controller.dart';
+import 'package:flutter_talkie/app/features/auth/models/auth_user.dart';
 import 'package:flutter_talkie/app/features/auth/models/login_response.dart';
 import 'package:flutter_talkie/app/features/auth/services/auth_service.dart';
 import 'package:flutter_talkie/app/shared/enums/loading_status.dart';
@@ -46,6 +47,7 @@ class LoginController extends GetxController {
       );
 
       await StorageService.set<String>(StorageKeys.token, loginResponse.token);
+      await StorageService.set<AuthUser>(StorageKeys.user, loginResponse.user);
 
       _setRemember();
       appRouter.go('/chats');

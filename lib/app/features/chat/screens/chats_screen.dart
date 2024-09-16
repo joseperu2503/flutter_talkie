@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_talkie/app/core/constants/app_colors.dart';
+import 'package:flutter_talkie/app/features/auth/controllers/auth_controller.dart';
 import 'package:flutter_talkie/app/features/chat/controllers/chat_controller.dart';
 import 'package:flutter_talkie/app/features/chat/widgets/chat_item.dart';
 import 'package:get/get.dart';
@@ -12,10 +13,12 @@ class ChatsScreen extends StatefulWidget {
 }
 
 class _ChatsScreenState extends State<ChatsScreen> {
-  final chatController = Get.put(ChatController());
+  final chatController = Get.find<ChatController>();
+  final authController = Get.find<AuthController>();
 
   @override
   void initState() {
+    chatController.getChats();
     super.initState();
   }
 
@@ -60,6 +63,14 @@ class _ChatsScreenState extends State<ChatsScreen> {
                   itemCount: chatController.chats.length,
                 ),
               )),
+          SliverToBoxAdapter(
+            child: TextButton(
+              onPressed: () {
+                authController.logout();
+              },
+              child: Text('logout'),
+            ),
+          )
         ],
       ),
     );
