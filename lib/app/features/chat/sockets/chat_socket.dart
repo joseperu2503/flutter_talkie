@@ -49,6 +49,20 @@ class ChatSocket {
     });
   }
 
+  sendMessage({
+    required String content,
+    required int recipientId,
+  }) {
+    //** Emitir */
+
+    Map<String, dynamic> data = {
+      "content": content,
+      "recipientId": recipientId,
+    };
+
+    socket.emit('sendMessage', data);
+  }
+
   void disconnect() {
     socket.disconnect();
   }

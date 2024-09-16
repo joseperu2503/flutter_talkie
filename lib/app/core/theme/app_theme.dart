@@ -16,11 +16,6 @@ class AppTheme {
           backgroundColor: Colors.white,
           surfaceTintColor: Colors.white,
         ),
-        textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(
-            foregroundColor: AppColors.textArsenic,
-          ),
-        ),
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: AppColors.primary,
         ),

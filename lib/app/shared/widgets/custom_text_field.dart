@@ -119,7 +119,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               ),
               TextFormField(
                 style: const TextStyle(
-                  color: AppColors.textYankeesBlue,
+                  color: AppColors.blue2,
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
                   height: 22 / 14,

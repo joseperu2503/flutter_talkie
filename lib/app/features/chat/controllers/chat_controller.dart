@@ -80,6 +80,11 @@ class ChatController extends GetxController {
     await socket?.connect();
   }
 
+  sendMessage(String content, int recipientId) {
+    print(content);
+    socket?.sendMessage(content: content, recipientId: recipientId);
+  }
+
   disconnectSocket() {
     socket?.disconnect();
   }

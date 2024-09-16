@@ -1,40 +1,20 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  //Primary color
-  static const Color primaryYankeesBlue = Color(0xFF9A1663);
-  static const Color primaryBlue = Color(0xFF1A66FF);
-  static const Color primaryCultured = Color(0xFFF4F6FA);
+  static const Color blue = Color(0xFF1E71FF);
+  static const Color gray = Color(0xFF788998);
 
-  //Secondary color
-  static const Color secondaryMangoTango = Color(0xFFE0144C);
-  static const Color secondaryPastelRed = Color(0xFFFF6264);
+  static const Color blue2 = Color(0xFF101B4F);
+
   static const Color white = Color(0xFFFFFFFF);
 
-  //Text color
-  static const Color textYankeesBlue = Color(0xFF181A37);
   static const Color textArsenic = Color(0xFF3E424B);
-  static const Color textCoolBlack = Color(0xFF07255B);
-  static const Color textCultured = Color(0xFFF4F6FA);
-  static const Color gray = Color(0xFF8B8B8B);
-
-  static const Color star = Color(0xFFFF7A45);
+  static const Color textArsenicDark = Color(0xFFB5B8BD);
 
   static const Color error = Color(0xFFF04438);
   static const Color success = Color(0xFF2AA952);
-  static const Color backgroundColorDark = Color(0xFF232427);
 
-  static const Color backgroundColor = Color(0xFFFFFFFF);
+  static const Color primary = blue;
 
-  static const Color textYankeesBlueDark = Color(0xFFFFFFFF);
-  static const Color primaryCulturedDark = Color(0xFF2b3036);
-  static const Color textCulturedDark = primaryCulturedDark;
-
-  static const Color textArsenicDark = Color(0xFFB5B8BD);
-
-  static const Color textCoolBlackDark = Color(0xFFE7E7E7);
-  static const Color bgInputDark = Color(0xFF2F3337);
-  static const Color bgInput = Color(0xFFF0F3F9);
-
-  static const Color primary = primaryBlue;
+  static const Color backgroundColor = Color(0xffEDEFF8);
 }

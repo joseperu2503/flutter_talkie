@@ -38,7 +38,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w700,
-                        color: AppColors.textArsenic,
+                        color: AppColors.blue2,
                         height: 1.2,
                         leadingDistribution: TextLeadingDistribution.even,
                       ),

@@ -48,7 +48,7 @@ class ChatItem extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w500,
-                    color: AppColors.textYankeesBlue,
+                    color: AppColors.blue2,
                     height: 1.2,
                     leadingDistribution: TextLeadingDistribution.even,
                   ),
@@ -61,7 +61,7 @@ class ChatItem extends StatelessWidget {
                   style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w500,
-                    color: AppColors.textYankeesBlue,
+                    color: AppColors.blue2,
                     height: 1.2,
                     leadingDistribution: TextLeadingDistribution.even,
                   ),

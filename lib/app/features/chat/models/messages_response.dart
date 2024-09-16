@@ -25,12 +25,14 @@ class Message {
   final String content;
   final DateTime timestamp;
   final Sender sender;
+  final bool isSender;
 
   Message({
     required this.id,
     required this.content,
     required this.timestamp,
     required this.sender,
+    required this.isSender,
   });
 
   factory Message.fromJson(Map<String, dynamic> json) => Message(
@@ -38,6 +40,7 @@ class Message {
         content: json["content"],
         timestamp: DateTime.parse(json["timestamp"]),
         sender: Sender.fromJson(json["sender"]),
+        isSender: json["isSender"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -45,6 +48,7 @@ class Message {
         "content": content,
         "timestamp": timestamp.toIso8601String(),
         "sender": sender.toJson(),
+        "isSender": isSender,
       };
 }
 
