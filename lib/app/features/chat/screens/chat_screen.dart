@@ -114,7 +114,6 @@ class _ChatScreenState extends State<ChatScreen> {
                         ),
                         isCollapsed: true,
                       ),
-                      onChanged: (value) {},
                     ),
                   ),
                 ),
@@ -130,10 +129,13 @@ class _ChatScreenState extends State<ChatScreen> {
                     return TextButton(
                       onPressed: () {
                         chatController.sendMessage(
-                          'hola',
+                          messageController.text,
                           chat.users[0].id,
                           chat.id,
                         );
+                        setState(() {
+                          messageController.text = '';
+                        });
                       },
                       child: const Text('S'),
                     );
