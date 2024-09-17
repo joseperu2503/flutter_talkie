@@ -3,18 +3,17 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_talkie/app/core/constants/app_colors.dart';
 import 'package:flutter_talkie/app/features/auth/controllers/auth_controller.dart';
 import 'package:flutter_talkie/app/features/chat/controllers/chat_controller.dart';
-import 'package:flutter_talkie/app/features/contacts/screens/contacts_screen.dart';
 import 'package:flutter_talkie/app/features/chat/widgets/chat_item.dart';
 import 'package:get/get.dart';
 
-class ChatsScreen extends StatefulWidget {
-  const ChatsScreen({super.key});
+class ContactsScreen extends StatefulWidget {
+  const ContactsScreen({super.key});
 
   @override
-  State<ChatsScreen> createState() => _ChatsScreenState();
+  State<ContactsScreen> createState() => _ContactsScreenState();
 }
 
-class _ChatsScreenState extends State<ChatsScreen> {
+class _ContactsScreenState extends State<ContactsScreen> {
   final chatController = Get.find<ChatController>();
   final authController = Get.find<AuthController>();
 
@@ -40,7 +39,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                 child: const Row(
                   children: [
                     Text(
-                      'Chats',
+                      'Contacts',
                       style: TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w700,
@@ -53,6 +52,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
                 ),
               ),
             ),
+            automaticallyImplyLeading: false,
           ),
           Obx(
             () => SliverPadding(
@@ -73,7 +73,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
               onPressed: () {
                 authController.logout();
               },
-              child: const Text('logout'),
+              child: Text('logout'),
             ),
           )
         ],
@@ -88,14 +88,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
               borderRadius: BorderRadius.circular(24),
             ),
           ),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const ContactsScreen(),
-              ),
-            );
-          },
+          onPressed: () {},
           child: SvgPicture.asset(
             'assets/icons/plus.svg',
             colorFilter: const ColorFilter.mode(
