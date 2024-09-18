@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_talkie/app/core/constants/app_colors.dart';
 import 'package:flutter_talkie/app/features/contacts/controllers/contacts_controller.dart';
+import 'package:flutter_talkie/app/features/contacts/widgets/add_contact_dialog.dart';
 import 'package:flutter_talkie/app/features/contacts/widgets/contact_item.dart';
 import 'package:get/get.dart';
 
@@ -54,7 +55,14 @@ class _ContactsScreenState extends State<ContactsScreen> {
                         style: TextButton.styleFrom(
                           shape: const CircleBorder(),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return const AddContactDialog();
+                            },
+                          );
+                        },
                         child: SvgPicture.asset(
                           'assets/icons/plus.svg',
                           colorFilter: const ColorFilter.mode(

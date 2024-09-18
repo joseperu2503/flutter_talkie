@@ -22,19 +22,13 @@ class CustomButton extends StatefulWidget {
 class _CustomButtonState extends State<CustomButton> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 56,
+    return SizedBox(
+      height: 52,
       width: widget.width,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: AppColors.primary,
-        ),
-      ),
       child: TextButton(
         style: TextButton.styleFrom(
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
+            borderRadius: BorderRadius.circular(30),
           ),
           backgroundColor: AppColors.primary,
         ),
@@ -51,8 +45,8 @@ class _CustomButtonState extends State<CustomButton> {
               Text(
                 widget.text!,
                 style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
+                  fontSize: 16,
+                  fontWeight: FontWeight.w600,
                   color: widget.onPressed == null
                       ? AppColors.gray
                       : AppColors.white,
