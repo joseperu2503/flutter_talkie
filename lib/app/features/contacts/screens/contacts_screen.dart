@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_talkie/app/core/constants/app_colors.dart';
-import 'package:flutter_talkie/app/features/auth/controllers/auth_controller.dart';
-import 'package:flutter_talkie/app/features/chat/controllers/chat_controller.dart';
-import 'package:flutter_talkie/app/features/chat/widgets/chat_item.dart';
+import 'package:flutter_talkie/app/features/contacts/controllers/contacts_controller.dart';
+import 'package:flutter_talkie/app/features/contacts/widgets/contact_item.dart';
 import 'package:get/get.dart';
 
 class ContactsScreen extends StatefulWidget {
@@ -14,12 +13,11 @@ class ContactsScreen extends StatefulWidget {
 }
 
 class _ContactsScreenState extends State<ContactsScreen> {
-  final chatController = Get.find<ChatController>();
-  final authController = Get.find<AuthController>();
+  final ContactsController contactsController = Get.put(ContactsController());
 
   @override
   void initState() {
-    chatController.getChats();
+    contactsController.getContacts();
     super.initState();
   }
 
@@ -34,18 +32,38 @@ class _ContactsScreenState extends State<ContactsScreen> {
               child: Container(
                 height: 60,
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
+                  horizontal: 24,
                 ),
-                child: const Row(
+                child: Row(
                   children: [
-                    Text(
+                    const Text(
                       'Contacts',
                       style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.blue2,
-                        height: 1.2,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.neutralActive,
+                        height: 30 / 18,
                         leadingDistribution: TextLeadingDistribution.even,
+                      ),
+                    ),
+                    const Spacer(),
+                    SizedBox(
+                      height: 48,
+                      width: 48,
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          shape: const CircleBorder(),
+                        ),
+                        onPressed: () {},
+                        child: SvgPicture.asset(
+                          'assets/icons/plus.svg',
+                          colorFilter: const ColorFilter.mode(
+                            AppColors.neutralActive,
+                            BlendMode.srcIn,
+                          ),
+                          width: 24,
+                          height: 24,
+                        ),
                       ),
                     ),
                   ],
@@ -54,51 +72,75 @@ class _ContactsScreenState extends State<ContactsScreen> {
             ),
             automaticallyImplyLeading: false,
           ),
-          Obx(
-            () => SliverPadding(
-              padding: const EdgeInsets.symmetric(
-                horizontal: 16,
-              ),
-              sliver: SliverList.builder(
-                itemBuilder: (context, index) {
-                  final chat = chatController.chats[index];
-                  return ChatItem(chat: chat);
-                },
-                itemCount: chatController.chats.length,
+          SliverPadding(
+            padding: const EdgeInsets.only(
+              top: 16,
+              left: 24,
+              right: 24,
+              bottom: 16,
+            ),
+            sliver: SliverToBoxAdapter(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: AppColors.neutralOffWhite,
+                  borderRadius: BorderRadius.circular(4),
+                ),
+                height: 44,
+                child: TextFormField(
+                  style: const TextStyle(
+                    color: AppColors.blue2,
+                    fontSize: 14,
+                    height: 24 / 14,
+                    fontWeight: FontWeight.w600,
+                  ),
+                  decoration: InputDecoration(
+                    prefixIcon: SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: Center(
+                        child: SvgPicture.asset(
+                          'assets/icons/search.svg',
+                          colorFilter: const ColorFilter.mode(
+                            AppColors.neutralDisabled,
+                            BlendMode.srcIn,
+                          ),
+                          width: 24,
+                          height: 24,
+                        ),
+                      ),
+                    ),
+                    border: const OutlineInputBorder(
+                      borderSide: BorderSide.none,
+                    ),
+                    contentPadding: const EdgeInsets.only(
+                      top: 10,
+                      left: 20,
+                      right: 20,
+                      bottom: 10,
+                    ),
+                    isCollapsed: true,
+                    hintText: 'Search',
+                    hintStyle: const TextStyle(
+                      fontSize: 14,
+                      height: 24 / 14,
+                      fontWeight: FontWeight.w600,
+                      color: AppColors.neutralDisabled,
+                    ),
+                  ),
+                ),
               ),
             ),
           ),
-          SliverToBoxAdapter(
-            child: TextButton(
-              onPressed: () {
-                authController.logout();
+          Obx(
+            () => SliverList.builder(
+              itemBuilder: (context, index) {
+                final contact = contactsController.contacts[index];
+                return ContactItem(contact: contact);
               },
-              child: Text('logout'),
+              itemCount: contactsController.contacts.length,
             ),
           )
         ],
-      ),
-      floatingActionButton: Container(
-        height: 56,
-        width: 56,
-        child: TextButton(
-          style: TextButton.styleFrom(
-            backgroundColor: AppColors.primary,
-            shape: ContinuousRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
-            ),
-          ),
-          onPressed: () {},
-          child: SvgPicture.asset(
-            'assets/icons/plus.svg',
-            colorFilter: const ColorFilter.mode(
-              AppColors.white,
-              BlendMode.srcIn,
-            ),
-            width: 24,
-            height: 24,
-          ),
-        ),
       ),
     );
   }

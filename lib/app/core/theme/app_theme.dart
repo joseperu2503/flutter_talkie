@@ -3,12 +3,17 @@ import 'package:flutter_talkie/app/core/constants/app_colors.dart';
 
 class AppTheme {
   static ThemeData getTheme() => ThemeData(
-        fontFamily: 'Poppins',
+        fontFamily: 'Mulish',
         scaffoldBackgroundColor: AppColors.backgroundColor,
         useMaterial3: true,
         colorScheme: ColorScheme.fromSwatch(
           accentColor: Colors.black12,
           backgroundColor: Colors.white,
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: TextButton.styleFrom(
+            foregroundColor: Colors.black12,
+          ),
         ),
         bottomSheetTheme: const BottomSheetThemeData(
           modalBackgroundColor: Colors.white,
