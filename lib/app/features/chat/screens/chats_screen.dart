@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter_talkie/app/core/constants/app_colors.dart';
 import 'package:flutter_talkie/app/features/auth/controllers/auth_controller.dart';
 import 'package:flutter_talkie/app/features/chat/controllers/chat_controller.dart';
-import 'package:flutter_talkie/app/features/contacts/screens/contacts_screen.dart';
 import 'package:flutter_talkie/app/features/chat/widgets/chat_item.dart';
 import 'package:get/get.dart';
 
@@ -35,17 +35,17 @@ class _ChatsScreenState extends State<ChatsScreen> {
               child: Container(
                 height: 60,
                 padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
+                  horizontal: 24,
                 ),
                 child: const Row(
                   children: [
                     Text(
                       'Chats',
                       style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w700,
-                        color: AppColors.blue2,
-                        height: 1.2,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.neutralActive,
+                        height: 30 / 18,
                         leadingDistribution: TextLeadingDistribution.even,
                       ),
                     ),
@@ -89,15 +89,10 @@ class _ChatsScreenState extends State<ChatsScreen> {
             ),
           ),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const ContactsScreen(),
-              ),
-            );
+            context.go('/contacts');
           },
           child: SvgPicture.asset(
-            'assets/icons/plus.svg',
+            'assets/icons/add_chat.svg',
             colorFilter: const ColorFilter.mode(
               AppColors.white,
               BlendMode.srcIn,

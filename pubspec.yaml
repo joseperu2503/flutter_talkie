@@ -29,6 +29,7 @@ flutter:
   assets:
     - .env
     - assets/icons/
+    - assets/icons/tabs/
     - assets/images/
 
   fonts:
