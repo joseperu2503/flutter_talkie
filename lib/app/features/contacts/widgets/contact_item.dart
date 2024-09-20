@@ -103,7 +103,7 @@ class ContactItem extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Last seen ${timeago.format(contact.lastConected)}',
+                    'Last seen ${timeago.format(contact.lastConnection)}',
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
