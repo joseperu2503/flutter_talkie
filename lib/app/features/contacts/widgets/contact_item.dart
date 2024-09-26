@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_talkie/app/core/constants/app_colors.dart';
+import 'package:flutter_talkie/app/features/chat/controllers/chat_controller.dart';
+import 'package:flutter_talkie/app/features/chat/screens/chat_screen.dart';
 import 'package:flutter_talkie/app/features/contacts/models/contact.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:get/get.dart';
 
 class ContactItem extends StatelessWidget {
   const ContactItem({super.key, required this.contact});
@@ -10,10 +13,21 @@ class ContactItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final chatController = Get.find<ChatController>();
+
     return SizedBox(
       height: 84,
       child: TextButton(
-        onPressed: () {},
+        onPressed: () {
+          chatController.createChat(contact);
+          Navigator.of(context, rootNavigator: true).push(
+            MaterialPageRoute(
+              builder: (context) => const ChatScreen(
+                chatId: null,
+              ),
+            ),
+          );
+        },
         style: TextButton.styleFrom(
           shape: const ContinuousRectangleBorder(),
           padding: const EdgeInsets.symmetric(

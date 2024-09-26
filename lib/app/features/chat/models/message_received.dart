@@ -1,8 +1,8 @@
-import 'package:flutter_talkie/app/features/chat/models/messages_response.dart';
+import 'package:flutter_talkie/app/features/chat/models/chat.dart';
 
 class MessagesReceived {
   final Message message;
-  final int chatId;
+  final String chatId;
 
   MessagesReceived({
     required this.message,

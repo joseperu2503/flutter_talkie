@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_talkie/app/core/core.dart';
-import 'package:flutter_talkie/app/features/chat/models/messages_response.dart';
+import 'package:flutter_talkie/app/features/chat/models/chat.dart';
 
 class MessageItem extends StatelessWidget {
   const MessageItem({

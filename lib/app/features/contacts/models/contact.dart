@@ -4,7 +4,7 @@ class Contact {
   final String surname;
   final String? photo;
   final String phone;
-  final String eamil;
+  final String email;
   final bool isOnline;
   final DateTime lastConnection;
 
@@ -14,7 +14,7 @@ class Contact {
     required this.surname,
     required this.photo,
     required this.phone,
-    required this.eamil,
+    required this.email,
     required this.isOnline,
     required this.lastConnection,
   });
@@ -25,7 +25,7 @@ class Contact {
         surname: json["surname"],
         photo: json["photo"],
         phone: json["phone"],
-        eamil: json["eamil"],
+        email: json["email"],
         isOnline: json["isOnline"],
         lastConnection: DateTime.parse(json["lastConnection"]),
       );
@@ -36,7 +36,7 @@ class Contact {
         "surname": surname,
         "photo": photo,
         "phone": phone,
-        "eamil": eamil,
+        "email": email,
         "isOnline": isOnline,
         "lastConnection": lastConnection.toIso8601String(),
       };

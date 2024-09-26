@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_talkie/app/core/core.dart';
+import 'package:flutter_talkie/app/features/chat/controllers/chat_controller.dart';
 import 'package:flutter_talkie/app/features/chat/models/chat.dart';
 import 'package:flutter_talkie/app/features/chat/screens/chat_screen.dart';
+import 'package:get/get.dart';
 
 class ChatItem extends StatelessWidget {
   const ChatItem({
@@ -13,8 +15,12 @@ class ChatItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final chatController = Get.find<ChatController>();
+
     return GestureDetector(
       onTap: () {
+        chatController.selectCurrentChat(chat);
+
         Navigator.push(
           context,
           MaterialPageRoute(
@@ -44,7 +50,7 @@ class ChatItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  chat.name,
+                  chat.receiver.name,
                   style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w500,
@@ -57,7 +63,7 @@ class ChatItem extends StatelessWidget {
                   height: 8,
                 ),
                 Text(
-                  chat.lastMessage.content,
+                  chat.lastMessage?.content ?? '',
                   style: const TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.w500,

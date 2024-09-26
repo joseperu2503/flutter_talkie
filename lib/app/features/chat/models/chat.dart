@@ -1,48 +1,88 @@
-import 'package:flutter_talkie/app/features/chat/models/messages_response.dart';
-
 class Chat {
-  int id;
-  String name;
-  LastMessage lastMessage;
-  List<Sender> users;
+  String id;
+  Message? lastMessage;
   List<Message> messages;
+  Receiver receiver;
 
   Chat({
     required this.id,
-    required this.name,
     required this.lastMessage,
-    required this.users,
     required this.messages,
+    required this.receiver,
   });
 
   factory Chat.fromJson(Map<String, dynamic> json) => Chat(
         id: json["id"],
-        name: json["name"],
-        lastMessage: LastMessage.fromJson(json["lastMessage"]),
-        users: List<Sender>.from(json["users"].map((x) => Sender.fromJson(x))),
-        messages: json["messages"] != null
-            ? List<Message>.from(json["users"].map((x) => Message.fromJson(x)))
-            : [],
+        lastMessage: Message.fromJson(json["lastMessage"]),
+        messages: List<Message>.from(
+            json["messages"].map((x) => Message.fromJson(x))),
+        receiver: Receiver.fromJson(json["receiver"]),
       );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "lastMessage": lastMessage?.toJson(),
+        "messages": List<dynamic>.from(messages.map((x) => x.toJson())),
+        "receiver": receiver.toJson(),
+      };
 }
 
-class LastMessage {
-  final int id;
-  final String content;
-  final DateTime timestamp;
-  final Sender sender;
+class Message {
+  String id;
+  String content;
+  DateTime timestamp;
+  Receiver sender;
+  bool isSender;
 
-  LastMessage({
+  Message({
     required this.id,
     required this.content,
     required this.timestamp,
     required this.sender,
+    required this.isSender,
   });
 
-  factory LastMessage.fromJson(Map<String, dynamic> json) => LastMessage(
+  factory Message.fromJson(Map<String, dynamic> json) => Message(
         id: json["id"],
         content: json["content"],
         timestamp: DateTime.parse(json["timestamp"]),
-        sender: Sender.fromJson(json["sender"]),
+        sender: Receiver.fromJson(json["sender"]),
+        isSender: json["isSender"],
       );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "content": content,
+        "timestamp": timestamp.toIso8601String(),
+        "sender": sender.toJson(),
+        "isSender": isSender,
+      };
+}
+
+class Receiver {
+  int id;
+  String name;
+  String surname;
+  String email;
+
+  Receiver({
+    required this.id,
+    required this.name,
+    required this.surname,
+    required this.email,
+  });
+
+  factory Receiver.fromJson(Map<String, dynamic> json) => Receiver(
+        id: json["id"],
+        name: json["name"],
+        surname: json["surname"],
+        email: json["email"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "surname": surname,
+        "email": email,
+      };
 }

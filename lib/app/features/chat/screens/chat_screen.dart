@@ -11,17 +11,17 @@ class ChatScreen extends StatefulWidget {
     required this.chatId,
   });
 
-  final int chatId;
+  final String? chatId;
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  String? internalChatId;
+
   @override
   void initState() {
-    final chatController = Get.find<ChatController>();
-    chatController.getMessagesByChat(widget.chatId);
     super.initState();
   }
 
@@ -38,8 +38,7 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       body: Obx(
         () {
-          final Chat? chat = chatController.chats
-              .firstWhereOrNull((chat) => chat.id == widget.chatId);
+          final Chat? chat = chatController.currentChat.value;
 
           if (chat == null) {
             return Container();
@@ -117,30 +116,18 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                   ),
                 ),
-                Obx(
-                  () {
-                    final Chat? chat = chatController.chats
-                        .firstWhereOrNull((chat) => chat.id == widget.chatId);
-
-                    if (chat == null) {
-                      return Container();
-                    }
-
-                    return TextButton(
-                      onPressed: () {
-                        chatController.sendMessage(
-                          messageController.text,
-                          chat.users[0].id,
-                          chat.id,
-                        );
-                        setState(() {
-                          messageController.text = '';
-                        });
-                      },
-                      child: const Text('S'),
+                TextButton(
+                  onPressed: () {
+                    chatController.sendMessage(
+                      messageController.text,
                     );
+
+                    setState(() {
+                      messageController.text = '';
+                    });
                   },
-                ),
+                  child: const Text('S'),
+                )
               ],
             ),
           ),
