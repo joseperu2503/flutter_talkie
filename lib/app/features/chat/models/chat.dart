@@ -66,12 +66,14 @@ class Receiver {
   String name;
   String surname;
   String email;
+  String? photo;
 
   Receiver({
     required this.id,
     required this.name,
     required this.surname,
     required this.email,
+    required this.photo,
   });
 
   factory Receiver.fromJson(Map<String, dynamic> json) => Receiver(
@@ -79,6 +81,7 @@ class Receiver {
         name: json["name"],
         surname: json["surname"],
         email: json["email"],
+        photo: json["photo"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -86,5 +89,6 @@ class Receiver {
         "name": name,
         "surname": surname,
         "email": email,
+        "photo": photo,
       };
 }

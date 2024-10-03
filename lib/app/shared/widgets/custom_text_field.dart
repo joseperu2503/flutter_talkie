@@ -108,9 +108,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   style: TextStyle(
                     fontSize: elevateLabel ? 12 : 18,
                     fontWeight: FontWeight.w400,
-                    color: elevateLabel
-                        ? AppColors.primary
-                        : AppColors.textArsenicDark,
+                    color: elevateLabel ? AppColors.primary : AppColors.gray,
                     height: elevateLabel ? 20 / 12 : 24 / 18,
                     leadingDistribution: TextLeadingDistribution.even,
                   ),
@@ -130,7 +128,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(
-                      color: AppColors.textArsenicDark.withOpacity(0.7),
+                      color: AppColors.gray.withOpacity(0.7),
                     ),
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -159,7 +157,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                                 ? 'assets/icons/eye.svg'
                                 : 'assets/icons/eye_closed.svg',
                             colorFilter: ColorFilter.mode(
-                              AppColors.textArsenic.withOpacity(0.5),
+                              AppColors.gray.withOpacity(0.5),
                               BlendMode.srcIn,
                             ),
                             width: 22,

@@ -42,7 +42,7 @@ class _ChatScreenState extends State<ChatScreen> {
     final screen = MediaQuery.of(context);
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.neutralOffWhite,
       appBar: AppBar(
         scrolledUnderElevation: 0,
         automaticallyImplyLeading: false,
@@ -121,7 +121,7 @@ class _ChatScreenState extends State<ChatScreen> {
         },
       ),
       bottomSheet: Container(
-        color: AppColors.backgroundColor,
+        color: AppColors.neutralOffWhite,
         child: Container(
           padding: EdgeInsets.only(
             top: 8,

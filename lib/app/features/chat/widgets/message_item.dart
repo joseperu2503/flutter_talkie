@@ -27,13 +27,13 @@ class MessageItem extends StatelessWidget {
             color: message.isSender ? AppColors.primary : AppColors.gray2,
             borderRadius: BorderRadius.only(
               topLeft: message.isSender
-                  ? const Radius.circular(20)
+                  ? const Radius.circular(16)
                   : const Radius.circular(0),
-              topRight: const Radius.circular(20),
-              bottomLeft: const Radius.circular(20),
+              topRight: const Radius.circular(16),
+              bottomLeft: const Radius.circular(16),
               bottomRight: message.isSender
                   ? const Radius.circular(0)
-                  : const Radius.circular(20),
+                  : const Radius.circular(16),
             ),
           ),
           padding: const EdgeInsets.symmetric(

@@ -15,9 +15,6 @@ class AppColors {
 
   static const Color white = Color(0xFFFFFFFF);
 
-  static const Color textArsenic = Color(0xFF3E424B);
-  static const Color textArsenicDark = Color(0xFFB5B8BD);
-
   static const Color error = Color(0xFFF04438);
   static const Color accentSuccess = Color(0xFF2CC069);
 

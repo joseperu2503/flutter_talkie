@@ -25,18 +25,37 @@ class ChatItem extends StatelessWidget {
       },
       behavior: HitTestBehavior.translucent,
       child: SizedBox(
-        height: 90,
+        height: 56,
         child: Row(
           children: [
-            ClipOval(
-              child: Image.network(
-                'https://randomuser.me/api/portraits/women/23.jpg',
-                width: 60,
-                height: 60,
-              ),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: chat.receiver.photo != null
+                  ? Image.network(
+                      chat.receiver.photo!,
+                      width: 48,
+                      height: 48,
+                    )
+                  : Container(
+                      width: 48,
+                      height: 48,
+                      color: AppColors.primary,
+                      child: Center(
+                        child: Text(
+                          '${chat.receiver.name[0]}${chat.receiver.surname[0]}',
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                            color: AppColors.white,
+                            height: 24 / 14,
+                            leadingDistribution: TextLeadingDistribution.even,
+                          ),
+                        ),
+                      ),
+                    ),
             ),
             const SizedBox(
-              width: 8,
+              width: 12,
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -45,23 +64,23 @@ class ChatItem extends StatelessWidget {
                 Text(
                   chat.receiver.name,
                   style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.blue2,
-                    height: 1.2,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.neutralActive,
+                    height: 24 / 14,
                     leadingDistribution: TextLeadingDistribution.even,
                   ),
                 ),
                 const SizedBox(
-                  height: 8,
+                  height: 2,
                 ),
                 Text(
                   chat.lastMessage?.content ?? '',
                   style: const TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.blue2,
-                    height: 1.2,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.neutralDisabled,
+                    height: 20 / 12,
                     leadingDistribution: TextLeadingDistribution.even,
                   ),
                 ),
