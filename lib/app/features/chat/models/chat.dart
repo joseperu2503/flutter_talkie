@@ -13,7 +13,9 @@ class Chat {
 
   factory Chat.fromJson(Map<String, dynamic> json) => Chat(
         id: json["id"],
-        lastMessage: Message.fromJson(json["lastMessage"]),
+        lastMessage: json["lastMessage"] == null
+            ? null
+            : Message.fromJson(json["lastMessage"]),
         messages: List<Message>.from(
             json["messages"].map((x) => Message.fromJson(x))),
         receiver: Receiver.fromJson(json["receiver"]),

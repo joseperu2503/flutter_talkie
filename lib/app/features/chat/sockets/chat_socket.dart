@@ -51,13 +51,12 @@ class ChatSocket {
 
   sendMessage({
     required String content,
-    required int recipientId,
+    required String chatId,
   }) {
     //** Emitir */
-
     Map<String, dynamic> data = {
       "content": content,
-      "recipientId": recipientId,
+      "chatId": chatId,
     };
 
     socket.emit('sendMessage', data);

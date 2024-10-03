@@ -1,12 +1,13 @@
 class Contact {
-  final int id;
-  final String name;
-  final String surname;
-  final String? photo;
-  final String phone;
-  final String email;
-  final bool isOnline;
-  final DateTime lastConnection;
+  int id;
+  String name;
+  String surname;
+  String? photo;
+  String phone;
+  String email;
+  bool isOnline;
+  DateTime lastConnection;
+  String chatId;
 
   Contact({
     required this.id,
@@ -17,6 +18,7 @@ class Contact {
     required this.email,
     required this.isOnline,
     required this.lastConnection,
+    required this.chatId,
   });
 
   factory Contact.fromJson(Map<String, dynamic> json) => Contact(
@@ -28,6 +30,7 @@ class Contact {
         email: json["email"],
         isOnline: json["isOnline"],
         lastConnection: DateTime.parse(json["lastConnection"]),
+        chatId: json["chatId"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -39,5 +42,6 @@ class Contact {
         "email": email,
         "isOnline": isOnline,
         "lastConnection": lastConnection.toIso8601String(),
+        "chatId": chatId,
       };
 }

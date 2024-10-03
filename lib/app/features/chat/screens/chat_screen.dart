@@ -11,7 +11,7 @@ class ChatScreen extends StatefulWidget {
     required this.chatId,
   });
 
-  final String? chatId;
+  final String chatId;
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -38,7 +38,8 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       body: Obx(
         () {
-          final Chat? chat = chatController.currentChat.value;
+          final Chat? chat = chatController.chats
+              .firstWhereOrNull((chat) => chat.id == widget.chatId);
 
           if (chat == null) {
             return Container();
@@ -120,6 +121,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   onPressed: () {
                     chatController.sendMessage(
                       messageController.text,
+                      widget.chatId,
                     );
 
                     setState(() {
