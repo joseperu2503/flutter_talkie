@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:flutter_talkie/app/core/core.dart';
 import 'package:flutter_talkie/app/features/chat/controllers/chat_controller.dart';
 import 'package:flutter_talkie/app/features/chat/models/chat.dart';
@@ -18,11 +19,18 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  String? internalChatId;
-
   @override
   void initState() {
     super.initState();
+    messageController.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    messageController.dispose();
+    super.dispose();
   }
 
   TextEditingController messageController = TextEditingController();
@@ -68,17 +76,29 @@ class _ChatScreenState extends State<ChatScreen> {
         color: AppColors.backgroundColor,
         child: SafeArea(
           child: Container(
-            height: 60,
-            padding: const EdgeInsets.symmetric(horizontal: 24),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    height: 54,
+            padding: const EdgeInsets.only(
+              top: 8,
+              left: 16,
+              right: 16,
+              bottom: 8,
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppColors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Color(0x101B4F26), // Color de la sombra
+                    offset: Offset(0, 15), // Desplazamiento de la sombra
+                    blurRadius: 30, // Radio de difuminado
+                    spreadRadius: 0, // Radio de expansión
+                  ),
+                ],
+              ),
+              height: 54,
+              child: Row(
+                children: [
+                  Expanded(
                     child: TextFormField(
                       controller: messageController,
                       style: const TextStyle(
@@ -106,6 +126,13 @@ class _ChatScreenState extends State<ChatScreen> {
                           ),
                           borderRadius: BorderRadius.circular(12),
                         ),
+                        hintText: 'Message',
+                        hintStyle: const TextStyle(
+                          color: AppColors.gray,
+                          fontSize: 16,
+                          fontWeight: FontWeight.w400,
+                          height: 22 / 16,
+                        ),
                         contentPadding: const EdgeInsets.only(
                           top: 40,
                           left: 20,
@@ -116,21 +143,40 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                     ),
                   ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    chatController.sendMessage(
-                      messageController.text,
-                      widget.chatId,
-                    );
+                  SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: TextButton(
+                      onPressed: messageController.text.trim().isEmpty
+                          ? null
+                          : () {
+                              chatController.sendMessage(
+                                messageController.text.trim(),
+                                widget.chatId,
+                              );
 
-                    setState(() {
-                      messageController.text = '';
-                    });
-                  },
-                  child: const Text('S'),
-                )
-              ],
+                              setState(() {
+                                messageController.text = '';
+                              });
+                            },
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                      ),
+                      child: SvgPicture.asset(
+                        messageController.text.trim().isEmpty
+                            ? 'assets/icons/send_outlined.svg'
+                            : 'assets/icons/send_solid.svg',
+                        colorFilter: ColorFilter.mode(
+                          messageController.text.trim().isEmpty
+                              ? AppColors.gray
+                              : AppColors.primary,
+                          BlendMode.srcIn,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         ),

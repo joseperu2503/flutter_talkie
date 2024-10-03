@@ -20,22 +20,25 @@ class MessageItem extends StatelessWidget {
           margin: const EdgeInsets.only(
             bottom: 8,
           ),
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width * 0.7,
+          ),
           decoration: BoxDecoration(
-            color: message.isSender ? AppColors.primary : AppColors.gray,
+            color: message.isSender ? AppColors.primary : AppColors.gray2,
             borderRadius: BorderRadius.only(
               topLeft: message.isSender
-                  ? const Radius.circular(10)
+                  ? const Radius.circular(20)
                   : const Radius.circular(0),
-              topRight: const Radius.circular(10),
-              bottomLeft: const Radius.circular(10),
+              topRight: const Radius.circular(20),
+              bottomLeft: const Radius.circular(20),
               bottomRight: message.isSender
                   ? const Radius.circular(0)
-                  : const Radius.circular(10),
+                  : const Radius.circular(20),
             ),
           ),
           padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 8,
+            horizontal: 20,
+            vertical: 15,
           ),
           child: Text(
             message.content,
