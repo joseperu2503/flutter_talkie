@@ -11,7 +11,6 @@ import 'package:get/get.dart';
 class ChatController extends GetxController {
   Rx<LoadingStatus> loading = LoadingStatus.none.obs;
   RxList<Chat> chats = <Chat>[].obs;
-  RxMap<String, List<Message>> chatMessages = <String, List<Message>>{}.obs;
 
   getChats() async {
     loading.value = LoadingStatus.loading;
@@ -46,15 +45,19 @@ class ChatController extends GetxController {
   }
 
   addMessageToChat(Message message, String chatId) {
-    final int index = chats.indexWhere((chat) => chat.id == chatId);
-    if (index < 0) {
-      return;
-    }
+    final Chat? chat = chats.firstWhereOrNull((chat) => chat.id == chatId);
 
-    List<Message> messages = chats[index].messages;
+    if (chat == null) return;
+
+    List<Message> messages = chat.messages;
 
     messages.insert(0, message);
-    chats[index].messages = messages;
+    chat.messages = messages;
+
+    chat.lastMessage = message;
+    chats.remove(chat);
+    chats.insert(0, chat);
+
     chats.refresh();
   }
 

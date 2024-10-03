@@ -61,10 +61,14 @@ class _ChatsScreenState extends State<ChatsScreen> {
               ),
               sliver: SliverList.builder(
                 itemBuilder: (context, index) {
-                  final chat = chatController.chats[index];
+                  final chat = chatController.chats
+                      .where((c) => c.lastMessage != null)
+                      .toList()[index];
                   return ChatItem(chat: chat);
                 },
-                itemCount: chatController.chats.length,
+                itemCount: chatController.chats
+                    .where((c) => c.lastMessage != null)
+                    .length,
               ),
             ),
           ),
