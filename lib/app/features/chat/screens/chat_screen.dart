@@ -4,6 +4,7 @@ import 'package:flutter_talkie/app/core/core.dart';
 import 'package:flutter_talkie/app/features/chat/controllers/chat_controller.dart';
 import 'package:flutter_talkie/app/features/chat/models/chat.dart';
 import 'package:flutter_talkie/app/features/chat/widgets/message_item.dart';
+import 'package:flutter_talkie/app/shared/widgets/back_button.dart';
 import 'package:get/get.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -38,11 +39,54 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     final chatController = Get.find<ChatController>();
+    final screen = MediaQuery.of(context);
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: AppBar(
-        title: const Text('Chat'),
+        scrolledUnderElevation: 0,
+        automaticallyImplyLeading: false,
+        toolbarHeight: 64,
+        flexibleSpace: Obx(
+          () {
+            final Chat? chat = chatController.chats
+                .firstWhereOrNull((chat) => chat.id == widget.chatId);
+
+            if (chat == null) {
+              return Container();
+            }
+
+            return SafeArea(
+              child: Container(
+                padding: const EdgeInsets.only(
+                  left: 8,
+                  right: 16,
+                ),
+                height: 64,
+                child: Row(
+                  children: [
+                    const CustomBackButton(),
+                    const SizedBox(
+                      width: 12,
+                    ),
+                    Expanded(
+                      child: Text(
+                        '${chat.receiver.name} ${chat.receiver.surname}',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.neutralActive,
+                          height: 25 / 18,
+                          leadingDistribution: TextLeadingDistribution.even,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
       ),
       body: Obx(
         () {
@@ -57,7 +101,11 @@ class _ChatScreenState extends State<ChatScreen> {
             reverse: true,
             slivers: [
               SliverPadding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+                padding: EdgeInsets.only(
+                  left: 16,
+                  right: 16,
+                  bottom: 54 + 8 + 8 + screen.padding.bottom,
+                ),
                 sliver: SliverList.builder(
                   itemBuilder: (context, index) {
                     final message = chat.messages[index];
@@ -72,111 +120,109 @@ class _ChatScreenState extends State<ChatScreen> {
           );
         },
       ),
-      bottomNavigationBar: Container(
+      bottomSheet: Container(
         color: AppColors.backgroundColor,
-        child: SafeArea(
+        child: Container(
+          padding: EdgeInsets.only(
+            top: 8,
+            left: 16,
+            right: 16,
+            bottom: 8 + screen.padding.bottom,
+          ),
           child: Container(
-            padding: const EdgeInsets.only(
-              top: 8,
-              left: 16,
-              right: 16,
-              bottom: 8,
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: const [
+                BoxShadow(
+                  color: Color(0x101B4F26), // Color de la sombra
+                  offset: Offset(0, 15), // Desplazamiento de la sombra
+                  blurRadius: 30, // Radio de difuminado
+                  spreadRadius: 0, // Radio de expansión
+                ),
+              ],
             ),
-            child: Container(
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(10),
-                boxShadow: const [
-                  BoxShadow(
-                    color: Color(0x101B4F26), // Color de la sombra
-                    offset: Offset(0, 15), // Desplazamiento de la sombra
-                    blurRadius: 30, // Radio de difuminado
-                    spreadRadius: 0, // Radio de expansión
-                  ),
-                ],
-              ),
-              height: 54,
-              child: Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                      controller: messageController,
-                      style: const TextStyle(
-                        color: AppColors.blue2,
-                        fontSize: 14,
+            height: 54,
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    controller: messageController,
+                    style: const TextStyle(
+                      color: AppColors.blue2,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w400,
+                      height: 22 / 14,
+                    ),
+                    decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                        borderSide: const BorderSide(
+                          color: Colors.transparent,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: Colors.transparent,
+                        ),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          color: Colors.transparent,
+                        ),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      hintText: 'Message',
+                      hintStyle: const TextStyle(
+                        color: AppColors.gray,
+                        fontSize: 16,
                         fontWeight: FontWeight.w400,
-                        height: 22 / 14,
+                        height: 22 / 16,
                       ),
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: const BorderSide(
-                            color: Colors.transparent,
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Colors.transparent,
-                          ),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Colors.transparent,
-                          ),
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                        hintText: 'Message',
-                        hintStyle: const TextStyle(
-                          color: AppColors.gray,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w400,
-                          height: 22 / 16,
-                        ),
-                        contentPadding: const EdgeInsets.only(
-                          top: 40,
-                          left: 20,
-                          right: 20,
-                          bottom: 20,
-                        ),
-                        isCollapsed: true,
+                      contentPadding: const EdgeInsets.only(
+                        top: 40,
+                        left: 20,
+                        right: 20,
+                        bottom: 20,
+                      ),
+                      isCollapsed: true,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: 50,
+                  height: 50,
+                  child: TextButton(
+                    onPressed: messageController.text.trim().isEmpty
+                        ? null
+                        : () {
+                            chatController.sendMessage(
+                              messageController.text.trim(),
+                              widget.chatId,
+                            );
+
+                            setState(() {
+                              messageController.text = '';
+                            });
+                          },
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                    ),
+                    child: SvgPicture.asset(
+                      messageController.text.trim().isEmpty
+                          ? 'assets/icons/send_outlined.svg'
+                          : 'assets/icons/send_solid.svg',
+                      colorFilter: ColorFilter.mode(
+                        messageController.text.trim().isEmpty
+                            ? AppColors.gray
+                            : AppColors.primary,
+                        BlendMode.srcIn,
                       ),
                     ),
                   ),
-                  SizedBox(
-                    width: 50,
-                    height: 50,
-                    child: TextButton(
-                      onPressed: messageController.text.trim().isEmpty
-                          ? null
-                          : () {
-                              chatController.sendMessage(
-                                messageController.text.trim(),
-                                widget.chatId,
-                              );
-
-                              setState(() {
-                                messageController.text = '';
-                              });
-                            },
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                      ),
-                      child: SvgPicture.asset(
-                        messageController.text.trim().isEmpty
-                            ? 'assets/icons/send_outlined.svg'
-                            : 'assets/icons/send_solid.svg',
-                        colorFilter: ColorFilter.mode(
-                          messageController.text.trim().isEmpty
-                              ? AppColors.gray
-                              : AppColors.primary,
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
+                )
+              ],
             ),
           ),
         ),
