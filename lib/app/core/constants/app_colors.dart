@@ -19,6 +19,8 @@ class AppColors {
   static const Color accentSuccess = Color(0xFF2CC069);
 
   static const Color primary = blue;
+  static const Color brandColorBackground = Color(0xffD2D5F9);
+  static const Color brandColorDark = Color(0xff001A83);
 
   static const Color backgroundColor = Color(0xffEDEFF8);
 }
