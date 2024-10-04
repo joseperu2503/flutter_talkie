@@ -57,11 +57,9 @@ class _ChatsScreenState extends State<ChatsScreen> {
           Obx(
             () => SliverPadding(
               padding: const EdgeInsets.only(
-                left: 16,
-                right: 16,
-                top: 24,
+                top: 16,
               ),
-              sliver: SliverList.separated(
+              sliver: SliverList.builder(
                 itemBuilder: (context, index) {
                   final chat = chatController.chats
                       .where((c) => c.lastMessage != null)
@@ -71,11 +69,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
                 itemCount: chatController.chats
                     .where((c) => c.lastMessage != null)
                     .length,
-                separatorBuilder: (BuildContext context, int index) {
-                  return const SizedBox(
-                    height: 16,
-                  );
-                },
               ),
             ),
           ),

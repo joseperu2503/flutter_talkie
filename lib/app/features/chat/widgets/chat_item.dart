@@ -14,130 +14,138 @@ class ChatItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context, rootNavigator: true).push(
-          MaterialPageRoute(
-            builder: (context) => ChatScreen(
-              chatId: chat.id,
-            ),
-          ),
-        );
-      },
-      behavior: HitTestBehavior.translucent,
-      child: SizedBox(
-        height: 56,
-        child: Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: chat.receiver.photo != null
-                  ? Image.network(
-                      chat.receiver.photo!,
-                      width: 48,
-                      height: 48,
-                    )
-                  : Container(
-                      width: 48,
-                      height: 48,
-                      color: AppColors.primary,
-                      child: Center(
-                        child: Text(
-                          '${chat.receiver.name[0]}${chat.receiver.surname[0]}',
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.white,
-                            height: 24 / 14,
-                            leadingDistribution: TextLeadingDistribution.even,
-                          ),
-                        ),
-                      ),
-                    ),
-            ),
-            const SizedBox(
-              width: 12,
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          chat.receiver.name,
-                          style: const TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.neutralActive,
-                            height: 24 / 14,
-                            leadingDistribution: TextLeadingDistribution.even,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Text(
-                        formatTimestamp(chat.lastMessage?.timestamp),
-                        style: const TextStyle(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.neutralDisabled,
-                          height: 16 / 10,
-                          leadingDistribution: TextLeadingDistribution.even,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 2,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          chat.lastMessage?.content ?? '',
-                          style: const TextStyle(
-                            fontSize: 12,
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.neutralDisabled,
-                            height: 20 / 12,
-                            leadingDistribution: TextLeadingDistribution.even,
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 4,
-                      ),
-                      Container(
-                        width: 20,
-                        height: 20,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: AppColors.brandColorBackground,
-                        ),
-                        alignment: Alignment.center,
-                        child: const Text(
-                          '1',
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.brandColorDark,
-                            height: 10 / 10,
-                            leadingDistribution: TextLeadingDistribution.even,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
+    return SizedBox(
+      height: 72,
+      child: TextButton(
+        onPressed: () {
+          Navigator.of(context, rootNavigator: true).push(
+            MaterialPageRoute(
+              builder: (context) => ChatScreen(
+                chatId: chat.id,
               ),
             ),
-          ],
+          );
+        },
+        style: TextButton.styleFrom(
+          shape: const ContinuousRectangleBorder(),
+          padding: const EdgeInsets.symmetric(
+            horizontal: 24,
+          ),
+        ),
+        child: SizedBox(
+          height: 56,
+          child: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: chat.receiver.photo != null
+                    ? Image.network(
+                        chat.receiver.photo!,
+                        width: 48,
+                        height: 48,
+                      )
+                    : Container(
+                        width: 48,
+                        height: 48,
+                        color: AppColors.primary,
+                        child: Center(
+                          child: Text(
+                            '${chat.receiver.name[0]}${chat.receiver.surname[0]}',
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              color: AppColors.white,
+                              height: 24 / 14,
+                              leadingDistribution: TextLeadingDistribution.even,
+                            ),
+                          ),
+                        ),
+                      ),
+              ),
+              const SizedBox(
+                width: 12,
+              ),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            chat.receiver.name,
+                            style: const TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.neutralActive,
+                              height: 24 / 14,
+                              leadingDistribution: TextLeadingDistribution.even,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        Text(
+                          formatTimestamp(chat.lastMessage?.timestamp),
+                          style: const TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.neutralDisabled,
+                            height: 16 / 10,
+                            leadingDistribution: TextLeadingDistribution.even,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 2,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Text(
+                            chat.lastMessage?.content ?? '',
+                            style: const TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.neutralDisabled,
+                              height: 20 / 12,
+                              leadingDistribution: TextLeadingDistribution.even,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        Container(
+                          width: 20,
+                          height: 20,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColors.brandColorBackground,
+                          ),
+                          alignment: Alignment.center,
+                          child: const Text(
+                            '1',
+                            style: TextStyle(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.brandColorDark,
+                              height: 10 / 10,
+                              leadingDistribution: TextLeadingDistribution.even,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

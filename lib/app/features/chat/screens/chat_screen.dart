@@ -135,10 +135,10 @@ class _ChatScreenState extends State<ChatScreen> {
               borderRadius: BorderRadius.circular(10),
               boxShadow: const [
                 BoxShadow(
-                  color: Color(0x101B4F26), // Color de la sombra
-                  offset: Offset(0, 15), // Desplazamiento de la sombra
-                  blurRadius: 30, // Radio de difuminado
-                  spreadRadius: 0, // Radio de expansión
+                  color: Color(0x101B4F26),
+                  offset: Offset(0, 15),
+                  blurRadius: 30,
+                  spreadRadius: 0,
                 ),
               ],
             ),

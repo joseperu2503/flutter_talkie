@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_talkie/app/core/core.dart';
 import 'package:flutter_talkie/app/features/chat/models/chat.dart';
+import 'package:intl/intl.dart';
 
 class MessageItem extends StatelessWidget {
   const MessageItem({
@@ -24,7 +25,7 @@ class MessageItem extends StatelessWidget {
             maxWidth: MediaQuery.of(context).size.width * 0.7,
           ),
           decoration: BoxDecoration(
-            color: message.isSender ? AppColors.primary : AppColors.gray2,
+            color: message.isSender ? AppColors.primary : AppColors.white,
             borderRadius: BorderRadius.only(
               topLeft: message.isSender
                   ? const Radius.circular(16)
@@ -37,18 +38,42 @@ class MessageItem extends StatelessWidget {
             ),
           ),
           padding: const EdgeInsets.symmetric(
-            horizontal: 20,
-            vertical: 15,
+            horizontal: 10,
+            vertical: 10,
           ),
-          child: Text(
-            message.content,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-              color: message.isSender ? AppColors.white : AppColors.white,
-              height: 22 / 16,
-              leadingDistribution: TextLeadingDistribution.even,
-            ),
+          child: Column(
+            crossAxisAlignment: message.isSender
+                ? CrossAxisAlignment.end
+                : CrossAxisAlignment.start,
+            children: [
+              Text(
+                message.content,
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  color: message.isSender
+                      ? AppColors.white
+                      : AppColors.neutralActive,
+                  height: 22 / 14,
+                  leadingDistribution: TextLeadingDistribution.even,
+                ),
+              ),
+              const SizedBox(
+                height: 4,
+              ),
+              Text(
+                DateFormat('HH:mm').format(message.timestamp.toLocal()),
+                style: TextStyle(
+                  fontSize: 10,
+                  fontWeight: FontWeight.w400,
+                  color: message.isSender
+                      ? AppColors.white
+                      : AppColors.neutralDisabled,
+                  height: 22 / 10,
+                  leadingDistribution: TextLeadingDistribution.even,
+                ),
+              ),
+            ],
           ),
         ),
       ],
