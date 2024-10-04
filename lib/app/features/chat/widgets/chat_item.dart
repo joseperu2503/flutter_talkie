@@ -128,9 +128,9 @@ class ChatItem extends StatelessWidget {
                             color: AppColors.brandColorBackground,
                           ),
                           alignment: Alignment.center,
-                          child: const Text(
-                            '1',
-                            style: TextStyle(
+                          child: Text(
+                            chat.unreadMessagesCount.toString(),
+                            style: const TextStyle(
                               fontSize: 10,
                               fontWeight: FontWeight.w600,
                               color: AppColors.brandColorDark,

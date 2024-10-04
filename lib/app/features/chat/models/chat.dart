@@ -3,12 +3,14 @@ class Chat {
   Message? lastMessage;
   List<Message> messages;
   Receiver receiver;
+  int unreadMessagesCount;
 
   Chat({
     required this.id,
     required this.lastMessage,
     required this.messages,
     required this.receiver,
+    required this.unreadMessagesCount,
   });
 
   factory Chat.fromJson(Map<String, dynamic> json) => Chat(
@@ -19,6 +21,7 @@ class Chat {
         messages: List<Message>.from(
             json["messages"].map((x) => Message.fromJson(x))),
         receiver: Receiver.fromJson(json["receiver"]),
+        unreadMessagesCount: json["unreadMessagesCount"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -26,6 +29,7 @@ class Chat {
         "lastMessage": lastMessage?.toJson(),
         "messages": List<dynamic>.from(messages.map((x) => x.toJson())),
         "receiver": receiver.toJson(),
+        "unreadMessagesCount": unreadMessagesCount,
       };
 }
 
