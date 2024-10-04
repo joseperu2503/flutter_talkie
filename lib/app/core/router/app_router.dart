@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_talkie/app/features/auth/services/auth_service.dart';
 import 'package:flutter_talkie/app/features/contacts/screens/contacts_screen.dart';
+import 'package:flutter_talkie/app/features/settings/screens/settings_screen.dart';
 import 'package:flutter_talkie/app/shared/layouts/internal_layout.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_talkie/app/features/auth/screens/login_screen.dart';
@@ -75,8 +76,8 @@ GoRouter appRouter = GoRouter(
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: '/chats2',
-              builder: (context, state) => const ChatsScreen(),
+              path: '/settings',
+              builder: (context, state) => const SettingsScreen(),
               redirect: protectedRoute,
             ),
           ],
