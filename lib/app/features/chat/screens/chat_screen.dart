@@ -26,6 +26,8 @@ class _ChatScreenState extends State<ChatScreen> {
     messageController.addListener(() {
       setState(() {});
     });
+    final chatController = Get.find<ChatController>();
+    chatController.markChatAsRead(widget.chatId);
   }
 
   @override
@@ -54,6 +56,13 @@ class _ChatScreenState extends State<ChatScreen> {
 
             if (chat == null) {
               return Container();
+            }
+
+            final unreadMessagesCount = chat.unreadMessagesCount;
+
+            // Detectar cuando unreadMessagesCount aumenta
+            if (unreadMessagesCount > 0) {
+              chatController.markChatAsRead(widget.chatId);
             }
 
             return SafeArea(

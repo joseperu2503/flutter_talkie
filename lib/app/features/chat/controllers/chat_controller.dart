@@ -1,5 +1,4 @@
 import 'package:flutter_talkie/app/core/core.dart';
-import 'package:flutter_talkie/app/features/auth/controllers/auth_controller.dart';
 import 'package:flutter_talkie/app/features/auth/services/auth_service.dart';
 import 'package:flutter_talkie/app/features/chat/models/chat.dart';
 import 'package:flutter_talkie/app/features/chat/services/chat_service.dart';
@@ -39,6 +38,9 @@ class ChatController extends GetxController {
           messageReceived.chatId,
         );
       },
+      onChatUpdated: (chat) {
+        updateChat(chat);
+      },
     );
 
     await socket?.connect();
@@ -54,18 +56,34 @@ class ChatController extends GetxController {
     messages.insert(0, message);
     chat.messages = messages;
 
-    chat.lastMessage = message;
-    chats.remove(chat);
-    chats.insert(0, chat);
-
     chats.refresh();
   }
 
-  sendMessage(String content, String chatId) async {
-    final authController = Get.find<AuthController>();
-    final user = authController.user.value;
-    if (user == null) return;
+  updateChat(Chat chat) {
+    // Buscar si el chat ya existe en la lista
+    final Chat? existingChat =
+        chats.firstWhereOrNull((element) => element.id == chat.id);
 
+    if (existingChat != null) {
+      // Si el chat existe, actualizar su contenido
+      final index = chats.indexOf(existingChat);
+      chats[index] = chat;
+    } else {
+      // Si el chat no existe, agregarlo al inicio de la lista
+      chats.insert(0, chat);
+    }
+
+    // Refrescar la lista de chats para notificar cambios
+    chats.refresh();
+  }
+
+  markChatAsRead(String chatId) {
+    socket?.markChatAsRead(
+      chatId: chatId,
+    );
+  }
+
+  sendMessage(String content, String chatId) async {
     socket?.sendMessage(
       content: content,
       chatId: chatId,

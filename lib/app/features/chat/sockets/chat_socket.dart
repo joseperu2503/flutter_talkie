@@ -1,13 +1,16 @@
 import 'package:flutter_talkie/app/core/core.dart';
+import 'package:flutter_talkie/app/features/chat/models/chat.dart';
 import 'package:flutter_talkie/app/features/chat/models/message_received.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class ChatSocket {
   late io.Socket socket;
   final void Function(MessagesReceived messageReceived) onMessageReceived;
+  final void Function(Chat chat) onChatUpdated;
 
   ChatSocket({
     required this.onMessageReceived,
+    required this.onChatUpdated,
   });
 
   Future<void> connect() async {
@@ -38,6 +41,14 @@ class ChatSocket {
       onMessageReceived(messageReceived);
     });
 
+    //** Escuchar Socket */
+    socket.on('chatUpdated', (dynamic data) {
+      Chat chatUpdated = Chat.fromJson(data);
+      print('chatUpdated ${chatUpdated.id}');
+
+      onChatUpdated(chatUpdated);
+    });
+
     //** Errores de conexión */
     socket.onConnectError((data) {
       // print('Connect Error: $data');
@@ -60,6 +71,17 @@ class ChatSocket {
     };
 
     socket.emit('sendMessage', data);
+  }
+
+  markChatAsRead({
+    required String chatId,
+  }) {
+    //** Emitir */
+    Map<String, dynamic> data = {
+      "chatId": chatId,
+    };
+
+    socket.emit('markChatAsRead', data);
   }
 
   void disconnect() {

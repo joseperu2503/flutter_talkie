@@ -120,25 +120,27 @@ class ChatItem extends StatelessWidget {
                         const SizedBox(
                           width: 4,
                         ),
-                        Container(
-                          width: 20,
-                          height: 20,
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: AppColors.brandColorBackground,
-                          ),
-                          alignment: Alignment.center,
-                          child: Text(
-                            chat.unreadMessagesCount.toString(),
-                            style: const TextStyle(
-                              fontSize: 10,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.brandColorDark,
-                              height: 10 / 10,
-                              leadingDistribution: TextLeadingDistribution.even,
+                        if (chat.unreadMessagesCount > 0)
+                          Container(
+                            width: 20,
+                            height: 20,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColors.brandColorBackground,
+                            ),
+                            alignment: Alignment.center,
+                            child: Text(
+                              chat.unreadMessagesCount.toString(),
+                              style: const TextStyle(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.brandColorDark,
+                                height: 10 / 10,
+                                leadingDistribution:
+                                    TextLeadingDistribution.even,
+                              ),
                             ),
                           ),
-                        ),
                       ],
                     ),
                   ],
