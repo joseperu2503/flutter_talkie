@@ -4,7 +4,7 @@ import 'package:flutter_talkie/app/core/constants/app_colors.dart';
 class AppTheme {
   static ThemeData getTheme() => ThemeData(
         fontFamily: 'Mulish',
-        scaffoldBackgroundColor: AppColors.backgroundColor,
+        scaffoldBackgroundColor: AppColors.white,
         useMaterial3: true,
         colorScheme: ColorScheme.fromSwatch(
           accentColor: Colors.black12,

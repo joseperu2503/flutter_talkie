@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_talkie/app/features/auth/screens/home_screen.dart';
 import 'package:flutter_talkie/app/features/auth/services/auth_service.dart';
 import 'package:flutter_talkie/app/features/contacts/screens/contacts_screen.dart';
 import 'package:flutter_talkie/app/features/settings/screens/settings_screen.dart';
@@ -33,8 +34,14 @@ Future<String?> protectedRoute(
 
 GoRouter appRouter = GoRouter(
   navigatorKey: rootNavigatorKey,
-  initialLocation: '/login',
+  initialLocation: '/home',
   routes: [
+    GoRoute(
+      path: '/home',
+      builder: (context, state) => const HomeScreen(),
+      parentNavigatorKey: rootNavigatorKey,
+      redirect: unprotectedRoute,
+    ),
     GoRoute(
       path: '/login',
       builder: (context, state) => const LoginScreen(),
