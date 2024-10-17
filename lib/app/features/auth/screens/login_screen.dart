@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_talkie/app/core/core.dart';
 import 'package:flutter_talkie/app/features/auth/controllers/login_controller.dart';
+import 'package:flutter_talkie/app/shared/widgets/back_button.dart';
 import 'package:get/get.dart';
 import 'package:flutter_talkie/app/shared/widgets/custom_button.dart';
 import 'package:flutter_talkie/app/shared/widgets/custom_text_field.dart';
@@ -21,7 +23,28 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final screen = MediaQuery.of(context);
+
     return Scaffold(
+      appBar: AppBar(
+        scrolledUnderElevation: 0,
+        automaticallyImplyLeading: false,
+        toolbarHeight: 64,
+        flexibleSpace: SafeArea(
+          child: Container(
+            padding: const EdgeInsets.only(
+              left: 8,
+              right: 16,
+            ),
+            height: 64,
+            child: const Row(
+              children: [
+                CustomBackButton(),
+              ],
+            ),
+          ),
+        ),
+      ),
       body: CustomScrollView(
         slivers: [
           SliverFillRemaining(
@@ -36,15 +59,18 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  const Spacer(),
-                  Center(
-                    child: Image.asset(
-                      'assets/images/logo.png',
-                      width: 250,
+                  const Text(
+                    'Welcome back! Glad\nto see you, Again!',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                      height: 30 / 24,
+                      color: AppColors.neutralActive,
+                      leadingDistribution: TextLeadingDistribution.even,
                     ),
                   ),
                   const SizedBox(
-                    height: 24,
+                    height: 40,
                   ),
                   Obx(
                     () => CustomTextField(
@@ -87,6 +113,38 @@ class _LoginScreenState extends State<LoginScreen> {
                     },
                   ),
                   const Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Don’t have an account?',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.neutralActive,
+                          height: 24 / 14,
+                          leadingDistribution: TextLeadingDistribution.even,
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        behavior: HitTestBehavior.translucent,
+                        child: const Text(
+                          ' Register Now',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.brandColorDefault,
+                            height: 24 / 14,
+                            leadingDistribution: TextLeadingDistribution.even,
+                          ),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 80 + screen.padding.bottom,
+                      ),
+                    ],
+                  ),
                 ],
               ),
             ),

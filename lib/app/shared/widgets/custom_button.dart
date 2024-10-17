@@ -30,7 +30,7 @@ class _CustomButtonState extends State<CustomButton> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
-          backgroundColor: AppColors.primary,
+          backgroundColor: AppColors.brandColorDefault,
         ),
         onPressed: widget.onPressed,
         child: Row(
