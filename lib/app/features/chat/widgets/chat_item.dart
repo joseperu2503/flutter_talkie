@@ -36,31 +36,59 @@ class ChatItem extends StatelessWidget {
           height: 56,
           child: Row(
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: chat.receiver.photo != null
-                    ? Image.network(
-                        chat.receiver.photo!,
-                        width: 48,
-                        height: 48,
-                      )
-                    : Container(
-                        width: 48,
-                        height: 48,
-                        color: AppColors.primary,
-                        child: Center(
-                          child: Text(
-                            '${chat.receiver.name[0]}${chat.receiver.surname[0]}',
-                            style: const TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w700,
-                              color: AppColors.white,
-                              height: 24 / 14,
-                              leadingDistribution: TextLeadingDistribution.even,
+              Stack(
+                clipBehavior: Clip.none,
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: chat.receiver.photo != null
+                        ? Image.network(
+                            chat.receiver.photo!,
+                            width: 48,
+                            height: 48,
+                          )
+                        : Container(
+                            width: 48,
+                            height: 48,
+                            color: AppColors.primary,
+                            child: Center(
+                              child: Text(
+                                '${chat.receiver.name[0]}${chat.receiver.surname[0]}',
+                                style: const TextStyle(
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w700,
+                                  color: AppColors.white,
+                                  height: 24 / 14,
+                                  leadingDistribution:
+                                      TextLeadingDistribution.even,
+                                ),
+                              ),
                             ),
                           ),
+                  ),
+                  if (chat.receiver.isConnected)
+                    Positioned(
+                      top: -6,
+                      right: -6,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: AppColors.white,
+                        ),
+                        width: 16,
+                        height: 16,
+                        alignment: Alignment.center,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: AppColors.accentSuccess,
+                          ),
+                          width: 12,
+                          height: 12,
                         ),
                       ),
+                    )
+                ],
               ),
               const SizedBox(
                 width: 12,

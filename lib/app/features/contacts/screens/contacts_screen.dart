@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_talkie/app/core/constants/app_colors.dart';
-import 'package:flutter_talkie/app/features/contacts/controllers/contacts_controller.dart';
+import 'package:flutter_talkie/app/features/chat/controllers/chat_controller.dart';
 import 'package:flutter_talkie/app/features/contacts/widgets/add_contact_dialog.dart';
 import 'package:flutter_talkie/app/features/contacts/widgets/contact_item.dart';
 import 'package:get/get.dart';
@@ -14,11 +14,10 @@ class ContactsScreen extends StatefulWidget {
 }
 
 class _ContactsScreenState extends State<ContactsScreen> {
-  final ContactsController contactsController = Get.put(ContactsController());
+  final ChatController chatController = Get.find<ChatController>();
 
   @override
   void initState() {
-    contactsController.getContacts();
     super.initState();
   }
 
@@ -142,10 +141,10 @@ class _ContactsScreenState extends State<ContactsScreen> {
           Obx(
             () => SliverList.builder(
               itemBuilder: (context, index) {
-                final contact = contactsController.contacts[index];
-                return ContactItem(contact: contact);
+                final chat = chatController.chats[index];
+                return ContactItem(chat: chat);
               },
-              itemCount: contactsController.contacts.length,
+              itemCount: chatController.chats.length,
             ),
           )
         ],

@@ -15,7 +15,7 @@ class App extends StatefulWidget {
   State<App> createState() => _AppState();
 }
 
-class _AppState extends State<App> {
+class _AppState extends State<App> with WidgetsBindingObserver {
   @override
   void initState() {
     final authController = Get.put<AuthController>(AuthController());
@@ -25,6 +25,21 @@ class _AppState extends State<App> {
     authController.initAutoLogout();
     chatController.connectSocket();
     super.initState();
+
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    final chatController = Get.find<ChatController>();
+    if (state == AppLifecycleState.resumed) {
+      chatController.socket?.updateUserStatus(isConnected: true);
+      print('App en primer plano');
+    } else if (state == AppLifecycleState.paused) {
+      chatController.socket?.updateUserStatus(isConnected: false);
+      print('App en segundo plano');
+    }
   }
 
   @override

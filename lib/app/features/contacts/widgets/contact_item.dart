@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_talkie/app/core/constants/app_colors.dart';
+import 'package:flutter_talkie/app/features/chat/models/chat.dart';
 import 'package:flutter_talkie/app/features/chat/screens/chat_screen.dart';
-import 'package:flutter_talkie/app/features/contacts/models/contact.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ContactItem extends StatelessWidget {
-  const ContactItem({super.key, required this.contact});
+  const ContactItem({
+    super.key,
+    required this.chat,
+  });
 
-  final Contact contact;
+  final Chat chat;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,7 @@ class ContactItem extends StatelessWidget {
           Navigator.of(context, rootNavigator: true).push(
             MaterialPageRoute(
               builder: (context) => ChatScreen(
-                chatId: contact.chatId,
+                chatId: chat.id,
               ),
             ),
           );
@@ -45,9 +48,9 @@ class ContactItem extends StatelessWidget {
                 children: [
                   ClipRRect(
                     borderRadius: BorderRadius.circular(16),
-                    child: contact.photo != null
+                    child: chat.receiver.photo != null
                         ? Image.network(
-                            contact.photo!,
+                            chat.receiver.photo!,
                             width: 48,
                             height: 48,
                           )
@@ -57,7 +60,7 @@ class ContactItem extends StatelessWidget {
                             color: AppColors.primary,
                             child: Center(
                               child: Text(
-                                '${contact.name[0]}${contact.surname[0]}',
+                                '${chat.receiver.name[0]}${chat.receiver.surname[0]}',
                                 style: const TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w700,
@@ -70,7 +73,7 @@ class ContactItem extends StatelessWidget {
                             ),
                           ),
                   ),
-                  if (contact.isOnline)
+                  if (chat.receiver.isConnected)
                     Positioned(
                       top: -6,
                       right: -6,
@@ -102,7 +105,7 @@ class ContactItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    contact.name,
+                    chat.receiver.name,
                     style: const TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
@@ -112,7 +115,7 @@ class ContactItem extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Last seen ${timeago.format(contact.lastConnection)}',
+                    'Last seen ${timeago.format(chat.receiver.lastConnection)}',
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,

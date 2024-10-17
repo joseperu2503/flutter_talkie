@@ -2,7 +2,7 @@ class Chat {
   String id;
   Message? lastMessage;
   List<Message> messages;
-  Receiver receiver;
+  Contact receiver;
   int unreadMessagesCount;
 
   Chat({
@@ -20,7 +20,7 @@ class Chat {
             : Message.fromJson(json["lastMessage"]),
         messages: List<Message>.from(
             json["messages"].map((x) => Message.fromJson(x))),
-        receiver: Receiver.fromJson(json["receiver"]),
+        receiver: Contact.fromJson(json["receiver"]),
         unreadMessagesCount: json["unreadMessagesCount"],
       );
 
@@ -37,7 +37,7 @@ class Message {
   String id;
   String content;
   DateTime timestamp;
-  Receiver sender;
+  Sender sender;
   bool isSender;
 
   Message({
@@ -52,7 +52,7 @@ class Message {
         id: json["id"],
         content: json["content"],
         timestamp: DateTime.parse(json["timestamp"]),
-        sender: Receiver.fromJson(json["sender"]),
+        sender: Sender.fromJson(json["sender"]),
         isSender: json["isSender"],
       );
 
@@ -65,14 +65,14 @@ class Message {
       };
 }
 
-class Receiver {
+class Sender {
   int id;
   String name;
   String surname;
   String email;
   String? photo;
 
-  Receiver({
+  Sender({
     required this.id,
     required this.name,
     required this.surname,
@@ -80,7 +80,7 @@ class Receiver {
     required this.photo,
   });
 
-  factory Receiver.fromJson(Map<String, dynamic> json) => Receiver(
+  factory Sender.fromJson(Map<String, dynamic> json) => Sender(
         id: json["id"],
         name: json["name"],
         surname: json["surname"],
@@ -94,5 +94,53 @@ class Receiver {
         "surname": surname,
         "email": email,
         "photo": photo,
+      };
+}
+
+class Contact {
+  int id;
+  String name;
+  String surname;
+  String? photo;
+  String phone;
+  String email;
+  bool isConnected;
+  DateTime lastConnection;
+  String chatId;
+
+  Contact({
+    required this.id,
+    required this.name,
+    required this.surname,
+    required this.photo,
+    required this.phone,
+    required this.email,
+    required this.isConnected,
+    required this.lastConnection,
+    required this.chatId,
+  });
+
+  factory Contact.fromJson(Map<String, dynamic> json) => Contact(
+        id: json["id"],
+        name: json["name"],
+        surname: json["surname"],
+        photo: json["photo"],
+        phone: json["phone"],
+        email: json["email"],
+        isConnected: json["isConnected"],
+        lastConnection: DateTime.parse(json["lastConnection"]),
+        chatId: json["chatId"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "surname": surname,
+        "photo": photo,
+        "phone": phone,
+        "email": email,
+        "isConnected": isConnected,
+        "lastConnection": lastConnection.toIso8601String(),
+        "chatId": chatId,
       };
 }

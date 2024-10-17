@@ -41,6 +41,9 @@ class ChatController extends GetxController {
       onChatUpdated: (chat) {
         updateChat(chat);
       },
+      onContactUpdated: (contact) {
+        updatedContat(contact);
+      },
     );
 
     await socket?.connect();
@@ -73,6 +76,24 @@ class ChatController extends GetxController {
     chats.insert(0, chat);
 
     // Refrescar la lista de chats para notificar cambios
+    chats.refresh();
+  }
+
+  void updatedContat(Contact contact) {
+    Chat? chatToUpdate = chats.firstWhereOrNull(
+      (chat) => chat.receiver.id == contact.id,
+    );
+
+    if (chatToUpdate == null) return;
+    chatToUpdate.receiver = contact;
+
+    chats.value = chats.map((chat) {
+      if (chat.id == contact.chatId) {
+        chat.receiver = contact;
+      }
+      return chat;
+    }).toList();
+
     chats.refresh();
   }
 

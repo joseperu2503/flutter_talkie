@@ -7,10 +7,12 @@ class ChatSocket {
   late io.Socket socket;
   final void Function(MessagesReceived messageReceived) onMessageReceived;
   final void Function(Chat chat) onChatUpdated;
+  final void Function(Contact contact) onContactUpdated;
 
   ChatSocket({
     required this.onMessageReceived,
     required this.onChatUpdated,
+    required this.onContactUpdated,
   });
 
   Future<void> connect() async {
@@ -49,6 +51,14 @@ class ChatSocket {
       onChatUpdated(chatUpdated);
     });
 
+    //** Escuchar Socket */
+    socket.on('contactUpdated', (dynamic data) {
+      Contact contact = Contact.fromJson(data);
+
+      print('contactUpdated $contact');
+      onContactUpdated(contact);
+    });
+
     //** Errores de conexión */
     socket.onConnectError((data) {
       // print('Connect Error: $data');
@@ -73,10 +83,21 @@ class ChatSocket {
     socket.emit('sendMessage', data);
   }
 
+  //** Emitir */
+  void updateUserStatus({
+    required bool isConnected,
+  }) {
+    print(isConnected);
+    // Emitir evento indicando que el usuario está conectado
+    socket.emit('updateUserStatus', {
+      'isConnected': isConnected,
+    });
+  }
+
+  //** Emitir */
   markChatAsRead({
     required String chatId,
   }) {
-    //** Emitir */
     Map<String, dynamic> data = {
       "chatId": chatId,
     };
