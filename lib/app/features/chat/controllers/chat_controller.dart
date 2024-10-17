@@ -59,19 +59,18 @@ class ChatController extends GetxController {
     chats.refresh();
   }
 
-  updateChat(Chat chat) {
+  void updateChat(Chat chat) {
     // Buscar si el chat ya existe en la lista
     final Chat? existingChat =
         chats.firstWhereOrNull((element) => element.id == chat.id);
 
     if (existingChat != null) {
-      // Si el chat existe, actualizar su contenido
-      final index = chats.indexOf(existingChat);
-      chats[index] = chat;
-    } else {
-      // Si el chat no existe, agregarlo al inicio de la lista
-      chats.insert(0, chat);
+      // Si el chat existe, eliminarlo de la lista
+      chats.remove(existingChat);
     }
+
+    // Insertar el chat al inicio de la lista
+    chats.insert(0, chat);
 
     // Refrescar la lista de chats para notificar cambios
     chats.refresh();
