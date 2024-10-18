@@ -102,7 +102,7 @@ class ChatItem extends StatelessWidget {
                       children: [
                         Expanded(
                           child: Text(
-                            chat.receiver.name,
+                            '${chat.receiver.name} ${chat.receiver.surname}',
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
