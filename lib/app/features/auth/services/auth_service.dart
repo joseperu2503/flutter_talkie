@@ -22,6 +22,32 @@ class AuthService {
     }
   }
 
+  static Future<LoginResponse> register({
+    required String name,
+    required String surname,
+    required String email,
+    required String phone,
+    required String username,
+    required String password,
+  }) async {
+    try {
+      Map<String, dynamic> form = {
+        "name": name,
+        "surname": surname,
+        "email": email,
+        "phone": phone,
+        "username": username,
+        "password": password,
+      };
+
+      final response = await Api.post('/auth/register', data: form);
+
+      return LoginResponse.fromJson(response.data);
+    } catch (e) {
+      throw ServiceException('An error occurred while trying to register.', e);
+    }
+  }
+
   static Future<AuthUser> getUser() async {
     try {
       final response = await Api.get('/auth/me');

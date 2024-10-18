@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_talkie/app/features/auth/screens/home_screen.dart';
+import 'package:flutter_talkie/app/features/auth/screens/register_screen.dart';
 import 'package:flutter_talkie/app/features/auth/services/auth_service.dart';
 import 'package:flutter_talkie/app/features/contacts/screens/contacts_screen.dart';
 import 'package:flutter_talkie/app/features/settings/screens/settings_screen.dart';
@@ -45,6 +46,12 @@ GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/login',
       builder: (context, state) => const LoginScreen(),
+      parentNavigatorKey: rootNavigatorKey,
+      redirect: unprotectedRoute,
+    ),
+    GoRoute(
+      path: '/register',
+      builder: (context, state) => const RegisterScreen(),
       parentNavigatorKey: rootNavigatorKey,
       redirect: unprotectedRoute,
     ),

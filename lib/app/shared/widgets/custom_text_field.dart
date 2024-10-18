@@ -17,7 +17,7 @@ class CustomTextField extends StatefulWidget {
     this.onFieldSubmitted,
     this.autofocus = false,
     this.readOnly = false,
-    this.label,
+    this.label = '',
     this.isPassword = false,
   });
 
@@ -31,7 +31,7 @@ class CustomTextField extends StatefulWidget {
   final void Function(String value)? onFieldSubmitted;
   final bool autofocus;
   final bool readOnly;
-  final String? label;
+  final String label;
   final bool isPassword;
 
   @override
@@ -101,18 +101,18 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 duration: const Duration(milliseconds: 200),
                 curve: Curves.easeInOut,
                 top: elevateLabel ? 5 : 29 - 12,
-                left: 20,
+                left: 16,
                 child: AnimatedDefaultTextStyle(
                   duration: const Duration(milliseconds: 200),
                   curve: Curves.bounceInOut,
                   style: TextStyle(
-                    fontSize: elevateLabel ? 12 : 18,
+                    fontSize: elevateLabel ? 12 : 16,
                     fontWeight: FontWeight.w400,
                     color: elevateLabel ? AppColors.primary : AppColors.gray,
-                    height: elevateLabel ? 20 / 12 : 24 / 18,
+                    height: elevateLabel ? 20 / 12 : 24 / 16,
                     leadingDistribution: TextLeadingDistribution.even,
                   ),
-                  child: Text(widget.label ?? widget.hintText ?? ''),
+                  child: Text(widget.label),
                 ),
               ),
               TextFormField(
@@ -120,7 +120,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   color: AppColors.blue2,
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
-                  height: 22 / 14,
+                  height: 16 / 14,
                 ),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
@@ -140,9 +140,16 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   ),
                   contentPadding: const EdgeInsets.only(
                     top: 40,
-                    left: 20,
-                    right: 20,
-                    bottom: 20,
+                    left: 16,
+                    right: 16,
+                    bottom: 16,
+                  ),
+                  hintText: elevateLabel ? widget.hintText : '',
+                  hintStyle: const TextStyle(
+                    color: AppColors.gray,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    height: 10 / 14,
                   ),
                   isCollapsed: true,
                   suffixIcon: (widget.isPassword)

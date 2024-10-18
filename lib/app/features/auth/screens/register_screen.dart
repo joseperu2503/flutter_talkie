@@ -3,25 +3,25 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:flutter_talkie/app/core/core.dart';
-import 'package:flutter_talkie/app/features/auth/controllers/login_controller.dart';
+import 'package:flutter_talkie/app/features/auth/controllers/register_controller.dart';
 import 'package:flutter_talkie/app/shared/widgets/back_button.dart';
 import 'package:flutter_talkie/app/shared/widgets/custom_button.dart';
 import 'package:flutter_talkie/app/shared/widgets/custom_text_field.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   @override
   void initState() {
     super.initState();
   }
 
-  final loginController = Get.put(LoginController());
+  final registerController = Get.put(RegisterController());
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
             hasScrollBody: false,
             child: Container(
               padding: const EdgeInsets.only(
-                top: 20,
+                top: 4,
                 right: 24,
                 left: 24,
                 bottom: 8,
@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const Text(
-                    'Welcome back! Glad\nto see you, Again!',
+                    'Hello! Register to get\nstarted',
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.w700,
@@ -76,11 +76,56 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Obx(
                     () => CustomTextField(
+                      label: 'Username',
+                      hintText: 'Your username',
+                      value: registerController.username.value,
+                      onChanged: (value) {
+                        registerController.changeUsername(value);
+                      },
+                      textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.name,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 18,
+                  ),
+                  Obx(
+                    () => CustomTextField(
+                      label: 'Name',
+                      hintText: 'Your name',
+                      value: registerController.name.value,
+                      onChanged: (value) {
+                        registerController.changeName(value);
+                      },
+                      textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.name,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 18,
+                  ),
+                  Obx(
+                    () => CustomTextField(
+                      label: 'Surname',
+                      hintText: 'Your surname',
+                      value: registerController.surname.value,
+                      onChanged: (value) {
+                        registerController.changeSurname(value);
+                      },
+                      textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.name,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 18,
+                  ),
+                  Obx(
+                    () => CustomTextField(
                       label: 'Email',
                       hintText: 'Your email',
-                      value: loginController.email.value,
+                      value: registerController.email.value,
                       onChanged: (value) {
-                        loginController.changeEmail(value);
+                        registerController.changeEmail(value);
                       },
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.emailAddress,
@@ -91,35 +136,52 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Obx(
                     () => CustomTextField(
-                      label: 'Password',
-                      hintText: 'Your password',
-                      value: loginController.password.value,
+                      label: 'Phone',
+                      hintText: 'Your phone',
+                      value: registerController.phone.value,
                       onChanged: (value) {
-                        loginController.changePassword(value);
+                        registerController.changePhone(value);
+                      },
+                      textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.phone,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 18,
+                  ),
+                  Obx(
+                    () => CustomTextField(
+                      label: 'Password',
+                      hintText: 'Password',
+                      value: registerController.password.value,
+                      onChanged: (value) {
+                        registerController.changePassword(value);
                       },
                       textInputAction: TextInputAction.done,
                       keyboardType: TextInputType.visiblePassword,
                       isPassword: true,
                       onFieldSubmitted: (value) {
-                        loginController.login();
+                        registerController.register();
                       },
                     ),
                   ),
                   const SizedBox(
-                    height: 40,
+                    height: 24,
                   ),
                   CustomButton(
-                    text: 'Log In',
+                    text: 'Register',
                     onPressed: () {
-                      loginController.login();
+                      registerController.register();
                     },
                   ),
-                  const Spacer(),
+                  const SizedBox(
+                    height: 24,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        'Don’t have an account?',
+                        'Already have an account?',
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w400,
@@ -130,11 +192,11 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          context.push('/register');
+                          context.pop();
                         },
                         behavior: HitTestBehavior.translucent,
                         child: const Text(
-                          ' Register Now',
+                          ' Login Now',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
@@ -147,7 +209,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     ],
                   ),
                   SizedBox(
-                    height: 32 + screen.padding.bottom,
+                    height: 80 + screen.padding.bottom,
                   ),
                 ],
               ),
