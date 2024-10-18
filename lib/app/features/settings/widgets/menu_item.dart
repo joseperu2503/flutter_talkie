@@ -8,11 +8,13 @@ class MenuItem extends StatelessWidget {
     required this.onPressed,
     required this.icon,
     required this.label,
+    this.withArrow = true,
   });
 
   final void Function() onPressed;
   final String icon;
   final String label;
+  final bool withArrow;
 
   @override
   Widget build(BuildContext context) {
@@ -51,14 +53,15 @@ class MenuItem extends StatelessWidget {
               ),
             ),
             const Spacer(),
-            SvgPicture.asset(
-              'assets/icons/arrow_forward.svg',
-              width: 20,
-              colorFilter: const ColorFilter.mode(
-                AppColors.neutralActive,
-                BlendMode.srcIn,
+            if (withArrow)
+              SvgPicture.asset(
+                'assets/icons/arrow_forward.svg',
+                width: 20,
+                colorFilter: const ColorFilter.mode(
+                  AppColors.neutralActive,
+                  BlendMode.srcIn,
+                ),
               ),
-            ),
           ],
         ),
       ),

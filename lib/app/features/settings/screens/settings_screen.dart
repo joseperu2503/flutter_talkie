@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_talkie/app/core/constants/app_colors.dart';
 import 'package:flutter_talkie/app/features/auth/controllers/auth_controller.dart';
-import 'package:flutter_talkie/app/features/chat/controllers/chat_controller.dart';
 import 'package:flutter_talkie/app/features/settings/widgets/menu_item.dart';
 import 'package:get/get.dart';
 
@@ -14,12 +13,10 @@ class SettingsScreen extends StatefulWidget {
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
-  final chatController = Get.find<ChatController>();
   final authController = Get.find<AuthController>();
 
   @override
   void initState() {
-    chatController.getChats();
     super.initState();
   }
 
@@ -181,6 +178,25 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   onPressed: () {},
                   icon: 'assets/icons/email.svg',
                   label: 'Invite Your Friends',
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                Container(
+                  height: 1,
+                  color: AppColors.neutralLine,
+                  margin: const EdgeInsets.symmetric(horizontal: 24),
+                ),
+                const SizedBox(
+                  height: 8,
+                ),
+                MenuItem(
+                  onPressed: () {
+                    authController.logout();
+                  },
+                  icon: 'assets/icons/logout.svg',
+                  label: 'Logout',
+                  withArrow: false,
                 )
               ],
             ),

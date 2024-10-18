@@ -72,14 +72,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
               ),
             ),
           ),
-          SliverToBoxAdapter(
-            child: TextButton(
-              onPressed: () {
-                authController.logout();
-              },
-              child: const Text('logout'),
-            ),
-          )
         ],
       ),
       floatingActionButton: SizedBox(
