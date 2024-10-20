@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_talkie/app/core/constants/breakpoints.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_talkie/app/core/constants/app_colors.dart';
 import 'package:flutter_talkie/app/features/auth/controllers/auth_controller.dart';
@@ -15,6 +16,42 @@ class ChatsScreen extends StatefulWidget {
 }
 
 class _ChatsScreenState extends State<ChatsScreen> {
+  final chatController = Get.find<ChatController>();
+  final authController = Get.find<AuthController>();
+
+  @override
+  void initState() {
+    chatController.getChats();
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (Breakpoints.isMdUp(context)) {
+      return Scaffold(
+        body: Row(
+          children: [
+            Container(
+              width: 300,
+              child: ChatsView(),
+            ),
+          ],
+        ),
+      );
+    }
+
+    return ChatsView();
+  }
+}
+
+class ChatsView extends StatefulWidget {
+  const ChatsView({super.key});
+
+  @override
+  State<ChatsView> createState() => _ChatsViewState();
+}
+
+class _ChatsViewState extends State<ChatsView> {
   final chatController = Get.find<ChatController>();
   final authController = Get.find<AuthController>();
 
