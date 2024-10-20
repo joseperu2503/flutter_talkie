@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:get/get.dart';
+import 'package:timeago/timeago.dart' as timeago;
+
 import 'package:flutter_talkie/app/core/constants/app_colors.dart';
+import 'package:flutter_talkie/app/core/constants/breakpoints.dart';
+import 'package:flutter_talkie/app/features/chat/controllers/chat_controller.dart';
 import 'package:flutter_talkie/app/features/chat/models/chat.dart';
 import 'package:flutter_talkie/app/features/chat/screens/chat_screen.dart';
-import 'package:timeago/timeago.dart' as timeago;
 
 class ContactItem extends StatelessWidget {
   const ContactItem({
@@ -14,17 +19,23 @@ class ContactItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final chatController = Get.find<ChatController>();
+
     return SizedBox(
       height: 84,
       child: TextButton(
         onPressed: () {
-          Navigator.of(context, rootNavigator: true).push(
-            MaterialPageRoute(
-              builder: (context) => ChatScreen(
-                chatId: chat.id,
+          chatController.setChatId(chat.id);
+          context.go('/chats');
+          if (Breakpoints.isMdDown(context)) {
+            Navigator.of(context, rootNavigator: true).push(
+              MaterialPageRoute(
+                builder: (context) => ChatScreen(
+                  chatId: chat.id,
+                ),
               ),
-            ),
-          );
+            );
+          }
         },
         style: TextButton.styleFrom(
           shape: const ContinuousRectangleBorder(),

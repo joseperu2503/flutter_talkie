@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_talkie/app/core/constants/breakpoints.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_talkie/app/core/constants/breakpoints.dart';
+import 'package:flutter_talkie/app/features/chat/screens/chat_screen.dart';
 import 'package:flutter_talkie/app/core/constants/app_colors.dart';
 import 'package:flutter_talkie/app/features/auth/controllers/auth_controller.dart';
 import 'package:flutter_talkie/app/features/chat/controllers/chat_controller.dart';
 import 'package:flutter_talkie/app/features/chat/widgets/chat_item.dart';
-import 'package:get/get.dart';
 
 class ChatsScreen extends StatefulWidget {
   const ChatsScreen({super.key});
@@ -17,7 +18,6 @@ class ChatsScreen extends StatefulWidget {
 
 class _ChatsScreenState extends State<ChatsScreen> {
   final chatController = Get.find<ChatController>();
-  final authController = Get.find<AuthController>();
 
   @override
   void initState() {
@@ -34,6 +34,15 @@ class _ChatsScreenState extends State<ChatsScreen> {
             Container(
               width: 300,
               child: ChatsView(),
+            ),
+            Obx(
+              () => chatController.chatId.value == null
+                  ? Container()
+                  : Expanded(
+                      child: ChatScreen(
+                        chatId: chatController.chatId.value!,
+                      ),
+                    ),
             ),
           ],
         ),

@@ -1,8 +1,11 @@
+import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_talkie/app/core/constants/breakpoints.dart';
 import 'package:flutter_talkie/app/core/core.dart';
+import 'package:flutter_talkie/app/features/chat/controllers/chat_controller.dart';
 import 'package:flutter_talkie/app/features/chat/models/chat.dart';
 import 'package:flutter_talkie/app/features/chat/screens/chat_screen.dart';
-import 'package:intl/intl.dart';
 
 class ChatItem extends StatelessWidget {
   const ChatItem({
@@ -14,17 +17,22 @@ class ChatItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final chatController = Get.find<ChatController>();
+
     return SizedBox(
       height: 72,
       child: TextButton(
         onPressed: () {
-          Navigator.of(context, rootNavigator: true).push(
-            MaterialPageRoute(
-              builder: (context) => ChatScreen(
-                chatId: chat.id,
+          chatController.setChatId(chat.id);
+          if (Breakpoints.isMdDown(context)) {
+            Navigator.of(context, rootNavigator: true).push(
+              MaterialPageRoute(
+                builder: (context) => ChatScreen(
+                  chatId: chat.id,
+                ),
               ),
-            ),
-          );
+            );
+          }
         },
         style: TextButton.styleFrom(
           shape: const ContinuousRectangleBorder(),

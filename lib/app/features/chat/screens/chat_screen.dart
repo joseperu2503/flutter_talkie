@@ -1,11 +1,13 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:flutter_talkie/app/core/constants/breakpoints.dart';
 import 'package:flutter_talkie/app/core/core.dart';
 import 'package:flutter_talkie/app/features/chat/controllers/chat_controller.dart';
 import 'package:flutter_talkie/app/features/chat/models/chat.dart';
 import 'package:flutter_talkie/app/features/chat/widgets/message_item.dart';
 import 'package:flutter_talkie/app/shared/widgets/back_button.dart';
-import 'package:get/get.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({
@@ -74,10 +76,11 @@ class _ChatScreenState extends State<ChatScreen> {
                 height: 64,
                 child: Row(
                   children: [
-                    const CustomBackButton(),
-                    const SizedBox(
-                      width: 12,
-                    ),
+                    if (Breakpoints.isMdDown(context))
+                      const Padding(
+                        padding: EdgeInsets.only(right: 12),
+                        child: CustomBackButton(),
+                      ),
                     Expanded(
                       child: Text(
                         '${chat.receiver.name} ${chat.receiver.surname}',
@@ -136,7 +139,7 @@ class _ChatScreenState extends State<ChatScreen> {
             top: 8,
             left: 16,
             right: 16,
-            bottom: 8 + screen.padding.bottom,
+            bottom: kIsWeb ? 16 : 8 + screen.padding.bottom,
           ),
           child: Container(
             decoration: BoxDecoration(

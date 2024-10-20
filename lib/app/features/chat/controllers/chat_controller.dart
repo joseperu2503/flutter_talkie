@@ -10,6 +10,11 @@ import 'package:get/get.dart';
 class ChatController extends GetxController {
   Rx<LoadingStatus> loading = LoadingStatus.none.obs;
   RxList<Chat> chats = <Chat>[].obs;
+  Rx<String?> chatId = Rx<String?>(null);
+
+  setChatId(String? id) {
+    chatId.value = id;
+  }
 
   getChats() async {
     loading.value = LoadingStatus.loading;
