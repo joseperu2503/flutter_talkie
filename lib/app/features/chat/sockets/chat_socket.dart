@@ -17,7 +17,7 @@ class ChatSocket {
 
   Future<void> connect() async {
     final token = await StorageService.get<String>(StorageKeys.token);
-
+    print(token);
     //* Configuración del socket */
     socket = io.io(
       '${Environment.baseUrl}/chats',
@@ -25,6 +25,8 @@ class ChatSocket {
           .setTransports(['websocket'])
           .disableAutoConnect()
           .setExtraHeaders({'authorization': token})
+          .setAuth({'authorization': token})
+          .setQuery({'token': token})
           .build(),
     );
 
