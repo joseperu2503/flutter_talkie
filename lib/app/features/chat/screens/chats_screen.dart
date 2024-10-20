@@ -27,7 +27,6 @@ class _ChatsScreenState extends State<ChatsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(

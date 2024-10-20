@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_talkie/app/core/core.dart';
+import 'package:flutter_talkie/app/shared/layouts/internal_layout.dart';
 import 'package:go_router/go_router.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
@@ -46,57 +47,24 @@ class CustomBottomNavigationBar extends StatelessWidget {
         selectedItemColor: AppColors.primary,
         type: BottomNavigationBarType.fixed,
         items: [
-          BottomNavigationBarItem(
-            label: 'Chats',
-            icon: SvgPicture.asset(
-              'assets/icons/tabs/chat_outlined.svg',
-              colorFilter: const ColorFilter.mode(
-                AppColors.neutralActive,
-                BlendMode.srcIn,
+          for (var menuTab in menuTabs)
+            BottomNavigationBarItem(
+              label: menuTab.label,
+              icon: SvgPicture.asset(
+                menuTab.icon,
+                colorFilter: const ColorFilter.mode(
+                  AppColors.neutralActive,
+                  BlendMode.srcIn,
+                ),
+              ),
+              activeIcon: SvgPicture.asset(
+                menuTab.activeIcon,
+                colorFilter: const ColorFilter.mode(
+                  AppColors.primary,
+                  BlendMode.srcIn,
+                ),
               ),
             ),
-            activeIcon: SvgPicture.asset(
-              'assets/icons/tabs/chat_solid.svg',
-              colorFilter: const ColorFilter.mode(
-                AppColors.primary,
-                BlendMode.srcIn,
-              ),
-            ),
-          ),
-          BottomNavigationBarItem(
-            label: 'Contacts',
-            icon: SvgPicture.asset(
-              'assets/icons/tabs/contacts_outlined.svg',
-              colorFilter: const ColorFilter.mode(
-                AppColors.neutralActive,
-                BlendMode.srcIn,
-              ),
-            ),
-            activeIcon: SvgPicture.asset(
-              'assets/icons/tabs/contacts_solid.svg',
-              colorFilter: const ColorFilter.mode(
-                AppColors.primary,
-                BlendMode.srcIn,
-              ),
-            ),
-          ),
-          BottomNavigationBarItem(
-            label: 'Settings',
-            icon: SvgPicture.asset(
-              'assets/icons/tabs/settings_outlined.svg',
-              colorFilter: const ColorFilter.mode(
-                AppColors.neutralActive,
-                BlendMode.srcIn,
-              ),
-            ),
-            activeIcon: SvgPicture.asset(
-              'assets/icons/tabs/settings_solid.svg',
-              colorFilter: const ColorFilter.mode(
-                AppColors.primary,
-                BlendMode.srcIn,
-              ),
-            ),
-          ),
         ],
       ),
     );
