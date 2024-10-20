@@ -2,16 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_talkie/app/core/constants/breakpoints.dart';
 import 'package:flutter_talkie/app/core/core.dart';
+import 'package:flutter_talkie/app/features/auth/controllers/auth_controller.dart';
 import 'package:flutter_talkie/app/shared/widgets/custom_bottom_navigation_bar.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 class InternalLayout extends StatelessWidget {
-  const InternalLayout({super.key, required this.navigationShell});
+  const InternalLayout({
+    super.key,
+    required this.navigationShell,
+  });
 
   final StatefulNavigationShell navigationShell;
 
   @override
   Widget build(BuildContext context) {
+    final authController = Get.find<AuthController>();
+
     return Scaffold(
       backgroundColor: AppColors.white,
       body: Stack(
@@ -40,26 +47,38 @@ class InternalLayout extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: Container(
-                      width: 48,
-                      height: 48,
-                      color: AppColors.primary,
-                      child: const Center(
-                        child: Text(
-                          'JP',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            color: AppColors.white,
-                            height: 24 / 14,
-                            leadingDistribution: TextLeadingDistribution.even,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
+                  Obx(() {
+                    final user = authController.user.value;
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(16),
+                      child: user?.photo != null
+                          ? Image.network(
+                              user!.photo!,
+                              width: 48,
+                              height: 48,
+                            )
+                          : Container(
+                              width: 48,
+                              height: 48,
+                              color: AppColors.primary,
+                              child: Center(
+                                child: Text(
+                                  user == null
+                                      ? ''
+                                      : '${user.name[0]}${user.surname[0]}',
+                                  style: const TextStyle(
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.w700,
+                                    color: AppColors.white,
+                                    height: 24 / 14,
+                                    leadingDistribution:
+                                        TextLeadingDistribution.even,
+                                  ),
+                                ),
+                              ),
+                            ),
+                    );
+                  }),
                   const SizedBox(
                     height: 52,
                   ),

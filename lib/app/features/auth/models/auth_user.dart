@@ -4,6 +4,7 @@ class AuthUser {
   final String name;
   final String surname;
   final String phone;
+  final String? photo;
 
   AuthUser({
     required this.id,
@@ -11,6 +12,7 @@ class AuthUser {
     required this.name,
     required this.surname,
     required this.phone,
+    required this.photo,
   });
 
   String get fullName => '$name $surname';
@@ -21,6 +23,7 @@ class AuthUser {
         name: json["name"],
         surname: json["surname"],
         phone: json["phone"],
+        photo: json["photo"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -29,5 +32,6 @@ class AuthUser {
         "name": name,
         "surname": surname,
         "phone": phone,
+        "photo": photo,
       };
 }

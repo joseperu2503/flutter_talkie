@@ -11,9 +11,6 @@ class AuthController extends GetxController {
 
   Future<void> getUser() async {
     try {
-      final (validToken, _) = await AuthService.verifyToken();
-      if (!validToken) return;
-
       final AuthUser user = await AuthService.getUser();
 
       setuser(user);
@@ -35,12 +32,14 @@ class AuthController extends GetxController {
   }
 
   initAutoLogout() async {
-    getUser();
     _cancelTimer();
+
     final (validToken, timeRemainingInSeconds) =
         await AuthService.verifyToken();
 
     if (validToken) {
+      getUser();
+
       _timer = Timer(Duration(seconds: timeRemainingInSeconds), () {
         logout();
       });

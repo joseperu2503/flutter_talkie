@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_talkie/app/core/constants/breakpoints.dart';
 import 'package:flutter_talkie/app/features/chat/screens/chat_screen.dart';
 import 'package:flutter_talkie/app/core/constants/app_colors.dart';
-import 'package:flutter_talkie/app/features/auth/controllers/auth_controller.dart';
 import 'package:flutter_talkie/app/features/chat/controllers/chat_controller.dart';
 import 'package:flutter_talkie/app/features/chat/widgets/chat_item.dart';
 
@@ -31,7 +30,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
       return Scaffold(
         body: Row(
           children: [
-            Container(
+            const SizedBox(
               width: 300,
               child: ChatsView(),
             ),
@@ -49,7 +48,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
       );
     }
 
-    return ChatsView();
+    return const ChatsView();
   }
 }
 
@@ -62,7 +61,6 @@ class ChatsView extends StatefulWidget {
 
 class _ChatsViewState extends State<ChatsView> {
   final chatController = Get.find<ChatController>();
-  final authController = Get.find<AuthController>();
 
   @override
   void initState() {

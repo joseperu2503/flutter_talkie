@@ -84,34 +84,41 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       const SizedBox(
                         width: 20,
                       ),
-                      const Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Almayra Zamzamy',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.neutralActive,
-                              height: 24 / 14,
-                              leadingDistribution: TextLeadingDistribution.even,
+                      Obx(() {
+                        final user = authController.user.value;
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              user == null
+                                  ? ''
+                                  : '${user.name} ${user.surname}',
+                              style: const TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.neutralActive,
+                                height: 24 / 14,
+                                leadingDistribution:
+                                    TextLeadingDistribution.even,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 2,
-                          ),
-                          Text(
-                            '+62 1309 - 1710 - 1920',
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.neutralDisabled,
-                              height: 20 / 12,
-                              leadingDistribution: TextLeadingDistribution.even,
+                            const SizedBox(
+                              height: 2,
                             ),
-                          ),
-                        ],
-                      )
+                            Text(
+                              user == null ? '' : user.phone,
+                              style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.neutralDisabled,
+                                height: 20 / 12,
+                                leadingDistribution:
+                                    TextLeadingDistribution.even,
+                              ),
+                            ),
+                          ],
+                        );
+                      }),
                     ],
                   ),
                 ),
