@@ -51,167 +51,172 @@ class _RegisterScreenState extends State<RegisterScreen> {
         slivers: [
           SliverFillRemaining(
             hasScrollBody: false,
-            child: Container(
-              padding: const EdgeInsets.only(
-                top: 4,
-                right: 24,
-                left: 24,
-                bottom: 8,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const Text(
-                    'Hello! Register to get\nstarted',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
-                      height: 30 / 24,
-                      color: AppColors.neutralActive,
-                      leadingDistribution: TextLeadingDistribution.even,
+            child: Center(
+              child: Container(
+                padding: const EdgeInsets.only(
+                  top: 4,
+                  right: 24,
+                  left: 24,
+                  bottom: 8,
+                ),
+                constraints: const BoxConstraints(
+                  maxWidth: 500,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Text(
+                      'Hello! Register to get\nstarted',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                        height: 30 / 24,
+                        color: AppColors.neutralActive,
+                        leadingDistribution: TextLeadingDistribution.even,
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  Obx(
-                    () => CustomTextField(
-                      label: 'Username',
-                      hintText: 'Your username',
-                      value: registerController.username.value,
-                      onChanged: (value) {
-                        registerController.changeUsername(value);
-                      },
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.name,
+                    const SizedBox(
+                      height: 40,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 18,
-                  ),
-                  Obx(
-                    () => CustomTextField(
-                      label: 'Name',
-                      hintText: 'Your name',
-                      value: registerController.name.value,
-                      onChanged: (value) {
-                        registerController.changeName(value);
-                      },
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.name,
+                    Obx(
+                      () => CustomTextField(
+                        label: 'Username',
+                        hintText: 'Your username',
+                        value: registerController.username.value,
+                        onChanged: (value) {
+                          registerController.changeUsername(value);
+                        },
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.name,
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 18,
-                  ),
-                  Obx(
-                    () => CustomTextField(
-                      label: 'Surname',
-                      hintText: 'Your surname',
-                      value: registerController.surname.value,
-                      onChanged: (value) {
-                        registerController.changeSurname(value);
-                      },
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.name,
+                    const SizedBox(
+                      height: 18,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 18,
-                  ),
-                  Obx(
-                    () => CustomTextField(
-                      label: 'Email',
-                      hintText: 'Your email',
-                      value: registerController.email.value,
-                      onChanged: (value) {
-                        registerController.changeEmail(value);
-                      },
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.emailAddress,
+                    Obx(
+                      () => CustomTextField(
+                        label: 'Name',
+                        hintText: 'Your name',
+                        value: registerController.name.value,
+                        onChanged: (value) {
+                          registerController.changeName(value);
+                        },
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.name,
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 18,
-                  ),
-                  Obx(
-                    () => CustomTextField(
-                      label: 'Phone',
-                      hintText: 'Your phone',
-                      value: registerController.phone.value,
-                      onChanged: (value) {
-                        registerController.changePhone(value);
-                      },
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.phone,
+                    const SizedBox(
+                      height: 18,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 18,
-                  ),
-                  Obx(
-                    () => CustomTextField(
-                      label: 'Password',
-                      hintText: 'Password',
-                      value: registerController.password.value,
-                      onChanged: (value) {
-                        registerController.changePassword(value);
-                      },
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.visiblePassword,
-                      isPassword: true,
-                      onFieldSubmitted: (value) {
+                    Obx(
+                      () => CustomTextField(
+                        label: 'Surname',
+                        hintText: 'Your surname',
+                        value: registerController.surname.value,
+                        onChanged: (value) {
+                          registerController.changeSurname(value);
+                        },
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.name,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 18,
+                    ),
+                    Obx(
+                      () => CustomTextField(
+                        label: 'Email',
+                        hintText: 'Your email',
+                        value: registerController.email.value,
+                        onChanged: (value) {
+                          registerController.changeEmail(value);
+                        },
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.emailAddress,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 18,
+                    ),
+                    Obx(
+                      () => CustomTextField(
+                        label: 'Phone',
+                        hintText: 'Your phone',
+                        value: registerController.phone.value,
+                        onChanged: (value) {
+                          registerController.changePhone(value);
+                        },
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.phone,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 18,
+                    ),
+                    Obx(
+                      () => CustomTextField(
+                        label: 'Password',
+                        hintText: 'Password',
+                        value: registerController.password.value,
+                        onChanged: (value) {
+                          registerController.changePassword(value);
+                        },
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.visiblePassword,
+                        isPassword: true,
+                        onFieldSubmitted: (value) {
+                          registerController.register();
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    CustomButton(
+                      text: 'Register',
+                      onPressed: () {
                         registerController.register();
                       },
                     ),
-                  ),
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  CustomButton(
-                    text: 'Register',
-                    onPressed: () {
-                      registerController.register();
-                    },
-                  ),
-                  const SizedBox(
-                    height: 24,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'Already have an account?',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.neutralActive,
-                          height: 24 / 14,
-                          leadingDistribution: TextLeadingDistribution.even,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          context.pop();
-                        },
-                        behavior: HitTestBehavior.translucent,
-                        child: const Text(
-                          ' Login Now',
+                    const SizedBox(
+                      height: 24,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Already have an account?',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
-                            color: AppColors.brandColorDefault,
+                            color: AppColors.neutralActive,
                             height: 24 / 14,
                             leadingDistribution: TextLeadingDistribution.even,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 80 + screen.padding.bottom,
-                  ),
-                ],
+                        GestureDetector(
+                          onTap: () {
+                            context.pop();
+                          },
+                          behavior: HitTestBehavior.translucent,
+                          child: const Text(
+                            ' Login Now',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.brandColorDefault,
+                              height: 24 / 14,
+                              leadingDistribution: TextLeadingDistribution.even,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 80 + screen.padding.bottom,
+                    ),
+                  ],
+                ),
               ),
             ),
           )

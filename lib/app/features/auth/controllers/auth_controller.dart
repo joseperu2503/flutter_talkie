@@ -49,6 +49,6 @@ class AuthController extends GetxController {
   logout() async {
     await StorageService.remove(StorageKeys.token);
     _cancelTimer();
-    appRouter.go('/login');
+    appRouter.go('/');
   }
 }

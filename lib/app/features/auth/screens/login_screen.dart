@@ -51,105 +51,110 @@ class _LoginScreenState extends State<LoginScreen> {
         slivers: [
           SliverFillRemaining(
             hasScrollBody: false,
-            child: Container(
-              padding: const EdgeInsets.only(
-                top: 20,
-                right: 24,
-                left: 24,
-                bottom: 8,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const Text(
-                    'Welcome back! Glad\nto see you, Again!',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.w700,
-                      height: 30 / 24,
-                      color: AppColors.neutralActive,
-                      leadingDistribution: TextLeadingDistribution.even,
+            child: Center(
+              child: Container(
+                padding: const EdgeInsets.only(
+                  top: 20,
+                  right: 24,
+                  left: 24,
+                  bottom: 8,
+                ),
+                constraints: const BoxConstraints(
+                  maxWidth: 500,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Text(
+                      'Welcome back! Glad\nto see you, Again!',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w700,
+                        height: 30 / 24,
+                        color: AppColors.neutralActive,
+                        leadingDistribution: TextLeadingDistribution.even,
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  Obx(
-                    () => CustomTextField(
-                      label: 'Email',
-                      hintText: 'Your email',
-                      value: loginController.email.value,
-                      onChanged: (value) {
-                        loginController.changeEmail(value);
-                      },
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.emailAddress,
+                    const SizedBox(
+                      height: 40,
                     ),
-                  ),
-                  const SizedBox(
-                    height: 18,
-                  ),
-                  Obx(
-                    () => CustomTextField(
-                      label: 'Password',
-                      hintText: 'Your password',
-                      value: loginController.password.value,
-                      onChanged: (value) {
-                        loginController.changePassword(value);
-                      },
-                      textInputAction: TextInputAction.done,
-                      keyboardType: TextInputType.visiblePassword,
-                      isPassword: true,
-                      onFieldSubmitted: (value) {
+                    Obx(
+                      () => CustomTextField(
+                        label: 'Email',
+                        hintText: 'Your email',
+                        value: loginController.email.value,
+                        onChanged: (value) {
+                          loginController.changeEmail(value);
+                        },
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.emailAddress,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 18,
+                    ),
+                    Obx(
+                      () => CustomTextField(
+                        label: 'Password',
+                        hintText: 'Your password',
+                        value: loginController.password.value,
+                        onChanged: (value) {
+                          loginController.changePassword(value);
+                        },
+                        textInputAction: TextInputAction.done,
+                        keyboardType: TextInputType.visiblePassword,
+                        isPassword: true,
+                        onFieldSubmitted: (value) {
+                          loginController.login();
+                        },
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    CustomButton(
+                      text: 'Log In',
+                      onPressed: () {
                         loginController.login();
                       },
                     ),
-                  ),
-                  const SizedBox(
-                    height: 40,
-                  ),
-                  CustomButton(
-                    text: 'Log In',
-                    onPressed: () {
-                      loginController.login();
-                    },
-                  ),
-                  const Spacer(),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'Don’t have an account?',
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.neutralActive,
-                          height: 24 / 14,
-                          leadingDistribution: TextLeadingDistribution.even,
-                        ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          context.push('/register');
-                        },
-                        behavior: HitTestBehavior.translucent,
-                        child: const Text(
-                          ' Register Now',
+                    const Spacer(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Don’t have an account?',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
-                            color: AppColors.brandColorDefault,
+                            color: AppColors.neutralActive,
                             height: 24 / 14,
                             leadingDistribution: TextLeadingDistribution.even,
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 32 + screen.padding.bottom,
-                  ),
-                ],
+                        GestureDetector(
+                          onTap: () {
+                            context.push('/register');
+                          },
+                          behavior: HitTestBehavior.translucent,
+                          child: const Text(
+                            ' Register Now',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.brandColorDefault,
+                              height: 24 / 14,
+                              leadingDistribution: TextLeadingDistribution.even,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 32 + screen.padding.bottom,
+                    ),
+                  ],
+                ),
               ),
             ),
           )

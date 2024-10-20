@@ -27,7 +27,7 @@ Future<String?> protectedRoute(
   final (validToken, _) = await AuthService.verifyToken();
 
   if (!validToken) {
-    return '/login';
+    return '/';
   }
 
   return null;
