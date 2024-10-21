@@ -35,10 +35,10 @@ Future<String?> protectedRoute(
 
 GoRouter appRouter = GoRouter(
   navigatorKey: rootNavigatorKey,
-  initialLocation: '/home',
+  initialLocation: '/',
   routes: [
     GoRoute(
-      path: '/home',
+      path: '/',
       builder: (context, state) => const HomeScreen(),
       parentNavigatorKey: rootNavigatorKey,
       redirect: unprotectedRoute,

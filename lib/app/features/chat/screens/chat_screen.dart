@@ -200,6 +200,17 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                       isCollapsed: true,
                     ),
+                    onFieldSubmitted: (value) {
+                      if (messageController.text.trim().isEmpty) return;
+                      chatController.sendMessage(
+                        messageController.text.trim(),
+                        widget.chatId,
+                      );
+
+                      setState(() {
+                        messageController.text = '';
+                      });
+                    },
                   ),
                 ),
                 SizedBox(
@@ -209,6 +220,8 @@ class _ChatScreenState extends State<ChatScreen> {
                     onPressed: messageController.text.trim().isEmpty
                         ? null
                         : () {
+                            if (messageController.text.trim().isEmpty) return;
+
                             chatController.sendMessage(
                               messageController.text.trim(),
                               widget.chatId,
