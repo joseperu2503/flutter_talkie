@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_talkie/app/core/controllers/theme_controller.dart';
 import 'package:flutter_talkie/app/features/auth/controllers/auth_controller.dart';
 import 'package:flutter_talkie/app/features/chat/controllers/chat_controller.dart';
 import 'package:get/get.dart';
@@ -21,9 +22,13 @@ class _AppState extends State<App> with WidgetsBindingObserver {
     final authController = Get.put<AuthController>(AuthController());
 
     final chatController = Get.put<ChatController>(ChatController());
+    final themeController = Get.put<ThemeController>(ThemeController());
 
     authController.initAutoLogout();
     chatController.connectSocket();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      themeController.getThemeModeFromStorage();
+    });
     super.initState();
 
     WidgetsBinding.instance.addObserver(this);

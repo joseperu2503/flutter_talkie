@@ -45,10 +45,12 @@ class ContactItem extends StatelessWidget {
         ),
         child: Container(
           height: double.maxFinite,
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             border: Border(
               bottom: BorderSide(
-                color: AppColors.neutralLine,
+                color: context.isDarkMode
+                    ? AppColors.neutralDark
+                    : AppColors.neutralLine,
               ),
             ),
           ),
@@ -68,7 +70,9 @@ class ContactItem extends StatelessWidget {
                         : Container(
                             width: 48,
                             height: 48,
-                            color: AppColors.primary,
+                            color: context.isDarkMode
+                                ? AppColors.brandColorDarkMode
+                                : AppColors.brandColorDefault,
                             child: Center(
                               child: Text(
                                 '${chat.receiver.name[0]}${chat.receiver.surname[0]}',
@@ -117,10 +121,12 @@ class ContactItem extends StatelessWidget {
                 children: [
                   Text(
                     chat.receiver.name,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 14,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.neutralActive,
+                      color: context.isDarkMode
+                          ? AppColors.white
+                          : AppColors.neutralActive,
                       height: 24 / 14,
                       leadingDistribution: TextLeadingDistribution.even,
                     ),

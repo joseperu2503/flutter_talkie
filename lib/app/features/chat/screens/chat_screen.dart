@@ -46,7 +46,9 @@ class _ChatScreenState extends State<ChatScreen> {
     final screen = MediaQuery.of(context);
 
     return Scaffold(
-      backgroundColor: AppColors.neutralOffWhite,
+      backgroundColor: context.isDarkMode
+          ? AppColors.neutralDark
+          : AppColors.neutralOffWhite,
       appBar: AppBar(
         scrolledUnderElevation: 0,
         automaticallyImplyLeading: false,
@@ -84,10 +86,12 @@ class _ChatScreenState extends State<ChatScreen> {
                     Expanded(
                       child: Text(
                         '${chat.receiver.name} ${chat.receiver.surname}',
-                        style: const TextStyle(
+                        style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
-                          color: AppColors.neutralActive,
+                          color: context.isDarkMode
+                              ? AppColors.white
+                              : AppColors.neutralActive,
                           height: 25 / 18,
                           leadingDistribution: TextLeadingDistribution.even,
                         ),
@@ -133,17 +137,20 @@ class _ChatScreenState extends State<ChatScreen> {
         },
       ),
       bottomSheet: Container(
-        color: AppColors.neutralOffWhite,
+        color: context.isDarkMode
+            ? AppColors.neutralActive
+            : AppColors.neutralOffWhite,
         child: Container(
           padding: EdgeInsets.only(
-            top: 8,
+            top: 10,
             left: 16,
             right: 16,
             bottom: kIsWeb ? 16 : 8 + screen.padding.bottom,
           ),
           child: Container(
             decoration: BoxDecoration(
-              color: AppColors.white,
+              color:
+                  context.isDarkMode ? AppColors.neutralDark : AppColors.white,
               borderRadius: BorderRadius.circular(10),
               boxShadow: const [
                 BoxShadow(
@@ -160,8 +167,10 @@ class _ChatScreenState extends State<ChatScreen> {
                 Expanded(
                   child: TextFormField(
                     controller: messageController,
-                    style: const TextStyle(
-                      color: AppColors.blue2,
+                    style: TextStyle(
+                      color: context.isDarkMode
+                          ? AppColors.neutralOffWhite
+                          : AppColors.neutralActive,
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
                       height: 22 / 14,
@@ -187,7 +196,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                       hintText: 'Message',
                       hintStyle: const TextStyle(
-                        color: AppColors.gray,
+                        color: AppColors.neutralDisabled,
                         fontSize: 16,
                         fontWeight: FontWeight.w400,
                         height: 22 / 16,
@@ -240,8 +249,10 @@ class _ChatScreenState extends State<ChatScreen> {
                           : 'assets/icons/send_solid.svg',
                       colorFilter: ColorFilter.mode(
                         messageController.text.trim().isEmpty
-                            ? AppColors.gray
-                            : AppColors.primary,
+                            ? AppColors.neutralDisabled
+                            : context.isDarkMode
+                                ? AppColors.brandColorDarkMode
+                                : AppColors.brandColorDefault,
                         BlendMode.srcIn,
                       ),
                     ),

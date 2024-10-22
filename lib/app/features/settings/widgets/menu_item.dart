@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_talkie/app/core/core.dart';
+import 'package:get/get.dart';
 
 class MenuItem extends StatelessWidget {
   const MenuItem({
@@ -34,8 +35,10 @@ class MenuItem extends StatelessWidget {
               icon,
               width: 24,
               height: 24,
-              colorFilter: const ColorFilter.mode(
-                AppColors.neutralActive,
+              colorFilter: ColorFilter.mode(
+                context.isDarkMode
+                    ? AppColors.neutralOffWhite
+                    : AppColors.neutralActive,
                 BlendMode.srcIn,
               ),
             ),
@@ -44,10 +47,12 @@ class MenuItem extends StatelessWidget {
             ),
             Text(
               label,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
-                color: AppColors.neutralActive,
+                color: context.isDarkMode
+                    ? AppColors.neutralOffWhite
+                    : AppColors.neutralActive,
                 height: 24 / 14,
                 leadingDistribution: TextLeadingDistribution.even,
               ),
@@ -57,8 +62,10 @@ class MenuItem extends StatelessWidget {
               SvgPicture.asset(
                 'assets/icons/arrow_forward.svg',
                 width: 20,
-                colorFilter: const ColorFilter.mode(
-                  AppColors.neutralActive,
+                colorFilter: ColorFilter.mode(
+                  context.isDarkMode
+                      ? AppColors.neutralOffWhite
+                      : AppColors.neutralActive,
                   BlendMode.srcIn,
                 ),
               ),

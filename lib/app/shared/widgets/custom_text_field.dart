@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_talkie/app/core/constants/app_colors.dart';
 import 'package:flutter_talkie/app/shared/plugins/formx/formx.dart';
+import 'package:get/get.dart';
 
 class CustomTextField extends StatefulWidget {
   const CustomTextField({
@@ -108,7 +109,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   style: TextStyle(
                     fontSize: elevateLabel ? 12 : 16,
                     fontWeight: FontWeight.w400,
-                    color: elevateLabel ? AppColors.primary : AppColors.gray,
+                    color: elevateLabel
+                        ? context.isDarkMode
+                            ? AppColors.brandColorDarkMode
+                            : AppColors.brandColorDefault
+                        : AppColors.neutralDisabled,
                     height: elevateLabel ? 20 / 12 : 24 / 16,
                     leadingDistribution: TextLeadingDistribution.even,
                   ),
@@ -116,8 +121,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 ),
               ),
               TextFormField(
-                style: const TextStyle(
-                  color: AppColors.blue2,
+                style: TextStyle(
+                  color: context.isDarkMode
+                      ? AppColors.neutralOffWhite
+                      : AppColors.neutralActive,
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
                   height: 16 / 14,
@@ -127,14 +134,16 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                      color: AppColors.gray.withOpacity(0.7),
+                    borderSide: const BorderSide(
+                      color: AppColors.neutralDisabled,
                     ),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderSide: const BorderSide(
-                      color: AppColors.primary,
+                    borderSide: BorderSide(
+                      color: context.isDarkMode
+                          ? AppColors.brandColorDarkMode
+                          : AppColors.brandColorDefault,
                     ),
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -146,7 +155,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                   ),
                   hintText: elevateLabel ? widget.hintText : '',
                   hintStyle: const TextStyle(
-                    color: AppColors.gray,
+                    color: AppColors.neutralDisabled,
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
                     height: 10 / 14,
@@ -163,8 +172,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
                             showPassword
                                 ? 'assets/icons/eye.svg'
                                 : 'assets/icons/eye_closed.svg',
-                            colorFilter: ColorFilter.mode(
-                              AppColors.gray.withOpacity(0.5),
+                            colorFilter: const ColorFilter.mode(
+                              AppColors.neutralDisabled,
                               BlendMode.srcIn,
                             ),
                             width: 22,

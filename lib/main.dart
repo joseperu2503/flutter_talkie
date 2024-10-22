@@ -3,6 +3,7 @@ import 'package:flutter_talkie/app/app.dart';
 import 'package:flutter_talkie/app/core/constants/environment.dart';
 import 'package:flutter_talkie/app/core/router/app_router.dart';
 import 'package:flutter_talkie/app/core/theme/app_theme.dart';
+import 'package:get/get.dart';
 
 void main() async {
   await Environment.initEnvironment();
@@ -15,11 +16,15 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
+    return GetMaterialApp.router(
       title: 'Talkie',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.getTheme(),
-      routerConfig: appRouter,
+      theme: AppTheme.getTheme(ThemeMode.light),
+      darkTheme: AppTheme.getTheme(ThemeMode.dark),
+      themeMode: ThemeMode.system,
+      routeInformationParser: appRouter.routeInformationParser,
+      routerDelegate: appRouter.routerDelegate,
+      routeInformationProvider: appRouter.routeInformationProvider,
       builder: (context, child) => App(
         child: child,
       ),

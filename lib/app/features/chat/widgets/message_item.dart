@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_talkie/app/core/core.dart';
 import 'package:flutter_talkie/app/features/chat/models/chat.dart';
 import 'package:intl/intl.dart';
+import 'package:get/get.dart';
 
 class MessageItem extends StatelessWidget {
   const MessageItem({
@@ -25,7 +26,13 @@ class MessageItem extends StatelessWidget {
             maxWidth: MediaQuery.of(context).size.width * 0.7,
           ),
           decoration: BoxDecoration(
-            color: message.isSender ? AppColors.primary : AppColors.white,
+            color: message.isSender
+                ? context.isDarkMode
+                    ? AppColors.brandColorDarkMode
+                    : AppColors.brandColorDefault
+                : context.isDarkMode
+                    ? AppColors.neutralActive
+                    : AppColors.white,
             borderRadius: BorderRadius.only(
               topLeft: message.isSender
                   ? const Radius.circular(16)
@@ -52,8 +59,10 @@ class MessageItem extends StatelessWidget {
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
                   color: message.isSender
-                      ? AppColors.white
-                      : AppColors.neutralActive,
+                      ? AppColors.neutralOffWhite
+                      : context.isDarkMode
+                          ? AppColors.neutralOffWhite
+                          : AppColors.neutralActive,
                   height: 22 / 14,
                   leadingDistribution: TextLeadingDistribution.even,
                 ),

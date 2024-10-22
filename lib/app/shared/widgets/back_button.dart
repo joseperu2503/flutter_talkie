@@ -1,10 +1,11 @@
 import 'dart:io';
-
+import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:flutter_talkie/app/core/core.dart';
-import 'package:go_router/go_router.dart';
 
 class CustomBackButton extends StatelessWidget {
   const CustomBackButton({super.key});
@@ -32,8 +33,10 @@ class CustomBackButton extends StatelessWidget {
                 : 'assets/icons/arrow_back_ios.svg',
             width: 32,
             height: 32,
-            colorFilter: const ColorFilter.mode(
-              AppColors.neutralActive,
+            colorFilter: ColorFilter.mode(
+              context.isDarkMode
+                  ? AppColors.neutralOffWhite
+                  : AppColors.neutralActive,
               BlendMode.srcIn,
             ),
           ),

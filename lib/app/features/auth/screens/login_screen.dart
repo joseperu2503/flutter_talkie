@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-
 import 'package:flutter_talkie/app/core/core.dart';
 import 'package:flutter_talkie/app/features/auth/controllers/login_controller.dart';
 import 'package:flutter_talkie/app/shared/widgets/back_button.dart';
@@ -65,13 +64,15 @@ class _LoginScreenState extends State<LoginScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Text(
+                    Text(
                       'Welcome back! Glad\nto see you, Again!',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w700,
                         height: 30 / 24,
-                        color: AppColors.neutralActive,
+                        color: context.isDarkMode
+                            ? AppColors.neutralOffWhite
+                            : AppColors.neutralActive,
                         leadingDistribution: TextLeadingDistribution.even,
                       ),
                     ),
@@ -122,12 +123,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           'Don’t have an account?',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
-                            color: AppColors.neutralActive,
+                            color: context.isDarkMode
+                                ? AppColors.neutralOffWhite
+                                : AppColors.neutralActive,
                             height: 24 / 14,
                             leadingDistribution: TextLeadingDistribution.even,
                           ),
@@ -137,12 +140,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             context.push('/register');
                           },
                           behavior: HitTestBehavior.translucent,
-                          child: const Text(
+                          child: Text(
                             ' Register Now',
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
-                              color: AppColors.brandColorDefault,
+                              color: context.isDarkMode
+                                  ? AppColors.brandColorDarkMode
+                                  : AppColors.brandColorDefault,
                               height: 24 / 14,
                               leadingDistribution: TextLeadingDistribution.even,
                             ),

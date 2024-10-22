@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_talkie/app/core/constants/app_colors.dart';
+import 'package:flutter_talkie/app/core/core.dart';
+import 'package:get/get.dart';
 
 class CustomButton extends StatefulWidget {
   const CustomButton({
@@ -30,7 +31,9 @@ class _CustomButtonState extends State<CustomButton> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
-          backgroundColor: AppColors.brandColorDefault,
+          backgroundColor: context.isDarkMode
+              ? AppColors.brandColorDarkMode
+              : AppColors.brandColorDefault,
         ),
         onPressed: widget.onPressed,
         child: Row(
@@ -48,7 +51,7 @@ class _CustomButtonState extends State<CustomButton> {
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                   color: widget.onPressed == null
-                      ? AppColors.gray
+                      ? AppColors.neutralActive
                       : AppColors.white,
                   leadingDistribution: TextLeadingDistribution.even,
                 ),

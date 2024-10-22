@@ -2,29 +2,47 @@ import 'package:flutter/material.dart';
 import 'package:flutter_talkie/app/core/constants/app_colors.dart';
 
 class AppTheme {
-  static ThemeData getTheme() => ThemeData(
-        fontFamily: 'Mulish',
-        scaffoldBackgroundColor: AppColors.white,
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSwatch(
-          accentColor: Colors.black12,
-          backgroundColor: Colors.white,
+  static ThemeData getTheme(ThemeMode themeMode) {
+    return ThemeData(
+      fontFamily: 'Mulish',
+      brightness:
+          themeMode == ThemeMode.light ? Brightness.light : Brightness.dark,
+      scaffoldBackgroundColor: themeMode == ThemeMode.light
+          ? AppColors.white
+          : AppColors.neutralActive,
+      appBarTheme: AppBarTheme(
+        backgroundColor: themeMode == ThemeMode.light
+            ? AppColors.white
+            : AppColors.neutralActive,
+      ),
+      useMaterial3: true,
+      colorScheme: ColorScheme.fromSwatch(
+        brightness:
+            themeMode == ThemeMode.light ? Brightness.light : Brightness.dark,
+        accentColor: Colors.black12,
+        backgroundColor: Colors.white,
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: Colors.black12,
         ),
-        textButtonTheme: TextButtonThemeData(
-          style: TextButton.styleFrom(
-            foregroundColor: Colors.black12,
-          ),
-        ),
-        bottomSheetTheme: const BottomSheetThemeData(
-          modalBackgroundColor: Colors.white,
-          showDragHandle: true,
-          backgroundColor: Colors.white,
-          surfaceTintColor: Colors.white,
-        ),
-        textSelectionTheme: const TextSelectionThemeData(
-          cursorColor: AppColors.primary,
-        ),
-      );
+      ),
+      dialogBackgroundColor: themeMode == ThemeMode.light
+          ? AppColors.white
+          : AppColors.neutralActive,
+      bottomSheetTheme: const BottomSheetThemeData(
+        modalBackgroundColor: Colors.white,
+        showDragHandle: true,
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
+      ),
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: themeMode == ThemeMode.light
+            ? AppColors.brandColorDefault
+            : AppColors.neutralDisabled,
+      ),
+    );
+  }
 }
 
 class FadeTransitionBuilder extends PageTransitionsBuilder {

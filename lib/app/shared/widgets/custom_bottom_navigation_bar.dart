@@ -3,6 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_talkie/app/core/core.dart';
 import 'package:flutter_talkie/app/shared/layouts/internal_layout.dart';
 import 'package:go_router/go_router.dart';
+import 'package:get/get.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   const CustomBottomNavigationBar({
@@ -33,34 +34,42 @@ class CustomBottomNavigationBar extends StatelessWidget {
             spreadRadius: 0,
           ),
         ],
+        color: context.isDarkMode ? AppColors.neutralActive : AppColors.white,
       ),
-      constraints: BoxConstraints(
-        minHeight: 60 + screen.padding.bottom,
-      ),
+      padding: const EdgeInsets.only(top: 8),
+      height: 68 + screen.padding.bottom,
       child: BottomNavigationBar(
-        backgroundColor: AppColors.white,
         elevation: 0,
         currentIndex: navigationShell.currentIndex,
+        backgroundColor: Colors.transparent,
         onTap: (value) {
           _onTap(context, value);
         },
-        selectedItemColor: AppColors.primary,
+        selectedItemColor: context.isDarkMode
+            ? AppColors.brandColorDarkMode
+            : AppColors.brandColorDefault,
         type: BottomNavigationBarType.fixed,
+        unselectedItemColor:
+            context.isDarkMode ? AppColors.white : AppColors.neutralActive,
         items: [
           for (var menuTab in menuTabs)
             BottomNavigationBarItem(
               label: menuTab.label,
               icon: SvgPicture.asset(
                 menuTab.icon,
-                colorFilter: const ColorFilter.mode(
-                  AppColors.neutralActive,
+                colorFilter: ColorFilter.mode(
+                  context.isDarkMode
+                      ? AppColors.white
+                      : AppColors.neutralActive,
                   BlendMode.srcIn,
                 ),
               ),
               activeIcon: SvgPicture.asset(
                 menuTab.activeIcon,
-                colorFilter: const ColorFilter.mode(
-                  AppColors.primary,
+                colorFilter: ColorFilter.mode(
+                  context.isDarkMode
+                      ? AppColors.brandColorDarkMode
+                      : AppColors.brandColorDefault,
                   BlendMode.srcIn,
                 ),
               ),

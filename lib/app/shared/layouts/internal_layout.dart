@@ -60,7 +60,7 @@ class InternalLayout extends StatelessWidget {
                           : Container(
                               width: 48,
                               height: 48,
-                              color: AppColors.primary,
+                              color: AppColors.brandColorDefault,
                               child: Center(
                                 child: Text(
                                   user == null
@@ -109,7 +109,7 @@ class InternalLayout extends StatelessWidget {
                                 : menuTab.icon,
                             colorFilter: ColorFilter.mode(
                               navigationShell.currentIndex == index
-                                  ? AppColors.primary
+                                  ? AppColors.brandColorDefault
                                   : AppColors.neutralActive,
                               BlendMode.srcIn,
                             ),

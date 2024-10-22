@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_talkie/app/core/core.dart';
 import 'package:flutter_talkie/app/shared/widgets/custom_button.dart';
 import 'package:go_router/go_router.dart';
+import 'package:get/get.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -42,22 +44,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Image.asset(
-                          'assets/images/logo.png',
-                          width: 250,
+                        SvgPicture.asset(
+                          'assets/icons/home.svg',
+                          width: 262,
                         ),
                       ],
                     ),
                     const SizedBox(
-                      height: 24,
+                      height: 42,
                     ),
-                    const Text(
+                    Text(
                       'Connect easily with\nyour family and friends\nover countries',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w700,
                         height: 30 / 24,
-                        color: AppColors.neutralActive,
+                        color: context.isDarkMode
+                            ? AppColors.neutralOffWhite
+                            : AppColors.neutralActive,
                         leadingDistribution: TextLeadingDistribution.even,
                       ),
                       textAlign: TextAlign.center,
@@ -74,12 +78,14 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         onPressed: () {},
-                        child: const Text(
+                        child: Text(
                           'Terms & Privacy Policy',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
-                            color: AppColors.neutralActive,
+                            color: context.isDarkMode
+                                ? AppColors.neutralOffWhite
+                                : AppColors.neutralActive,
                             leadingDistribution: TextLeadingDistribution.even,
                           ),
                         ),

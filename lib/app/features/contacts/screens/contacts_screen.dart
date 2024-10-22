@@ -24,7 +24,6 @@ class _ContactsScreenState extends State<ContactsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -36,12 +35,14 @@ class _ContactsScreenState extends State<ContactsScreen> {
                 ),
                 child: Row(
                   children: [
-                    const Text(
+                    Text(
                       'Contacts',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.neutralActive,
+                        color: context.isDarkMode
+                            ? AppColors.neutralOffWhite
+                            : AppColors.neutralActive,
                         height: 30 / 18,
                         leadingDistribution: TextLeadingDistribution.even,
                       ),
@@ -64,8 +65,10 @@ class _ContactsScreenState extends State<ContactsScreen> {
                         },
                         child: SvgPicture.asset(
                           'assets/icons/plus.svg',
-                          colorFilter: const ColorFilter.mode(
-                            AppColors.neutralActive,
+                          colorFilter: ColorFilter.mode(
+                            context.isDarkMode
+                                ? AppColors.neutralOffWhite
+                                : AppColors.neutralActive,
                             BlendMode.srcIn,
                           ),
                           width: 24,
@@ -89,13 +92,17 @@ class _ContactsScreenState extends State<ContactsScreen> {
             sliver: SliverToBoxAdapter(
               child: Container(
                 decoration: BoxDecoration(
-                  color: AppColors.neutralOffWhite,
+                  color: context.isDarkMode
+                      ? AppColors.neutralDark
+                      : AppColors.neutralOffWhite,
                   borderRadius: BorderRadius.circular(4),
                 ),
                 height: 44,
                 child: TextFormField(
-                  style: const TextStyle(
-                    color: AppColors.blue2,
+                  style: TextStyle(
+                    color: context.isDarkMode
+                        ? AppColors.neutralOffWhite
+                        : AppColors.neutralActive,
                     fontSize: 14,
                     height: 24 / 14,
                     fontWeight: FontWeight.w600,

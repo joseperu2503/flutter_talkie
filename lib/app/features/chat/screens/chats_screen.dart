@@ -80,14 +80,16 @@ class _ChatsViewState extends State<ChatsView> {
                 padding: const EdgeInsets.symmetric(
                   horizontal: 24,
                 ),
-                child: const Row(
+                child: Row(
                   children: [
                     Text(
                       'Chats',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.neutralActive,
+                        color: context.isDarkMode
+                            ? AppColors.neutralOffWhite
+                            : AppColors.neutralActive,
                         height: 30 / 18,
                         leadingDistribution: TextLeadingDistribution.even,
                       ),
@@ -122,7 +124,7 @@ class _ChatsViewState extends State<ChatsView> {
         width: 56,
         child: TextButton(
           style: TextButton.styleFrom(
-            backgroundColor: AppColors.primary,
+            backgroundColor: AppColors.brandColorDefault,
             shape: ContinuousRectangleBorder(
               borderRadius: BorderRadius.circular(24),
             ),

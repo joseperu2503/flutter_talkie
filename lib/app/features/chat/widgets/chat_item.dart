@@ -58,7 +58,9 @@ class ChatItem extends StatelessWidget {
                         : Container(
                             width: 48,
                             height: 48,
-                            color: AppColors.primary,
+                            color: context.isDarkMode
+                                ? AppColors.brandColorDarkMode
+                                : AppColors.brandColorDefault,
                             child: Center(
                               child: Text(
                                 '${chat.receiver.name[0]}${chat.receiver.surname[0]}',
@@ -111,10 +113,12 @@ class ChatItem extends StatelessWidget {
                         Expanded(
                           child: Text(
                             '${chat.receiver.name} ${chat.receiver.surname}',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
-                              color: AppColors.neutralActive,
+                              color: context.isDarkMode
+                                  ? AppColors.white
+                                  : AppColors.neutralActive,
                               height: 24 / 14,
                               leadingDistribution: TextLeadingDistribution.even,
                             ),

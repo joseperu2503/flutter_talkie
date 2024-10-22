@@ -65,13 +65,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Text(
+                    Text(
                       'Hello! Register to get\nstarted',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w700,
                         height: 30 / 24,
-                        color: AppColors.neutralActive,
+                        color: context.isDarkMode
+                            ? AppColors.neutralOffWhite
+                            : AppColors.neutralActive,
                         leadingDistribution: TextLeadingDistribution.even,
                       ),
                     ),
@@ -184,12 +186,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        const Text(
+                        Text(
                           'Already have an account?',
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w400,
-                            color: AppColors.neutralActive,
+                            color: context.isDarkMode
+                                ? AppColors.neutralOffWhite
+                                : AppColors.neutralActive,
                             height: 24 / 14,
                             leadingDistribution: TextLeadingDistribution.even,
                           ),
@@ -199,12 +203,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             context.pop();
                           },
                           behavior: HitTestBehavior.translucent,
-                          child: const Text(
+                          child: Text(
                             ' Login Now',
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
-                              color: AppColors.brandColorDefault,
+                              color: context.isDarkMode
+                                  ? AppColors.brandColorDarkMode
+                                  : AppColors.brandColorDefault,
                               height: 24 / 14,
                               leadingDistribution: TextLeadingDistribution.even,
                             ),

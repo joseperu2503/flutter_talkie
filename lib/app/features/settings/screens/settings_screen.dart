@@ -23,7 +23,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.white,
       body: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -35,14 +34,16 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 padding: const EdgeInsets.symmetric(
                   horizontal: 24,
                 ),
-                child: const Row(
+                child: Row(
                   children: [
                     Text(
                       'Settings',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.w600,
-                        color: AppColors.neutralActive,
+                        color: context.isDarkMode
+                            ? AppColors.neutralOffWhite
+                            : AppColors.neutralActive,
                         height: 30 / 18,
                         leadingDistribution: TextLeadingDistribution.even,
                       ),
@@ -66,17 +67,21 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       Container(
                         width: 50,
                         height: 50,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: AppColors.neutralLine,
+                          color: context.isDarkMode
+                              ? AppColors.neutralDark
+                              : AppColors.neutralLine,
                         ),
                         alignment: Alignment.center,
                         child: SvgPicture.asset(
                           'assets/icons/profile.svg',
                           width: 24,
                           height: 24,
-                          colorFilter: const ColorFilter.mode(
-                            AppColors.neutralActive,
+                          colorFilter: ColorFilter.mode(
+                            context.isDarkMode
+                                ? AppColors.neutralOffWhite
+                                : AppColors.neutralActive,
                             BlendMode.srcIn,
                           ),
                         ),
@@ -93,10 +98,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               user == null
                                   ? ''
                                   : '${user.name} ${user.surname}',
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600,
-                                color: AppColors.neutralActive,
+                                color: context.isDarkMode
+                                    ? AppColors.neutralOffWhite
+                                    : AppColors.neutralActive,
                                 height: 24 / 14,
                                 leadingDistribution:
                                     TextLeadingDistribution.even,
@@ -167,7 +174,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 Container(
                   height: 1,
-                  color: AppColors.neutralLine,
+                  color: context.isDarkMode
+                      ? AppColors.neutralDark
+                      : AppColors.neutralLine,
                   margin: const EdgeInsets.symmetric(horizontal: 24),
                 ),
                 const SizedBox(
@@ -191,7 +200,9 @@ class _SettingsScreenState extends State<SettingsScreen> {
                 ),
                 Container(
                   height: 1,
-                  color: AppColors.neutralLine,
+                  color: context.isDarkMode
+                      ? AppColors.neutralDark
+                      : AppColors.neutralLine,
                   margin: const EdgeInsets.symmetric(horizontal: 24),
                 ),
                 const SizedBox(
