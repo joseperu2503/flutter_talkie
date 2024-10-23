@@ -3,6 +3,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:flutter_talkie/app/core/constants/app_colors.dart';
 import 'package:flutter_talkie/app/features/auth/controllers/auth_controller.dart';
 import 'package:flutter_talkie/app/features/settings/widgets/menu_item.dart';
+import 'package:flutter_talkie/app/features/settings/widgets/theme_dialog.dart';
 import 'package:get/get.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -149,7 +150,14 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   height: 24,
                 ),
                 MenuItem(
-                  onPressed: () {},
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return const ThemeDialog();
+                      },
+                    );
+                  },
                   icon: 'assets/icons/sun.svg',
                   label: 'Appereance',
                 ),

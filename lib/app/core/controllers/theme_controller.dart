@@ -6,9 +6,8 @@ class ThemeController extends GetxController {
   Rx<ThemeMode> themeMode = ThemeMode.dark.obs;
 
   // Método para alternar entre temas
-  void toggleTheme() {
-    themeMode.value =
-        themeMode.value == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+  void changeTheme(ThemeMode theme) {
+    themeMode.value = theme;
     Get.changeThemeMode(themeMode.value);
   }
 

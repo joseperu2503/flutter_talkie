@@ -6,3 +6,5 @@ export 'package:flutter_talkie/app/core/constants/environment.dart';
 export 'package:flutter_talkie/app/core/constants/storage_keys.dart';
 export 'package:flutter_talkie/app/core/router/app_router.dart';
 export 'package:flutter_talkie/app/core/theme/app_theme.dart';
+export 'package:flutter_talkie/app/core/widgets/height.dart';
+export 'package:flutter_talkie/app/core/widgets/width.dart';
