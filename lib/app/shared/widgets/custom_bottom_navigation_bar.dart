@@ -42,12 +42,12 @@ class CustomBottomNavigationBar extends StatelessWidget {
         onTap: (value) {
           _onTap(context, value);
         },
-        selectedItemColor: context.isDarkMode
-            ? AppColors.brandColorDarkMode
-            : AppColors.brandColorDefault,
+        selectedItemColor:
+            context.isDarkMode ? AppColors.white : AppColors.brandColorDefault,
         type: BottomNavigationBarType.fixed,
-        unselectedItemColor:
-            context.isDarkMode ? AppColors.white : AppColors.neutralActive,
+        unselectedItemColor: context.isDarkMode
+            ? AppColors.neutralOffWhite
+            : AppColors.neutralActive,
         items: [
           for (var menuTab in menuTabs)
             BottomNavigationBarItem(
@@ -56,7 +56,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
                 menuTab.icon,
                 colorFilter: ColorFilter.mode(
                   context.isDarkMode
-                      ? AppColors.white
+                      ? AppColors.neutralOffWhite
                       : AppColors.neutralActive,
                   BlendMode.srcIn,
                 ),
@@ -65,7 +65,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
                 menuTab.activeIcon,
                 colorFilter: ColorFilter.mode(
                   context.isDarkMode
-                      ? AppColors.brandColorDarkMode
+                      ? AppColors.white
                       : AppColors.brandColorDefault,
                   BlendMode.srcIn,
                 ),

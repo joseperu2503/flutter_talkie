@@ -1,22 +1,28 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_talkie/app/core/core.dart';
 import 'package:get/get.dart';
 
 class ThemeController extends GetxController {
-  // Variable reactiva para cambiar entre temas
   Rx<ThemeMode> themeMode = ThemeMode.dark.obs;
 
-  // Método para alternar entre temas
-  void changeTheme(ThemeMode theme) {
+  void changeTheme(ThemeMode theme) async {
+    await StorageService.set<String>('theme', theme.toString());
     themeMode.value = theme;
     Get.changeThemeMode(themeMode.value);
   }
 
-  // Guardar el estado del tema en almacenamiento local (opcional)
-  // y leerlo al iniciar la app
-  ThemeMode getThemeModeFromStorage() {
-    // Recuperar tema almacenado localmente
-    Get.changeThemeMode(ThemeMode.dark);
+  getThemeModeFromStorage() async {
+    final storedTheme = await StorageService.get<String>('theme');
 
-    return ThemeMode.light; // Valor por defecto
+    ThemeMode theme;
+    if (storedTheme == 'ThemeMode.dark') {
+      theme = ThemeMode.dark;
+    } else if (storedTheme == 'ThemeMode.light') {
+      theme = ThemeMode.light;
+    } else {
+      theme = ThemeMode.system;
+    }
+
+    changeTheme(theme);
   }
 }
