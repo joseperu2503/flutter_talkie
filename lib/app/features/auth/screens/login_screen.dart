@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_talkie/app/shared/widgets/custom_text_field_2.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_talkie/app/core/core.dart';
 import 'package:flutter_talkie/app/features/auth/controllers/login_controller.dart';
 import 'package:flutter_talkie/app/shared/widgets/back_button.dart';
 import 'package:flutter_talkie/app/shared/widgets/custom_elevated_button.dart';
-import 'package:flutter_talkie/app/shared/widgets/custom_text_field.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -80,9 +80,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 40,
                     ),
                     Obx(
-                      () => CustomTextField(
-                        label: 'Email',
-                        hintText: 'Your email',
+                      () => CustomTextField2(
+                        hintText: 'Email',
                         value: loginController.email.value,
                         onChanged: (value) {
                           loginController.changeEmail(value);
@@ -95,9 +94,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 18,
                     ),
                     Obx(
-                      () => CustomTextField(
-                        label: 'Password',
-                        hintText: 'Your password',
+                      () => CustomTextField2(
+                        hintText: 'Password',
                         value: loginController.password.value,
                         onChanged: (value) {
                           loginController.changePassword(value);

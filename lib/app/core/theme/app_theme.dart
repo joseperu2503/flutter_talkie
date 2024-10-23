@@ -29,6 +29,7 @@ class AppTheme {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
+          disabledBackgroundColor: AppColors.neutralLine,
         ),
       ),
       dialogBackgroundColor: AppColors.white,

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_talkie/app/core/constants/app_colors.dart';
 import 'package:flutter_talkie/app/features/chat/controllers/chat_controller.dart';
+import 'package:flutter_talkie/app/features/contacts/controllers/contacts_controller.dart';
 import 'package:flutter_talkie/app/features/contacts/widgets/add_contact_dialog.dart';
 import 'package:flutter_talkie/app/features/contacts/widgets/contact_item.dart';
+import 'package:flutter_talkie/app/shared/widgets/custom_text_field_2.dart';
 import 'package:get/get.dart';
 
 class ContactsScreen extends StatefulWidget {
@@ -15,11 +17,8 @@ class ContactsScreen extends StatefulWidget {
 
 class _ContactsScreenState extends State<ContactsScreen> {
   final ChatController chatController = Get.find<ChatController>();
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  final ContactsController contactsController =
+      Get.put<ContactsController>(ContactsController());
 
   @override
   Widget build(BuildContext context) {
@@ -90,57 +89,14 @@ class _ContactsScreenState extends State<ContactsScreen> {
               bottom: 16,
             ),
             sliver: SliverToBoxAdapter(
-              child: Container(
-                decoration: BoxDecoration(
-                  color: context.isDarkMode
-                      ? AppColors.neutralDark
-                      : AppColors.neutralOffWhite,
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                height: 44,
-                child: TextFormField(
-                  style: TextStyle(
-                    color: context.isDarkMode
-                        ? AppColors.neutralOffWhite
-                        : AppColors.neutralActive,
-                    fontSize: 14,
-                    height: 24 / 14,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  decoration: InputDecoration(
-                    prefixIcon: SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: Center(
-                        child: SvgPicture.asset(
-                          'assets/icons/search.svg',
-                          colorFilter: const ColorFilter.mode(
-                            AppColors.neutralDisabled,
-                            BlendMode.srcIn,
-                          ),
-                          width: 24,
-                          height: 24,
-                        ),
-                      ),
-                    ),
-                    border: const OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                    ),
-                    contentPadding: const EdgeInsets.only(
-                      top: 10,
-                      left: 20,
-                      right: 20,
-                      bottom: 10,
-                    ),
-                    isCollapsed: true,
-                    hintText: 'Search',
-                    hintStyle: const TextStyle(
-                      fontSize: 14,
-                      height: 24 / 14,
-                      fontWeight: FontWeight.w600,
-                      color: AppColors.neutralDisabled,
-                    ),
-                  ),
+              child: Obx(
+                () => CustomTextField2(
+                  hintText: 'Search',
+                  prefixIcon: 'assets/icons/search.svg',
+                  value: contactsController.search.value,
+                  onChanged: (value) {
+                    contactsController.changeSearch(value);
+                  },
                 ),
               ),
             ),

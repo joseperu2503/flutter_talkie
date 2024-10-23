@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_talkie/app/core/core.dart';
+import 'package:flutter_talkie/app/features/contacts/controllers/contacts_controller.dart';
 import 'package:flutter_talkie/app/shared/widgets/custom_elevated_button.dart';
+import 'package:flutter_talkie/app/shared/widgets/custom_text_field_2.dart';
 import 'package:get/get.dart';
 
 class AddContactDialog extends StatelessWidget {
@@ -8,6 +10,9 @@ class AddContactDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ContactsController contactsController =
+        Get.find<ContactsController>();
+
     return Dialog(
       child: Container(
         padding: const EdgeInsets.only(
@@ -15,6 +20,9 @@ class AddContactDialog extends StatelessWidget {
           left: 24,
           right: 24,
           bottom: 24,
+        ),
+        constraints: const BoxConstraints(
+          maxWidth: 500,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -50,52 +58,27 @@ class AddContactDialog extends StatelessWidget {
             const SizedBox(
               height: 12,
             ),
-            Container(
-              decoration: BoxDecoration(
-                color: context.isDarkMode
-                    ? AppColors.neutralDark
-                    : AppColors.neutralOffWhite,
-                borderRadius: BorderRadius.circular(4),
-              ),
-              height: 44,
-              child: TextFormField(
-                style: TextStyle(
-                  color: context.isDarkMode
-                      ? AppColors.neutralOffWhite
-                      : AppColors.neutralActive,
-                  fontSize: 14,
-                  height: 24 / 14,
-                  fontWeight: FontWeight.w600,
-                ),
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                  ),
-                  contentPadding: EdgeInsets.only(
-                    top: 10,
-                    left: 20,
-                    right: 20,
-                    bottom: 10,
-                  ),
-                  isCollapsed: true,
-                  hintText: 'Enter a username',
-                  hintStyle: TextStyle(
-                    fontSize: 14,
-                    height: 24 / 14,
-                    fontWeight: FontWeight.w600,
-                    color: AppColors.neutralDisabled,
-                  ),
-                ),
+            Obx(
+              () => CustomTextField2(
+                hintText: 'Enter a username',
+                value: contactsController.username.value,
+                onChanged: (value) {
+                  contactsController.changeUsername(value);
+                },
               ),
             ),
             const SizedBox(
               height: 32,
             ),
-            CustomElevatedButton(
-              text: 'Send Friend Request',
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+            Obx(
+              () => CustomElevatedButton(
+                text: 'Send Friend Request',
+                onPressed: contactsController.username.value.isInvalid
+                    ? null
+                    : () {
+                        contactsController.addContact();
+                      },
+              ),
             ),
           ],
         ),

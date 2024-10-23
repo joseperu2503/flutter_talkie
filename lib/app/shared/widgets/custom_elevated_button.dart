@@ -42,7 +42,7 @@ class _CustomElevatedButtonState extends State<CustomElevatedButton> {
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
                   color: widget.onPressed == null
-                      ? AppColors.neutralActive
+                      ? AppColors.neutralDisabled
                       : AppColors.white,
                   leadingDistribution: TextLeadingDistribution.even,
                 ),
