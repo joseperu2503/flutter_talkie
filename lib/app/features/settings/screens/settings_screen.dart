@@ -138,16 +138,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   icon: 'assets/icons/profile.svg',
                   label: 'Account',
                 ),
-                const SizedBox(
-                  height: 8,
-                ),
                 MenuItem(
                   onPressed: () {},
                   icon: 'assets/icons/tabs/chat_outlined.svg',
                   label: 'Chats',
                 ),
                 const SizedBox(
-                  height: 24,
+                  height: 16,
                 ),
                 MenuItem(
                   onPressed: () {
@@ -161,16 +158,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   icon: 'assets/icons/sun.svg',
                   label: 'Appereance',
                 ),
-                const SizedBox(
-                  height: 8,
-                ),
                 MenuItem(
                   onPressed: () {},
                   icon: 'assets/icons/notification.svg',
                   label: 'Notification',
-                ),
-                const SizedBox(
-                  height: 8,
                 ),
                 MenuItem(
                   onPressed: () {},
@@ -194,9 +185,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   onPressed: () {},
                   icon: 'assets/icons/help.svg',
                   label: 'Help',
-                ),
-                const SizedBox(
-                  height: 8,
                 ),
                 MenuItem(
                   onPressed: () {},

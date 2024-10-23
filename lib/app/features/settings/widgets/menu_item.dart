@@ -20,7 +20,7 @@ class MenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 40,
+      height: 56,
       child: TextButton(
         onPressed: onPressed,
         style: TextButton.styleFrom(
