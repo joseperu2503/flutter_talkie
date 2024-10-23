@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_talkie/app/core/controllers/theme_controller.dart';
 import 'package:flutter_talkie/app/features/auth/controllers/auth_controller.dart';
 import 'package:flutter_talkie/app/features/chat/controllers/chat_controller.dart';
+import 'package:flutter_talkie/app/shared/widgets/snackbar.dart';
 import 'package:get/get.dart';
 
 class App extends StatefulWidget {
@@ -40,10 +41,10 @@ class _AppState extends State<App> with WidgetsBindingObserver {
     final chatController = Get.find<ChatController>();
     if (state == AppLifecycleState.resumed) {
       chatController.socket?.updateUserStatus(isConnected: true);
-      print('App en primer plano');
+      // print('App en primer plano');
     } else if (state == AppLifecycleState.paused) {
       chatController.socket?.updateUserStatus(isConnected: false);
-      print('App en segundo plano');
+      // print('App en segundo plano');
     }
   }
 
@@ -51,6 +52,8 @@ class _AppState extends State<App> with WidgetsBindingObserver {
   Widget build(BuildContext context) {
     if (widget.child == null) return Container();
 
-    return widget.child!;
+    return SnackbarProvider(
+      child: widget.child!,
+    );
   }
 }

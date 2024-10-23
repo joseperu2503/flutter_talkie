@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const Color gray2 = Color(0xFF788998);
-
   static const Color neutralActive = Color(0xff0F1828);
   static const Color neutralOffWhite = Color(0xffF7F7FC);
   static const Color neutralDisabled = Color(0xffADB5BD);
@@ -14,12 +12,15 @@ class AppColors {
   static const Color white = Color(0xFFFFFFFF);
 
   static const Color error = Color(0xFFF04438);
+  static const Color backgroundError = Color(0xFFFCE7EB);
+
   static const Color accentSuccess = Color(0xFF2CC069);
+  static const Color backgroundSuccess = Color(0xFFDAFFDC);
 
   static const Color brandColorBackground = Color(0xffD2D5F9);
   static const Color brandColorDark = Color(0xff001A83);
   static const Color brandColorDefault = Color(0xff002DE3);
   static const Color brandColorDarkMode = Color(0xff375FFF);
 
-  static const Color backgroundColor = Color(0xffEDEFF8);
+  static const Color cta50 = Color(0xFFE7F0FD);
 }

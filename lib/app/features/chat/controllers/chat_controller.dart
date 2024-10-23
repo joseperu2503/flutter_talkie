@@ -4,7 +4,7 @@ import 'package:flutter_talkie/app/features/chat/models/chat.dart';
 import 'package:flutter_talkie/app/features/chat/services/chat_service.dart';
 import 'package:flutter_talkie/app/features/chat/sockets/chat_socket.dart';
 import 'package:flutter_talkie/app/shared/enums/loading_status.dart';
-import 'package:flutter_talkie/app/shared/services/snackbar_service.dart';
+import 'package:flutter_talkie/app/shared/widgets/snackbar.dart';
 import 'package:get/get.dart';
 
 class ChatController extends GetxController {
@@ -25,7 +25,7 @@ class ChatController extends GetxController {
     } on ServiceException catch (e) {
       loading.value = LoadingStatus.error;
 
-      SnackBarService.show(e.message);
+      SnackbarService.show(e.message);
     }
   }
 

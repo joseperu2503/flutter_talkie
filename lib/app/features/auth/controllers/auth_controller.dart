@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter_talkie/app/core/core.dart';
 import 'package:flutter_talkie/app/features/auth/models/auth_user.dart';
 import 'package:flutter_talkie/app/features/auth/services/auth_service.dart';
-import 'package:flutter_talkie/app/shared/services/snackbar_service.dart';
+import 'package:flutter_talkie/app/shared/widgets/snackbar.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {
@@ -15,7 +15,7 @@ class AuthController extends GetxController {
 
       setuser(user);
     } catch (e) {
-      SnackBarService.show(e);
+      SnackbarService.show('Ocurrio un error');
     }
   }
 
