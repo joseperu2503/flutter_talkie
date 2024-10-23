@@ -60,6 +60,7 @@ class AddContactDialog extends StatelessWidget {
             ),
             Obx(
               () => CustomTextField2(
+                autofocus: true,
                 hintText: 'Enter a username',
                 value: contactsController.username.value,
                 onChanged: (value) {

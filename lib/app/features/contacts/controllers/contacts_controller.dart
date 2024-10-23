@@ -13,6 +13,10 @@ class ContactsController extends GetxController {
     validators: [Validators.required<String>()],
   ).obs;
 
+  resetUsername() {
+    username.value = username.value.updateValue('').unTouch();
+  }
+
   changeUsername(FormxInput<String> value) {
     username.value = value;
   }

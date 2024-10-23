@@ -55,6 +55,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
                           shape: const CircleBorder(),
                         ),
                         onPressed: () {
+                          contactsController.resetUsername();
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {

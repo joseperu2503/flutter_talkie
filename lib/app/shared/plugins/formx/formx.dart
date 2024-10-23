@@ -48,6 +48,12 @@ class FormxInput<T> {
     );
   }
 
+  FormxInput<T> unTouch() {
+    return _copyWith(
+      isTouched: false,
+    );
+  }
+
   FormxInput<T> updateValue(T value) {
     return _copyWith(
       value: value,
