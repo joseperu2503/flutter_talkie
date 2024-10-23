@@ -22,6 +22,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screen = MediaQuery.of(context);
+
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
@@ -34,8 +36,9 @@ class CustomBottomNavigationBar extends StatelessWidget {
         ],
         color: context.isDarkMode ? AppColors.neutralActive : AppColors.white,
       ),
-      constraints: const BoxConstraints(minHeight: 68),
+      height: 60 + screen.padding.bottom,
       child: BottomNavigationBar(
+        type: BottomNavigationBarType.shifting,
         elevation: 0,
         currentIndex: navigationShell.currentIndex,
         backgroundColor: Colors.transparent,
@@ -44,7 +47,6 @@ class CustomBottomNavigationBar extends StatelessWidget {
         },
         selectedItemColor:
             context.isDarkMode ? AppColors.white : AppColors.brandColorDefault,
-        type: BottomNavigationBarType.fixed,
         unselectedItemColor: context.isDarkMode
             ? AppColors.neutralOffWhite
             : AppColors.neutralActive,
