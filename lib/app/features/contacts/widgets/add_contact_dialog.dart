@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_talkie/app/core/core.dart';
 import 'package:flutter_talkie/app/features/contacts/controllers/contacts_controller.dart';
 import 'package:flutter_talkie/app/shared/widgets/custom_elevated_button.dart';
-import 'package:flutter_talkie/app/shared/widgets/custom_text_field_2.dart';
+import 'package:flutter_talkie/app/shared/widgets/custom_text_field.dart';
 import 'package:get/get.dart';
 
 class AddContactDialog extends StatelessWidget {
@@ -59,7 +59,7 @@ class AddContactDialog extends StatelessWidget {
               height: 12,
             ),
             Obx(
-              () => CustomTextField2(
+              () => CustomTextField(
                 autofocus: true,
                 hintText: 'Enter a username',
                 value: contactsController.username.value,

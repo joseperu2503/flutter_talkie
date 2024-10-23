@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_talkie/app/shared/widgets/custom_text_field_2.dart';
+import 'package:flutter_talkie/app/shared/widgets/custom_text_field.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_talkie/app/core/core.dart';
@@ -80,7 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 40,
                     ),
                     Obx(
-                      () => CustomTextField2(
+                      () => CustomTextField(
                         hintText: 'Email',
                         value: loginController.email.value,
                         onChanged: (value) {
@@ -94,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       height: 18,
                     ),
                     Obx(
-                      () => CustomTextField2(
+                      () => CustomTextField(
                         hintText: 'Password',
                         value: loginController.password.value,
                         onChanged: (value) {

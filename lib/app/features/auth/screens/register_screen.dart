@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_talkie/app/shared/widgets/custom_text_field.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
@@ -6,7 +7,6 @@ import 'package:flutter_talkie/app/core/core.dart';
 import 'package:flutter_talkie/app/features/auth/controllers/register_controller.dart';
 import 'package:flutter_talkie/app/shared/widgets/back_button.dart';
 import 'package:flutter_talkie/app/shared/widgets/custom_elevated_button.dart';
-import 'package:flutter_talkie/app/shared/widgets/custom_text_field.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -82,8 +82,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     Obx(
                       () => CustomTextField(
-                        label: 'Username',
-                        hintText: 'Your username',
+                        hintText: 'Username',
                         value: registerController.username.value,
                         onChanged: (value) {
                           registerController.changeUsername(value);
@@ -97,8 +96,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     Obx(
                       () => CustomTextField(
-                        label: 'Name',
-                        hintText: 'Your name',
+                        hintText: 'Name',
                         value: registerController.name.value,
                         onChanged: (value) {
                           registerController.changeName(value);
@@ -112,8 +110,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     Obx(
                       () => CustomTextField(
-                        label: 'Surname',
-                        hintText: 'Your surname',
+                        hintText: 'Surname',
                         value: registerController.surname.value,
                         onChanged: (value) {
                           registerController.changeSurname(value);
@@ -127,8 +124,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     Obx(
                       () => CustomTextField(
-                        label: 'Email',
-                        hintText: 'Your email',
+                        hintText: 'Email',
                         value: registerController.email.value,
                         onChanged: (value) {
                           registerController.changeEmail(value);
@@ -142,8 +138,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     Obx(
                       () => CustomTextField(
-                        label: 'Phone',
-                        hintText: 'Your phone',
+                        hintText: 'Phone',
                         value: registerController.phone.value,
                         onChanged: (value) {
                           registerController.changePhone(value);
@@ -157,7 +152,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     ),
                     Obx(
                       () => CustomTextField(
-                        label: 'Password',
                         hintText: 'Password',
                         value: registerController.password.value,
                         onChanged: (value) {
