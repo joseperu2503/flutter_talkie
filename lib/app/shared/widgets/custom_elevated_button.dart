@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_talkie/app/core/core.dart';
-import 'package:get/get.dart';
 
-class CustomButton extends StatefulWidget {
-  const CustomButton({
+class CustomElevatedButton extends StatefulWidget {
+  const CustomElevatedButton({
     super.key,
     this.onPressed,
     this.text,
@@ -17,24 +16,16 @@ class CustomButton extends StatefulWidget {
   final Widget? iconLeft;
 
   @override
-  State<CustomButton> createState() => _CustomButtonState();
+  State<CustomElevatedButton> createState() => _CustomElevatedButtonState();
 }
 
-class _CustomButtonState extends State<CustomButton> {
+class _CustomElevatedButtonState extends State<CustomElevatedButton> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 52,
       width: widget.width,
-      child: TextButton(
-        style: TextButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-          backgroundColor: context.isDarkMode
-              ? AppColors.brandColorDarkMode
-              : AppColors.brandColorDefault,
-        ),
+      child: ElevatedButton(
         onPressed: widget.onPressed,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

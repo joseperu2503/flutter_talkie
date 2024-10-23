@@ -31,9 +31,6 @@ class _CustomTextButtonState extends State<CustomTextButton> {
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
-          backgroundColor: context.isDarkMode
-              ? AppColors.brandColorDarkMode
-              : AppColors.brandColorDefault,
         ),
         onPressed: widget.onPressed,
         child: Row(
@@ -52,7 +49,9 @@ class _CustomTextButtonState extends State<CustomTextButton> {
                   fontWeight: FontWeight.w600,
                   color: widget.onPressed == null
                       ? AppColors.neutralActive
-                      : AppColors.white,
+                      : context.isDarkMode
+                          ? AppColors.neutralOffWhite
+                          : AppColors.neutralActive,
                   leadingDistribution: TextLeadingDistribution.even,
                 ),
               )

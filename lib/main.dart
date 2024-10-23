@@ -19,8 +19,8 @@ class MainApp extends StatelessWidget {
     return GetMaterialApp.router(
       title: 'Talkie',
       debugShowCheckedModeBanner: false,
-      theme: AppTheme.getTheme(ThemeMode.light),
-      darkTheme: AppTheme.getTheme(ThemeMode.dark),
+      theme: AppTheme.getTheme(),
+      darkTheme: AppTheme.getDarkTheme(),
       themeMode: ThemeMode.system,
       routeInformationParser: appRouter.routeInformationParser,
       routerDelegate: appRouter.routerDelegate,

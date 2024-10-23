@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_talkie/app/core/core.dart';
 import 'package:flutter_talkie/app/features/auth/controllers/register_controller.dart';
 import 'package:flutter_talkie/app/shared/widgets/back_button.dart';
-import 'package:flutter_talkie/app/shared/widgets/custom_button.dart';
+import 'package:flutter_talkie/app/shared/widgets/custom_elevated_button.dart';
 import 'package:flutter_talkie/app/shared/widgets/custom_text_field.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -174,7 +174,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     const SizedBox(
                       height: 24,
                     ),
-                    CustomButton(
+                    CustomElevatedButton(
                       text: 'Register',
                       onPressed: () {
                         registerController.register();

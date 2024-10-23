@@ -122,11 +122,10 @@ class _ChatsViewState extends State<ChatsView> {
       floatingActionButton: SizedBox(
         height: 56,
         width: 56,
-        child: TextButton(
-          style: TextButton.styleFrom(
-            backgroundColor: AppColors.brandColorDefault,
-            shape: ContinuousRectangleBorder(
-              borderRadius: BorderRadius.circular(24),
+        child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
             ),
           ),
           onPressed: () {

@@ -2,23 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_talkie/app/core/constants/app_colors.dart';
 
 class AppTheme {
-  static ThemeData getTheme(ThemeMode themeMode) {
+  static ThemeData getTheme() {
     return ThemeData(
       fontFamily: 'Mulish',
-      brightness:
-          themeMode == ThemeMode.light ? Brightness.light : Brightness.dark,
-      scaffoldBackgroundColor: themeMode == ThemeMode.light
-          ? AppColors.white
-          : AppColors.neutralActive,
-      appBarTheme: AppBarTheme(
-        backgroundColor: themeMode == ThemeMode.light
-            ? AppColors.white
-            : AppColors.neutralActive,
+      brightness: Brightness.light,
+      scaffoldBackgroundColor: AppColors.white,
+      appBarTheme: const AppBarTheme(
+        backgroundColor: AppColors.white,
       ),
       useMaterial3: true,
       colorScheme: ColorScheme.fromSwatch(
-        brightness:
-            themeMode == ThemeMode.light ? Brightness.light : Brightness.dark,
+        brightness: Brightness.light,
         accentColor: Colors.black12,
         backgroundColor: Colors.white,
       ),
@@ -27,19 +21,67 @@ class AppTheme {
           foregroundColor: Colors.black12,
         ),
       ),
-      dialogBackgroundColor: themeMode == ThemeMode.light
-          ? AppColors.white
-          : AppColors.neutralActive,
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.zero,
+          backgroundColor: AppColors.brandColorDefault,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+        ),
+      ),
+      dialogBackgroundColor: AppColors.white,
       bottomSheetTheme: const BottomSheetThemeData(
         modalBackgroundColor: Colors.white,
         showDragHandle: true,
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.white,
       ),
-      textSelectionTheme: TextSelectionThemeData(
-        cursorColor: themeMode == ThemeMode.light
-            ? AppColors.brandColorDefault
-            : AppColors.neutralDisabled,
+      textSelectionTheme: const TextSelectionThemeData(
+        cursorColor: AppColors.brandColorDefault,
+      ),
+    );
+  }
+
+  static ThemeData getDarkTheme() {
+    return ThemeData(
+      fontFamily: 'Mulish',
+      brightness: Brightness.dark,
+      scaffoldBackgroundColor: AppColors.neutralActive,
+      appBarTheme: const AppBarTheme(
+        backgroundColor: AppColors.neutralActive,
+      ),
+      useMaterial3: true,
+      colorScheme: ColorScheme.fromSwatch(
+        brightness: Brightness.dark,
+        accentColor: Colors.black12,
+        backgroundColor: Colors.white,
+      ),
+      textButtonTheme: TextButtonThemeData(
+        style: TextButton.styleFrom(
+          foregroundColor: Colors.black12,
+        ),
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.zero,
+          backgroundColor: AppColors.brandColorDarkMode,
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+        ),
+      ),
+      dialogBackgroundColor: AppColors.neutralActive,
+      bottomSheetTheme: const BottomSheetThemeData(
+        modalBackgroundColor: Colors.white,
+        showDragHandle: true,
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
+      ),
+      textSelectionTheme: const TextSelectionThemeData(
+        cursorColor: AppColors.neutralDisabled,
       ),
     );
   }

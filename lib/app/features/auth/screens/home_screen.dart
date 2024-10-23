@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_talkie/app/core/core.dart';
-import 'package:flutter_talkie/app/shared/widgets/custom_button.dart';
+import 'package:flutter_talkie/app/shared/widgets/custom_elevated_button.dart';
 import 'package:go_router/go_router.dart';
 import 'package:get/get.dart';
 
@@ -94,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(
                       height: 12,
                     ),
-                    CustomButton(
+                    CustomElevatedButton(
                       text: 'Start Messaging',
                       onPressed: () {
                         context.push('/login');

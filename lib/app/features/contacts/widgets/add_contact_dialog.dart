@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_talkie/app/core/core.dart';
-import 'package:flutter_talkie/app/shared/widgets/custom_button.dart';
+import 'package:flutter_talkie/app/shared/widgets/custom_elevated_button.dart';
 import 'package:get/get.dart';
 
 class AddContactDialog extends StatelessWidget {
@@ -91,7 +91,7 @@ class AddContactDialog extends StatelessWidget {
             const SizedBox(
               height: 32,
             ),
-            CustomButton(
+            CustomElevatedButton(
               text: 'Send Friend Request',
               onPressed: () {
                 Navigator.of(context).pop();
