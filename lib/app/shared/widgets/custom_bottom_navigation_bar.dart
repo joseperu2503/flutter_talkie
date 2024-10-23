@@ -38,10 +38,10 @@ class CustomBottomNavigationBar extends StatelessWidget {
       ),
       height: 60 + screen.padding.bottom,
       child: BottomNavigationBar(
-        type: BottomNavigationBarType.shifting,
         elevation: 0,
         currentIndex: navigationShell.currentIndex,
-        backgroundColor: Colors.transparent,
+        backgroundColor:
+            context.isDarkMode ? AppColors.neutralActive : AppColors.white,
         onTap: (value) {
           _onTap(context, value);
         },
