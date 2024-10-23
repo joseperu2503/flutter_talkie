@@ -21,8 +21,8 @@ class CustomCheckbox extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 20,
-            height: 20,
+            width: 24,
+            height: 24,
             alignment: Alignment.center,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
@@ -31,7 +31,9 @@ class CustomCheckbox extends StatelessWidget {
                     ? context.isDarkMode
                         ? AppColors.brandColorDarkMode
                         : AppColors.brandColorDefault
-                    : AppColors.brandColorDarkMode,
+                    : context.isDarkMode
+                        ? AppColors.neutralDisabled
+                        : AppColors.neutralDisabled,
                 width: 1,
               ),
             ),
@@ -40,8 +42,8 @@ class CustomCheckbox extends StatelessWidget {
               child: Center(
                 child: Container(
                   alignment: Alignment.center,
-                  width: 10,
-                  height: 10,
+                  width: 12,
+                  height: 12,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: context.isDarkMode
@@ -52,17 +54,19 @@ class CustomCheckbox extends StatelessWidget {
               ),
             ),
           ),
-          const Width(12),
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: context.isDarkMode
-                  ? AppColors.neutralOffWhite
-                  : AppColors.neutralActive,
-              height: 24 / 16,
-              leadingDistribution: TextLeadingDistribution.even,
+          const Width(16),
+          Expanded(
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w600,
+                color: context.isDarkMode
+                    ? AppColors.neutralOffWhite
+                    : AppColors.neutralActive,
+                height: 24 / 16,
+                leadingDistribution: TextLeadingDistribution.even,
+              ),
             ),
           ),
         ],

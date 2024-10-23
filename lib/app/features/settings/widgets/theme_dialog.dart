@@ -63,7 +63,7 @@ class _ThemeDialogState extends State<ThemeDialog> {
               },
               label: 'Light',
             ),
-            const Height(16),
+            const Height(32),
             CustomCheckbox(
               isSelected: themeMode == ThemeMode.dark,
               onPress: () {
@@ -73,7 +73,7 @@ class _ThemeDialogState extends State<ThemeDialog> {
               },
               label: 'Dark',
             ),
-            const Height(16),
+            const Height(24),
             CustomCheckbox(
               isSelected: themeMode == ThemeMode.system,
               onPress: () {

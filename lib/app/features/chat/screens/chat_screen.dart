@@ -32,6 +32,8 @@ class _ChatScreenState extends State<ChatScreen> {
     chatController.markChatAsRead(widget.chatId);
   }
 
+  final FocusNode _focusNode = FocusNode();
+
   @override
   void dispose() {
     messageController.dispose();
@@ -44,7 +46,6 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     final chatController = Get.find<ChatController>();
     final screen = MediaQuery.of(context);
-    final FocusNode _focusNode = FocusNode();
 
     return Scaffold(
       backgroundColor: context.isDarkMode
@@ -223,7 +224,6 @@ class _ChatScreenState extends State<ChatScreen> {
                       _focusNode.requestFocus();
                     },
                     textInputAction: TextInputAction.send,
-                    autofocus: true,
                     focusNode: _focusNode,
                     onTapOutside: (event) {
                       FocusScope.of(context).unfocus();
