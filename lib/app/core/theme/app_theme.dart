@@ -33,12 +33,6 @@ class AppTheme {
         ),
       ),
       dialogBackgroundColor: AppColors.white,
-      bottomSheetTheme: const BottomSheetThemeData(
-        modalBackgroundColor: Colors.white,
-        showDragHandle: true,
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.white,
-      ),
       textSelectionTheme: const TextSelectionThemeData(
         cursorColor: AppColors.brandColorDefault,
       ),
@@ -75,12 +69,6 @@ class AppTheme {
         ),
       ),
       dialogBackgroundColor: AppColors.neutralActive,
-      bottomSheetTheme: const BottomSheetThemeData(
-        modalBackgroundColor: Colors.white,
-        showDragHandle: true,
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.white,
-      ),
       textSelectionTheme: const TextSelectionThemeData(
         cursorColor: AppColors.neutralDisabled,
       ),
