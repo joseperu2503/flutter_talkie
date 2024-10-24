@@ -102,15 +102,36 @@ class _ContactsScreenState extends State<ContactsScreen> {
               ),
             ),
           ),
-          Obx(
-            () => SliverList.builder(
+          Obx(() {
+            final chats = [...chatController.chats];
+            final String search = contactsController.search.value.value;
+
+            // Filtrar los chats según el nombre o apellido del receptor
+            final filteredChats = chats.where((chat) {
+              final receiverName = chat.receiver.name.toLowerCase();
+              final receiverSurname = chat.receiver.surname.toLowerCase();
+              // Retorna true si el nombre o apellido contiene el valor del buscador
+              return receiverName.contains(search) ||
+                  receiverSurname.contains(search);
+            }).toList();
+
+            filteredChats.sort((a, b) {
+              // Obtener la primera letra de cada nombre del receiver
+              String initialA = a.receiver.name[0].toUpperCase();
+              String initialB = b.receiver.name[0].toUpperCase();
+
+              // Comparar las iniciales
+              return initialA.compareTo(initialB);
+            });
+
+            return SliverList.builder(
               itemBuilder: (context, index) {
-                final chat = chatController.chats[index];
+                final chat = filteredChats[index];
                 return ContactItem(chat: chat);
               },
-              itemCount: chatController.chats.length,
-            ),
-          )
+              itemCount: filteredChats.length,
+            );
+          })
         ],
       ),
     );
