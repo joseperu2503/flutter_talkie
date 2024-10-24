@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_talkie/app/core/core.dart';
+import 'package:talkie/app/core/core.dart';
 
 class CustomElevatedButton extends StatefulWidget {
   const CustomElevatedButton({

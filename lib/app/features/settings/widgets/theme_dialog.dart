@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_talkie/app/core/controllers/theme_controller.dart';
-import 'package:flutter_talkie/app/core/core.dart';
-import 'package:flutter_talkie/app/shared/widgets/custom_elevated_button.dart';
-import 'package:flutter_talkie/app/shared/widgets/custom_checkbox.dart';
-import 'package:flutter_talkie/app/shared/widgets/custom_text_button.dart';
+import 'package:talkie/app/core/controllers/theme_controller.dart';
+import 'package:talkie/app/core/core.dart';
+import 'package:talkie/app/shared/widgets/custom_elevated_button.dart';
+import 'package:talkie/app/shared/widgets/custom_checkbox.dart';
+import 'package:talkie/app/shared/widgets/custom_text_button.dart';
 import 'package:get/get.dart';
 
 class ThemeDialog extends StatefulWidget {

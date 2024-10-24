@@ -1,6 +1,6 @@
-import 'package:flutter_talkie/app/core/core.dart';
-import 'package:flutter_talkie/app/features/auth/models/auth_user.dart';
-import 'package:flutter_talkie/app/features/auth/models/login_response.dart';
+import 'package:talkie/app/core/core.dart';
+import 'package:talkie/app/features/auth/models/auth_user.dart';
+import 'package:talkie/app/features/auth/models/login_response.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 class AuthService {

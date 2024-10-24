@@ -1,6 +1,6 @@
-import 'package:flutter_talkie/app/core/core.dart';
-import 'package:flutter_talkie/app/features/chat/models/chat.dart';
-import 'package:flutter_talkie/app/features/chat/models/message_received.dart';
+import 'package:talkie/app/core/core.dart';
+import 'package:talkie/app/features/chat/models/chat.dart';
+import 'package:talkie/app/features/chat/models/message_received.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class ChatSocket {

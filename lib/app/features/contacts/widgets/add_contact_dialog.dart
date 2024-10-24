@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_talkie/app/core/core.dart';
-import 'package:flutter_talkie/app/features/contacts/controllers/contacts_controller.dart';
-import 'package:flutter_talkie/app/shared/widgets/custom_elevated_button.dart';
-import 'package:flutter_talkie/app/shared/widgets/custom_text_field.dart';
+import 'package:talkie/app/core/core.dart';
+import 'package:talkie/app/features/contacts/controllers/contacts_controller.dart';
+import 'package:talkie/app/shared/widgets/custom_elevated_button.dart';
+import 'package:talkie/app/shared/widgets/custom_text_field.dart';
 import 'package:get/get.dart';
 
 class AddContactDialog extends StatelessWidget {

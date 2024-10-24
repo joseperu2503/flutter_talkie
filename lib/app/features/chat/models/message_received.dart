@@ -1,4 +1,4 @@
-import 'package:flutter_talkie/app/features/chat/models/chat.dart';
+import 'package:talkie/app/features/chat/models/chat.dart';
 
 class MessagesReceived {
   final Message message;

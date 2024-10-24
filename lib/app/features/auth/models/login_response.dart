@@ -1,4 +1,4 @@
-import 'package:flutter_talkie/app/features/auth/models/auth_user.dart';
+import 'package:talkie/app/features/auth/models/auth_user.dart';
 
 class LoginResponse {
   final AuthUser user;

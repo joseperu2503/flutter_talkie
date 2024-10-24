@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'package:flutter_talkie/app/core/core.dart';
+import 'package:talkie/app/core/core.dart';
 
 class CustomBackButton extends StatelessWidget {
   const CustomBackButton({super.key});

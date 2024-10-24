@@ -1,4 +1,4 @@
-package com.joseperezgil.talkie.flutter_talkie
+package com.joseperezgil.talkie
 
 import io.flutter.embedding.android.FlutterActivity
 

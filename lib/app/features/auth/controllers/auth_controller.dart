@@ -1,9 +1,9 @@
 import 'dart:async';
 
-import 'package:flutter_talkie/app/core/core.dart';
-import 'package:flutter_talkie/app/features/auth/models/auth_user.dart';
-import 'package:flutter_talkie/app/features/auth/services/auth_service.dart';
-import 'package:flutter_talkie/app/shared/widgets/snackbar.dart';
+import 'package:talkie/app/core/core.dart';
+import 'package:talkie/app/features/auth/models/auth_user.dart';
+import 'package:talkie/app/features/auth/services/auth_service.dart';
+import 'package:talkie/app/shared/widgets/snackbar.dart';
 import 'package:get/get.dart';
 
 class AuthController extends GetxController {

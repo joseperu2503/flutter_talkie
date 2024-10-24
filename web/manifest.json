@@ -1,6 +1,6 @@
 {
-    "name": "flutter_talkie",
-    "short_name": "flutter_talkie",
+    "name": "talkie",
+    "short_name": "talkie",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

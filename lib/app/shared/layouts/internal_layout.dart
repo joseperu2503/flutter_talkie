@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter_talkie/app/core/constants/breakpoints.dart';
-import 'package:flutter_talkie/app/core/core.dart';
-import 'package:flutter_talkie/app/features/auth/controllers/auth_controller.dart';
-import 'package:flutter_talkie/app/shared/widgets/custom_bottom_navigation_bar.dart';
+import 'package:talkie/app/core/constants/breakpoints.dart';
+import 'package:talkie/app/core/core.dart';
+import 'package:talkie/app/features/auth/controllers/auth_controller.dart';
+import 'package:talkie/app/shared/widgets/custom_bottom_navigation_bar.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 

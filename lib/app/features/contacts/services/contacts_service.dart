@@ -1,5 +1,5 @@
-import 'package:flutter_talkie/app/core/core.dart';
-import 'package:flutter_talkie/app/features/contacts/models/add_contact_response.dart';
+import 'package:talkie/app/core/core.dart';
+import 'package:talkie/app/features/contacts/models/add_contact_response.dart';
 
 class ContactsService {
   static Future<AddContactResponse> addContact(String username) async {

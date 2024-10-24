@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_talkie/app/core/constants/breakpoints.dart';
-import 'package:flutter_talkie/app/features/chat/screens/chat_screen.dart';
-import 'package:flutter_talkie/app/core/constants/app_colors.dart';
-import 'package:flutter_talkie/app/features/chat/controllers/chat_controller.dart';
-import 'package:flutter_talkie/app/features/chat/widgets/chat_item.dart';
+import 'package:talkie/app/core/constants/breakpoints.dart';
+import 'package:talkie/app/features/chat/screens/chat_screen.dart';
+import 'package:talkie/app/core/constants/app_colors.dart';
+import 'package:talkie/app/features/chat/controllers/chat_controller.dart';
+import 'package:talkie/app/features/chat/widgets/chat_item.dart';
 
 class ChatsScreen extends StatefulWidget {
   const ChatsScreen({super.key});

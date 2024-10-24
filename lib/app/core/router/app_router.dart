@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_talkie/app/features/auth/screens/home_screen.dart';
-import 'package:flutter_talkie/app/features/auth/screens/register_screen.dart';
-import 'package:flutter_talkie/app/features/auth/services/auth_service.dart';
-import 'package:flutter_talkie/app/features/contacts/screens/contacts_screen.dart';
-import 'package:flutter_talkie/app/features/settings/screens/settings_screen.dart';
-import 'package:flutter_talkie/app/shared/layouts/internal_layout.dart';
+import 'package:talkie/app/features/auth/screens/home_screen.dart';
+import 'package:talkie/app/features/auth/screens/register_screen.dart';
+import 'package:talkie/app/features/auth/services/auth_service.dart';
+import 'package:talkie/app/features/contacts/screens/contacts_screen.dart';
+import 'package:talkie/app/features/settings/screens/settings_screen.dart';
+import 'package:talkie/app/shared/layouts/internal_layout.dart';
 import 'package:go_router/go_router.dart';
-import 'package:flutter_talkie/app/features/auth/screens/login_screen.dart';
-import 'package:flutter_talkie/app/features/chat/screens/chats_screen.dart';
+import 'package:talkie/app/features/auth/screens/login_screen.dart';
+import 'package:talkie/app/features/chat/screens/chats_screen.dart';
 
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
 

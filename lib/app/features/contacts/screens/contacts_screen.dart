@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_talkie/app/core/constants/app_colors.dart';
-import 'package:flutter_talkie/app/features/chat/controllers/chat_controller.dart';
-import 'package:flutter_talkie/app/features/contacts/controllers/contacts_controller.dart';
-import 'package:flutter_talkie/app/features/contacts/widgets/add_contact_dialog.dart';
-import 'package:flutter_talkie/app/features/contacts/widgets/contact_item.dart';
-import 'package:flutter_talkie/app/shared/widgets/custom_text_field.dart';
+import 'package:talkie/app/core/constants/app_colors.dart';
+import 'package:talkie/app/features/chat/controllers/chat_controller.dart';
+import 'package:talkie/app/features/contacts/controllers/contacts_controller.dart';
+import 'package:talkie/app/features/contacts/widgets/add_contact_dialog.dart';
+import 'package:talkie/app/features/contacts/widgets/contact_item.dart';
+import 'package:talkie/app/shared/widgets/custom_text_field.dart';
 import 'package:get/get.dart';
 
 class ContactsScreen extends StatefulWidget {

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_talkie/app/core/core.dart';
-import 'package:flutter_talkie/app/features/contacts/services/contacts_service.dart';
-import 'package:flutter_talkie/app/shared/enums/loading_status.dart';
-import 'package:flutter_talkie/app/shared/plugins/formx/formx.dart';
-import 'package:flutter_talkie/app/shared/widgets/snackbar.dart';
+import 'package:talkie/app/core/core.dart';
+import 'package:talkie/app/features/contacts/services/contacts_service.dart';
+import 'package:talkie/app/shared/enums/loading_status.dart';
+import 'package:talkie/app/shared/plugins/formx/formx.dart';
+import 'package:talkie/app/shared/widgets/snackbar.dart';
 import 'package:get/get.dart';
 
 class ContactsController extends GetxController {

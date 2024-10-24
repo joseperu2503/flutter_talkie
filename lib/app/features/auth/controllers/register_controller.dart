@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_talkie/app/core/core.dart';
-import 'package:flutter_talkie/app/features/auth/controllers/auth_controller.dart';
-import 'package:flutter_talkie/app/features/auth/models/auth_user.dart';
-import 'package:flutter_talkie/app/features/auth/models/login_response.dart';
-import 'package:flutter_talkie/app/features/auth/services/auth_service.dart';
-import 'package:flutter_talkie/app/shared/enums/loading_status.dart';
-import 'package:flutter_talkie/app/shared/plugins/formx/formx.dart';
-import 'package:flutter_talkie/app/shared/widgets/snackbar.dart';
+import 'package:talkie/app/core/core.dart';
+import 'package:talkie/app/features/auth/controllers/auth_controller.dart';
+import 'package:talkie/app/features/auth/models/auth_user.dart';
+import 'package:talkie/app/features/auth/models/login_response.dart';
+import 'package:talkie/app/features/auth/services/auth_service.dart';
+import 'package:talkie/app/shared/enums/loading_status.dart';
+import 'package:talkie/app/shared/plugins/formx/formx.dart';
+import 'package:talkie/app/shared/widgets/snackbar.dart';
 import 'package:get/get.dart';
 
 class RegisterController extends GetxController {

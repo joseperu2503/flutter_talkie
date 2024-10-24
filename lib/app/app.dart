@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_talkie/app/core/controllers/theme_controller.dart';
-import 'package:flutter_talkie/app/features/auth/controllers/auth_controller.dart';
-import 'package:flutter_talkie/app/features/chat/controllers/chat_controller.dart';
-import 'package:flutter_talkie/app/shared/widgets/snackbar.dart';
+import 'package:talkie/app/core/controllers/theme_controller.dart';
+import 'package:talkie/app/features/auth/controllers/auth_controller.dart';
+import 'package:talkie/app/features/chat/controllers/chat_controller.dart';
+import 'package:talkie/app/shared/widgets/snackbar.dart';
 import 'package:get/get.dart';
 
 class App extends StatefulWidget {

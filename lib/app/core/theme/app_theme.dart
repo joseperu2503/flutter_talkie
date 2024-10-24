@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_talkie/app/core/constants/app_colors.dart';
+import 'package:talkie/app/core/constants/app_colors.dart';
 
 class AppTheme {
   static ThemeData getTheme() {

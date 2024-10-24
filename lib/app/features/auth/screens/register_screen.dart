@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_talkie/app/shared/widgets/custom_text_field.dart';
+import 'package:talkie/app/shared/widgets/custom_text_field.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:flutter_talkie/app/core/core.dart';
-import 'package:flutter_talkie/app/features/auth/controllers/register_controller.dart';
-import 'package:flutter_talkie/app/shared/widgets/back_button.dart';
-import 'package:flutter_talkie/app/shared/widgets/custom_elevated_button.dart';
+import 'package:talkie/app/core/core.dart';
+import 'package:talkie/app/features/auth/controllers/register_controller.dart';
+import 'package:talkie/app/shared/widgets/back_button.dart';
+import 'package:talkie/app/shared/widgets/custom_elevated_button.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});

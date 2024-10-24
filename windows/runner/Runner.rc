@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.joseperezgil.talkie" "\0"
-            VALUE "FileDescription", "flutter_talkie" "\0"
+            VALUE "FileDescription", "talkie" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "flutter_talkie" "\0"
+            VALUE "InternalName", "talkie" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.joseperezgil.talkie. All rights reserved." "\0"
-            VALUE "OriginalFilename", "flutter_talkie.exe" "\0"
-            VALUE "ProductName", "flutter_talkie" "\0"
+            VALUE "OriginalFilename", "talkie.exe" "\0"
+            VALUE "ProductName", "talkie" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

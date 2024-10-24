@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_talkie/app/core/constants/environment.dart';
-import 'package:flutter_talkie/app/core/constants/storage_keys.dart';
-import 'package:flutter_talkie/app/core/services/storage_service.dart';
+import 'package:talkie/app/core/constants/environment.dart';
+import 'package:talkie/app/core/constants/storage_keys.dart';
+import 'package:talkie/app/core/services/storage_service.dart';
 
 final Dio _dioBase = Dio(BaseOptions(baseUrl: '${Environment.baseUrl}/api'));
 

@@ -1,8 +1,8 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_talkie/app/core/constants/breakpoints.dart';
-import 'package:flutter_talkie/app/core/core.dart';
+import 'package:talkie/app/core/constants/breakpoints.dart';
+import 'package:talkie/app/core/core.dart';
 
 enum SnackbarType {
   info,

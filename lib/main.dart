@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_talkie/app/app.dart';
-import 'package:flutter_talkie/app/core/constants/environment.dart';
-import 'package:flutter_talkie/app/core/router/app_router.dart';
-import 'package:flutter_talkie/app/core/theme/app_theme.dart';
+import 'package:talkie/app/app.dart';
+import 'package:talkie/app/core/constants/environment.dart';
+import 'package:talkie/app/core/router/app_router.dart';
+import 'package:talkie/app/core/theme/app_theme.dart';
 import 'package:get/get.dart';
 
 void main() async {

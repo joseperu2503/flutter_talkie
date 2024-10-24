@@ -1,3 +1,3 @@
-# flutter_talkie
+# talkie
 
 A new Flutter project.

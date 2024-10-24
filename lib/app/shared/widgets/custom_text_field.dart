@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:flutter_talkie/app/core/constants/app_colors.dart';
-import 'package:flutter_talkie/app/shared/plugins/formx/formx.dart';
+import 'package:talkie/app/core/constants/app_colors.dart';
+import 'package:talkie/app/shared/plugins/formx/formx.dart';
 import 'package:get/get.dart';
 
 class CustomTextField extends StatefulWidget {

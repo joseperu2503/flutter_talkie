@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_talkie/app/core/core.dart';
-import 'package:flutter_talkie/app/features/chat/models/chat.dart';
+import 'package:talkie/app/core/core.dart';
+import 'package:talkie/app/features/chat/models/chat.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 
