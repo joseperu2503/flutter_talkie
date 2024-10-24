@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:talkie/app/core/controllers/theme_controller.dart';
 import 'package:talkie/app/features/auth/controllers/auth_controller.dart';
 import 'package:talkie/app/features/auth/services/auth_service.dart';
@@ -33,6 +34,14 @@ class _AppState extends State<App> with WidgetsBindingObserver {
     final chatController = Get.put<ChatController>(ChatController());
     final themeController = Get.put<ThemeController>(ThemeController());
 
+    await themeController.getThemeModeFromStorage();
+    Future.delayed(
+      const Duration(milliseconds: 300),
+      () {
+        FlutterNativeSplash.remove();
+      },
+    );
+
     final (validToken, timeRemainingInSeconds) =
         await AuthService.verifyToken();
 
@@ -41,8 +50,6 @@ class _AppState extends State<App> with WidgetsBindingObserver {
       chatController.connectSocket();
       chatController.getChats();
     }
-
-    themeController.getThemeModeFromStorage();
   }
 
   @override

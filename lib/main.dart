@@ -4,9 +4,13 @@ import 'package:talkie/app/core/constants/environment.dart';
 import 'package:talkie/app/core/router/app_router.dart';
 import 'package:talkie/app/core/theme/app_theme.dart';
 import 'package:get/get.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 void main() async {
   await Environment.initEnvironment();
+  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
+
+  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
 
   runApp(const MainApp());
 }

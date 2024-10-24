@@ -5,13 +5,13 @@ import 'package:get/get.dart';
 class ThemeController extends GetxController {
   Rx<ThemeMode> themeMode = ThemeMode.dark.obs;
 
-  void changeTheme(ThemeMode theme) async {
+  Future<void> changeTheme(ThemeMode theme) async {
     await StorageService.set<String>('theme', theme.toString());
     themeMode.value = theme;
     Get.changeThemeMode(themeMode.value);
   }
 
-  getThemeModeFromStorage() async {
+  Future<void> getThemeModeFromStorage() async {
     final storedTheme = await StorageService.get<String>('theme');
 
     ThemeMode theme;
@@ -23,6 +23,6 @@ class ThemeController extends GetxController {
       theme = ThemeMode.system;
     }
 
-    changeTheme(theme);
+    await changeTheme(theme);
   }
 }
