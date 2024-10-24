@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:talkie/app/core/constants/breakpoints.dart';
-import 'package:talkie/app/features/chat/screens/chat_screen.dart';
 import 'package:talkie/app/core/constants/app_colors.dart';
 import 'package:talkie/app/features/chat/controllers/chat_controller.dart';
 import 'package:talkie/app/features/chat/widgets/chat_item.dart';
@@ -17,73 +15,6 @@ class ChatsScreen extends StatefulWidget {
 
 class _ChatsScreenState extends State<ChatsScreen> {
   final chatController = Get.find<ChatController>();
-
-  @override
-  void initState() {
-    chatController.getChats();
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    if (Breakpoints.isMdUp(context)) {
-      return Scaffold(
-        body: Row(
-          children: [
-            const SizedBox(
-              width: 300,
-              child: ChatsView(),
-            ),
-            Obx(
-              () => chatController.chatId.value == null
-                  ? Expanded(
-                      child: Container(
-                        color: context.isDarkMode
-                            ? AppColors.neutralDark
-                            : AppColors.neutralOffWhite,
-                        child: Center(
-                          child: context.isDarkMode
-                              ? SvgPicture.asset(
-                                  'assets/icons/icon_bg_dark.svg',
-                                  width: 300,
-                                )
-                              : SvgPicture.asset(
-                                  'assets/icons/icon_bg.svg',
-                                  width: 300,
-                                ),
-                        ),
-                      ),
-                    )
-                  : Expanded(
-                      child: ChatScreen(
-                        chatId: chatController.chatId.value!,
-                      ),
-                    ),
-            ),
-          ],
-        ),
-      );
-    }
-
-    return const ChatsView();
-  }
-}
-
-class ChatsView extends StatefulWidget {
-  const ChatsView({super.key});
-
-  @override
-  State<ChatsView> createState() => _ChatsViewState();
-}
-
-class _ChatsViewState extends State<ChatsView> {
-  final chatController = Get.find<ChatController>();
-
-  @override
-  void initState() {
-    chatController.getChats();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {

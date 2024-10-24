@@ -27,6 +27,8 @@ class _AppState extends State<App> with WidgetsBindingObserver {
 
     authController.initAutoLogout();
     chatController.connectSocket();
+    chatController.getChats();
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       themeController.getThemeModeFromStorage();
     });

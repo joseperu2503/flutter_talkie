@@ -61,8 +61,14 @@ class LoginController extends GetxController {
       final AuthController authController = Get.find<AuthController>();
       final ChatController chatController = Get.find<ChatController>();
 
-      authController.initAutoLogout();
-      chatController.connectSocket();
+      final (validToken, timeRemainingInSeconds) =
+          await AuthService.verifyToken();
+
+      if (validToken) {
+        authController.initAutoLogout();
+        chatController.connectSocket();
+        chatController.getChats();
+      }
 
       loading.value = LoadingStatus.success;
     } on ServiceException catch (e) {
