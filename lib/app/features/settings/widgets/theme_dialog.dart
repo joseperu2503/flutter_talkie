@@ -37,6 +37,9 @@ class _ThemeDialogState extends State<ThemeDialog> {
           right: 24,
           bottom: 24,
         ),
+        constraints: const BoxConstraints(
+          maxWidth: 400,
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           mainAxisSize: MainAxisSize.min,

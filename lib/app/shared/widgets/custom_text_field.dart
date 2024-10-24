@@ -130,10 +130,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 borderSide: BorderSide.none,
               ),
               contentPadding: const EdgeInsets.only(
-                top: 10,
+                top: 15,
                 left: 20,
                 right: 20,
-                bottom: 10,
+                bottom: 15,
               ),
               isCollapsed: true,
               hintText: widget.hintText,
