@@ -198,9 +198,7 @@ class _CustomSnackbar extends StatelessWidget {
                   height: 64,
                   color: color,
                 ),
-                const SizedBox(
-                  width: 11,
-                ),
+                const Width(11),
                 SvgPicture.asset(
                   icon,
                   height: 24,
@@ -210,9 +208,7 @@ class _CustomSnackbar extends StatelessWidget {
                     BlendMode.srcIn,
                   ),
                 ),
-                const SizedBox(
-                  width: 9,
-                ),
+                const Width(9),
                 Expanded(
                   child: Text(
                     message,
@@ -225,9 +221,7 @@ class _CustomSnackbar extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(
-                  width: 40,
-                ),
+                const Width(40),
               ],
             ),
           ),

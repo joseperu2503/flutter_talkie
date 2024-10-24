@@ -40,9 +40,7 @@ class AddContactDialog extends StatelessWidget {
                 leadingDistribution: TextLeadingDistribution.even,
               ),
             ),
-            const SizedBox(
-              height: 36,
-            ),
+            const Height(36),
             Text(
               'Who do you want to add as a contact?',
               style: TextStyle(
@@ -55,9 +53,7 @@ class AddContactDialog extends StatelessWidget {
                 leadingDistribution: TextLeadingDistribution.even,
               ),
             ),
-            const SizedBox(
-              height: 12,
-            ),
+            const Height(12),
             Obx(
               () => CustomTextField(
                 autofocus: true,
@@ -68,9 +64,7 @@ class AddContactDialog extends StatelessWidget {
                 },
               ),
             ),
-            const SizedBox(
-              height: 32,
-            ),
+            const Height(32),
             Obx(
               () => CustomElevatedButton(
                 text: 'Send Friend Request',

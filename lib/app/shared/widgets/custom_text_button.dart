@@ -37,10 +37,7 @@ class _CustomTextButtonState extends State<CustomTextButton> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (widget.iconLeft != null) widget.iconLeft!,
-            if (widget.text != null && widget.iconLeft != null)
-              const SizedBox(
-                width: 10,
-              ),
+            if (widget.text != null && widget.iconLeft != null) const Width(10),
             if (widget.text != null)
               Text(
                 widget.text!,

@@ -31,10 +31,7 @@ class _CustomElevatedButtonState extends State<CustomElevatedButton> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (widget.iconLeft != null) widget.iconLeft!,
-            if (widget.text != null && widget.iconLeft != null)
-              const SizedBox(
-                width: 10,
-              ),
+            if (widget.text != null && widget.iconLeft != null) const Width(10),
             if (widget.text != null)
               Text(
                 widget.text!,

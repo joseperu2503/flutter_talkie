@@ -100,9 +100,7 @@ class ChatItem extends StatelessWidget {
                     )
                 ],
               ),
-              const SizedBox(
-                width: 12,
-              ),
+              const Width(12),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -138,9 +136,7 @@ class ChatItem extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 2,
-                    ),
+                    const Height(2),
                     Row(
                       children: [
                         Expanded(
@@ -157,9 +153,7 @@ class ChatItem extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        const SizedBox(
-                          width: 4,
-                        ),
+                        const Width(4),
                         if (chat.unreadMessagesCount > 0)
                           Container(
                             width: 20,

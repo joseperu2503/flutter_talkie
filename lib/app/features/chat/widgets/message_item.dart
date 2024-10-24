@@ -67,9 +67,7 @@ class MessageItem extends StatelessWidget {
                   leadingDistribution: TextLeadingDistribution.even,
                 ),
               ),
-              const SizedBox(
-                height: 4,
-              ),
+              const Height(4),
               Text(
                 DateFormat('HH:mm').format(message.timestamp.toLocal()),
                 style: TextStyle(

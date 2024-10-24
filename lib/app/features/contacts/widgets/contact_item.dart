@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:get/get.dart';
+import 'package:talkie/app/core/widgets/width.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'package:talkie/app/core/constants/app_colors.dart';
@@ -112,9 +113,7 @@ class ContactItem extends StatelessWidget {
                     )
                 ],
               ),
-              const SizedBox(
-                width: 12,
-              ),
+              const Width(12),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,

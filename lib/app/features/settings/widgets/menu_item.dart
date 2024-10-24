@@ -42,9 +42,7 @@ class MenuItem extends StatelessWidget {
                 BlendMode.srcIn,
               ),
             ),
-            const SizedBox(
-              width: 14,
-            ),
+            const Width(14),
             Text(
               label,
               style: TextStyle(

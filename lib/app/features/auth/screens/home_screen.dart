@@ -50,9 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 42,
-                    ),
+                    const Height(42),
                     Text(
                       'Connect easily with\nyour family and friends\nover countries',
                       style: TextStyle(
@@ -66,9 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(
-                      height: 80,
-                    ),
+                    const Height(80),
                     SizedBox(
                       height: 52,
                       child: TextButton(
@@ -91,9 +87,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 12,
-                    ),
+                    const Height(12),
                     CustomElevatedButton(
                       text: 'Start Messaging',
                       onPressed: () {

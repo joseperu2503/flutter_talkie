@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:talkie/app/core/constants/app_colors.dart';
+import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/auth/controllers/auth_controller.dart';
 import 'package:talkie/app/features/settings/widgets/menu_item.dart';
 import 'package:talkie/app/features/settings/widgets/theme_dialog.dart';
@@ -87,9 +87,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ),
                         ),
                       ),
-                      const SizedBox(
-                        width: 20,
-                      ),
+                      const Width(20),
                       Obx(() {
                         final user = authController.user.value;
                         return Column(
@@ -110,9 +108,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                     TextLeadingDistribution.even,
                               ),
                             ),
-                            const SizedBox(
-                              height: 2,
-                            ),
+                            const Height(2),
                             Text(
                               user == null ? '' : user.phone,
                               style: const TextStyle(
@@ -130,9 +126,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 16,
-                ),
+                const Height(16),
                 MenuItem(
                   onPressed: () {},
                   icon: 'assets/icons/profile.svg',
@@ -143,9 +137,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   icon: 'assets/icons/tabs/chat_outlined.svg',
                   label: 'Chats',
                 ),
-                const SizedBox(
-                  height: 16,
-                ),
+                const Height(16),
                 MenuItem(
                   onPressed: () {
                     showDialog(
@@ -168,9 +160,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   icon: 'assets/icons/privacy.svg',
                   label: 'Privacy',
                 ),
-                const SizedBox(
-                  height: 8,
-                ),
+                const Height(8),
                 Container(
                   height: 1,
                   color: context.isDarkMode
@@ -178,9 +168,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       : AppColors.neutralLine,
                   margin: const EdgeInsets.symmetric(horizontal: 24),
                 ),
-                const SizedBox(
-                  height: 8,
-                ),
+                const Height(8),
                 MenuItem(
                   onPressed: () {},
                   icon: 'assets/icons/help.svg',
@@ -191,9 +179,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   icon: 'assets/icons/email.svg',
                   label: 'Invite Your Friends',
                 ),
-                const SizedBox(
-                  height: 8,
-                ),
+                const Height(8),
                 Container(
                   height: 1,
                   color: context.isDarkMode
@@ -201,9 +187,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                       : AppColors.neutralLine,
                   margin: const EdgeInsets.symmetric(horizontal: 24),
                 ),
-                const SizedBox(
-                  height: 8,
-                ),
+                const Height(8),
                 MenuItem(
                   onPressed: () {
                     authController.logout();

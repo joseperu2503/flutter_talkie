@@ -17,6 +17,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
+    loginController.initData();
     super.initState();
   }
 
@@ -76,9 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         leadingDistribution: TextLeadingDistribution.even,
                       ),
                     ),
-                    const SizedBox(
-                      height: 40,
-                    ),
+                    const Height(40),
                     Obx(
                       () => CustomTextField(
                         hintText: 'Email',
@@ -90,9 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         keyboardType: TextInputType.emailAddress,
                       ),
                     ),
-                    const SizedBox(
-                      height: 18,
-                    ),
+                    const Height(18),
                     Obx(
                       () => CustomTextField(
                         hintText: 'Password',
@@ -108,9 +105,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                       ),
                     ),
-                    const SizedBox(
-                      height: 40,
-                    ),
+                    const Height(40),
                     CustomElevatedButton(
                       text: 'Log In',
                       onPressed: () {
@@ -118,6 +113,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
                     const Spacer(),
+                    const Height(40),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

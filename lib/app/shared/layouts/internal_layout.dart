@@ -79,9 +79,7 @@ class InternalLayout extends StatelessWidget {
                             ),
                     );
                   }),
-                  const SizedBox(
-                    height: 52,
-                  ),
+                  const Height(52),
                   ListView.separated(
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
@@ -118,9 +116,7 @@ class InternalLayout extends StatelessWidget {
                       );
                     },
                     separatorBuilder: (context, index) {
-                      return const SizedBox(
-                        height: 24,
-                      );
+                      return const Height(24);
                     },
                     itemCount: menuTabs.length,
                   )

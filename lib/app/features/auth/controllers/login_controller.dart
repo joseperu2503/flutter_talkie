@@ -23,6 +23,11 @@ class LoginController extends GetxController {
   Rx<LoadingStatus> loading = LoadingStatus.none.obs;
   Rx<bool> rememberMe = false.obs;
 
+  initData() {
+    email.value = email.value.unTouch().updateValue('');
+    password.value = password.value.unTouch().updateValue('');
+  }
+
   changeEmail(FormxInput<String> value) {
     email.value = value;
   }

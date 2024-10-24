@@ -77,9 +77,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         leadingDistribution: TextLeadingDistribution.even,
                       ),
                     ),
-                    const SizedBox(
-                      height: 40,
-                    ),
+                    const Height(40),
                     Obx(
                       () => CustomTextField(
                         hintText: 'Username',
@@ -91,9 +89,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         keyboardType: TextInputType.name,
                       ),
                     ),
-                    const SizedBox(
-                      height: 18,
-                    ),
+                    const Height(18),
                     Obx(
                       () => CustomTextField(
                         hintText: 'Name',
@@ -105,9 +101,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         keyboardType: TextInputType.name,
                       ),
                     ),
-                    const SizedBox(
-                      height: 18,
-                    ),
+                    const Height(18),
                     Obx(
                       () => CustomTextField(
                         hintText: 'Surname',
@@ -119,9 +113,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         keyboardType: TextInputType.name,
                       ),
                     ),
-                    const SizedBox(
-                      height: 18,
-                    ),
+                    const Height(18),
                     Obx(
                       () => CustomTextField(
                         hintText: 'Email',
@@ -133,9 +125,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         keyboardType: TextInputType.emailAddress,
                       ),
                     ),
-                    const SizedBox(
-                      height: 18,
-                    ),
+                    const Height(18),
                     Obx(
                       () => CustomTextField(
                         hintText: 'Phone',
@@ -147,9 +137,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         keyboardType: TextInputType.phone,
                       ),
                     ),
-                    const SizedBox(
-                      height: 18,
-                    ),
+                    const Height(18),
                     Obx(
                       () => CustomTextField(
                         hintText: 'Password',
@@ -165,18 +153,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                     ),
-                    const SizedBox(
-                      height: 24,
-                    ),
+                    const Height(24),
                     CustomElevatedButton(
                       text: 'Register',
                       onPressed: () {
                         registerController.register();
                       },
                     ),
-                    const SizedBox(
-                      height: 24,
-                    ),
+                    const Height(24),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
