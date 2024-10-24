@@ -119,10 +119,10 @@ class _ChatScreenState extends State<ChatScreen> {
             reverse: true,
             slivers: [
               SliverPadding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   left: 16,
                   right: 16,
-                  bottom: 54 + 8 + 8 + screen.padding.bottom,
+                  bottom: 12,
                 ),
                 sliver: SliverList.builder(
                   itemBuilder: (context, index) {
@@ -138,10 +138,15 @@ class _ChatScreenState extends State<ChatScreen> {
           );
         },
       ),
-      bottomSheet: Container(
-        color: context.isDarkMode
-            ? AppColors.neutralActive
-            : AppColors.neutralOffWhite,
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: context.isDarkMode ? AppColors.neutralActive : AppColors.white,
+          border: const Border(
+            top: BorderSide(
+              color: AppColors.neutralLine,
+            ),
+          ),
+        ),
         child: Container(
           padding: EdgeInsets.only(
             top: 10,
@@ -149,24 +154,17 @@ class _ChatScreenState extends State<ChatScreen> {
             right: 16,
             bottom: kIsWeb ? 16 : 8 + screen.padding.bottom,
           ),
-          child: Container(
-            decoration: BoxDecoration(
-              color:
-                  context.isDarkMode ? AppColors.neutralDark : AppColors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: const [
-                BoxShadow(
-                  color: Color(0x101B4F26),
-                  offset: Offset(0, 15),
-                  blurRadius: 30,
-                  spreadRadius: 0,
-                ),
-              ],
-            ),
-            height: 54,
-            child: Row(
-              children: [
-                Expanded(
+          child: Row(
+            children: [
+              Expanded(
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: context.isDarkMode
+                        ? AppColors.neutralDark
+                        : AppColors.neutralOffWhite,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  height: 44,
                   child: TextFormField(
                     controller: messageController,
                     style: TextStyle(
@@ -174,8 +172,8 @@ class _ChatScreenState extends State<ChatScreen> {
                           ? AppColors.neutralOffWhite
                           : AppColors.neutralActive,
                       fontSize: 14,
-                      fontWeight: FontWeight.w400,
-                      height: 22 / 14,
+                      fontWeight: FontWeight.w600,
+                      height: 24 / 14,
                     ),
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
@@ -198,16 +196,16 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                       hintText: 'Message',
                       hintStyle: const TextStyle(
+                        fontSize: 14,
+                        height: 24 / 14,
+                        fontWeight: FontWeight.w600,
                         color: AppColors.neutralDisabled,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400,
-                        height: 22 / 16,
                       ),
                       contentPadding: const EdgeInsets.only(
-                        top: 40,
+                        top: 15,
                         left: 20,
                         right: 20,
-                        bottom: 20,
+                        bottom: 15,
                       ),
                       isCollapsed: true,
                     ),
@@ -230,44 +228,44 @@ class _ChatScreenState extends State<ChatScreen> {
                     },
                   ),
                 ),
-                SizedBox(
-                  width: 50,
-                  height: 50,
-                  child: TextButton(
-                    onPressed: messageController.text.trim().isEmpty
-                        ? null
-                        : () {
-                            if (messageController.text.trim().isEmpty) return;
+              ),
+              SizedBox(
+                width: 50,
+                height: 50,
+                child: TextButton(
+                  onPressed: messageController.text.trim().isEmpty
+                      ? null
+                      : () {
+                          if (messageController.text.trim().isEmpty) return;
 
-                            chatController.sendMessage(
-                              messageController.text.trim(),
-                              widget.chatId,
-                            );
+                          chatController.sendMessage(
+                            messageController.text.trim(),
+                            widget.chatId,
+                          );
 
-                            setState(() {
-                              messageController.text = '';
-                            });
-                          },
-                    style: TextButton.styleFrom(
-                      padding: EdgeInsets.zero,
-                    ),
-                    child: SvgPicture.asset(
+                          setState(() {
+                            messageController.text = '';
+                          });
+                        },
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                  ),
+                  child: SvgPicture.asset(
+                    messageController.text.trim().isEmpty
+                        ? 'assets/icons/send_outlined.svg'
+                        : 'assets/icons/send_solid.svg',
+                    colorFilter: ColorFilter.mode(
                       messageController.text.trim().isEmpty
-                          ? 'assets/icons/send_outlined.svg'
-                          : 'assets/icons/send_solid.svg',
-                      colorFilter: ColorFilter.mode(
-                        messageController.text.trim().isEmpty
-                            ? AppColors.neutralDisabled
-                            : context.isDarkMode
-                                ? AppColors.brandColorDarkMode
-                                : AppColors.brandColorDefault,
-                        BlendMode.srcIn,
-                      ),
+                          ? AppColors.neutralDisabled
+                          : context.isDarkMode
+                              ? AppColors.brandColorDarkMode
+                              : AppColors.brandColorDefault,
+                      BlendMode.srcIn,
                     ),
                   ),
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
         ),
       ),
