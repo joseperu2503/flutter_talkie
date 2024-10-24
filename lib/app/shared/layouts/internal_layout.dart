@@ -35,7 +35,9 @@ class InternalLayout extends StatelessWidget {
               padding: const EdgeInsets.all(16),
               width: 80,
               decoration: BoxDecoration(
-                color: AppColors.white,
+                color: context.isDarkMode
+                    ? AppColors.neutralDark
+                    : AppColors.neutralOffWhite,
                 boxShadow: [
                   BoxShadow(
                     color: const Color(0xff000000).withOpacity(0.04),
@@ -60,7 +62,9 @@ class InternalLayout extends StatelessWidget {
                           : Container(
                               width: 48,
                               height: 48,
-                              color: AppColors.brandColorDefault,
+                              color: context.isDarkMode
+                                  ? AppColors.brandColorDarkMode
+                                  : AppColors.brandColorDefault,
                               child: Center(
                                 child: Text(
                                   user == null
@@ -107,8 +111,12 @@ class InternalLayout extends StatelessWidget {
                                 : menuTab.icon,
                             colorFilter: ColorFilter.mode(
                               navigationShell.currentIndex == index
-                                  ? AppColors.brandColorDefault
-                                  : AppColors.neutralActive,
+                                  ? context.isDarkMode
+                                      ? AppColors.white
+                                      : AppColors.brandColorDefault
+                                  : context.isDarkMode
+                                      ? AppColors.neutralOffWhite
+                                      : AppColors.neutralActive,
                               BlendMode.srcIn,
                             ),
                           ),

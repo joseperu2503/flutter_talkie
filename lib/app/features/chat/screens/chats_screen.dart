@@ -36,7 +36,24 @@ class _ChatsScreenState extends State<ChatsScreen> {
             ),
             Obx(
               () => chatController.chatId.value == null
-                  ? Container()
+                  ? Expanded(
+                      child: Container(
+                        color: context.isDarkMode
+                            ? AppColors.neutralDark
+                            : AppColors.neutralOffWhite,
+                        child: Center(
+                          child: context.isDarkMode
+                              ? SvgPicture.asset(
+                                  'assets/icons/icon_bg_dark.svg',
+                                  width: 300,
+                                )
+                              : SvgPicture.asset(
+                                  'assets/icons/icon_bg.svg',
+                                  width: 300,
+                                ),
+                        ),
+                      ),
+                    )
                   : Expanded(
                       child: ChatScreen(
                         chatId: chatController.chatId.value!,
