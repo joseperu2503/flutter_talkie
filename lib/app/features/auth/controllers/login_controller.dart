@@ -4,6 +4,7 @@ import 'package:talkie/app/features/auth/controllers/auth_controller.dart';
 import 'package:talkie/app/features/auth/models/auth_user.dart';
 import 'package:talkie/app/features/auth/models/login_response.dart';
 import 'package:talkie/app/features/auth/services/auth_service.dart';
+import 'package:talkie/app/features/chat/controllers/chat_controller.dart';
 import 'package:talkie/app/shared/enums/loading_status.dart';
 import 'package:talkie/app/shared/plugins/formx/formx.dart';
 import 'package:talkie/app/shared/widgets/snackbar.dart';
@@ -58,7 +59,10 @@ class LoginController extends GetxController {
       appRouter.go('/chats');
 
       final AuthController authController = Get.find<AuthController>();
+      final ChatController chatController = Get.find<ChatController>();
+
       authController.initAutoLogout();
+      chatController.connectSocket();
 
       loading.value = LoadingStatus.success;
     } on ServiceException catch (e) {
