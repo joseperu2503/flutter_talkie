@@ -128,6 +128,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   itemBuilder: (context, index) {
                     final message = chat.messages[index];
                     return MessageItem(
+                      key: ValueKey(message.id),
                       message: message,
                     );
                   },

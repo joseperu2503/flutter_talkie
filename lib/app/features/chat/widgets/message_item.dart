@@ -4,7 +4,7 @@ import 'package:talkie/app/features/chat/models/chat.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 
-class MessageItem extends StatelessWidget {
+class MessageItem extends StatefulWidget {
   const MessageItem({
     super.key,
     required this.message,
@@ -13,10 +13,21 @@ class MessageItem extends StatelessWidget {
   final Message message;
 
   @override
+  State<MessageItem> createState() => _MessageItemState();
+}
+
+class _MessageItemState extends State<MessageItem>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Row(
-      mainAxisAlignment:
-          message.isSender ? MainAxisAlignment.end : MainAxisAlignment.start,
+      mainAxisAlignment: widget.message.isSender
+          ? MainAxisAlignment.end
+          : MainAxisAlignment.start,
       children: [
         Container(
           margin: const EdgeInsets.only(
@@ -26,7 +37,7 @@ class MessageItem extends StatelessWidget {
             maxWidth: MediaQuery.of(context).size.width * 0.7,
           ),
           decoration: BoxDecoration(
-            color: message.isSender
+            color: widget.message.isSender
                 ? context.isDarkMode
                     ? AppColors.brandColorDarkMode
                     : AppColors.brandColorDefault
@@ -34,12 +45,12 @@ class MessageItem extends StatelessWidget {
                     ? AppColors.neutralActive
                     : AppColors.white,
             borderRadius: BorderRadius.only(
-              topLeft: message.isSender
+              topLeft: widget.message.isSender
                   ? const Radius.circular(16)
                   : const Radius.circular(0),
               topRight: const Radius.circular(16),
               bottomLeft: const Radius.circular(16),
-              bottomRight: message.isSender
+              bottomRight: widget.message.isSender
                   ? const Radius.circular(0)
                   : const Radius.circular(16),
             ),
@@ -49,19 +60,19 @@ class MessageItem extends StatelessWidget {
             vertical: 10,
           ),
           child: Column(
-            crossAxisAlignment: message.isSender
+            crossAxisAlignment: widget.message.isSender
                 ? CrossAxisAlignment.end
                 : CrossAxisAlignment.start,
             children: [
-              if (message.isImage && message.fileUrl != null)
-                Image.network(message.fileUrl!),
-              if (message.content != null)
+              if (widget.message.isImage && widget.message.fileUrl != null)
+                Image.network(widget.message.fileUrl!),
+              if (widget.message.content != null)
                 Text(
-                  message.content!,
+                  widget.message.content!,
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
-                    color: message.isSender
+                    color: widget.message.isSender
                         ? AppColors.neutralOffWhite
                         : context.isDarkMode
                             ? AppColors.neutralOffWhite
@@ -72,11 +83,11 @@ class MessageItem extends StatelessWidget {
                 ),
               const Height(4),
               Text(
-                DateFormat('HH:mm').format(message.timestamp.toLocal()),
+                DateFormat('HH:mm').format(widget.message.timestamp.toLocal()),
                 style: TextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.w400,
-                  color: message.isSender
+                  color: widget.message.isSender
                       ? AppColors.white
                       : AppColors.neutralDisabled,
                   height: 22 / 10,
