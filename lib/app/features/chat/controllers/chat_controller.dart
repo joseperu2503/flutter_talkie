@@ -25,7 +25,7 @@ class ChatController extends GetxController {
     } on ServiceException catch (e) {
       loading.value = LoadingStatus.error;
 
-      SnackbarService.show(e.message);
+      SnackbarService.show(e.message, type: SnackbarType.error);
     }
   }
 

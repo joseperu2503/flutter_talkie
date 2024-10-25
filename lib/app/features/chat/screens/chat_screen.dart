@@ -7,6 +7,7 @@ import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/chat/controllers/chat_controller.dart';
 import 'package:talkie/app/features/chat/models/chat.dart';
 import 'package:talkie/app/features/chat/widgets/message_item.dart';
+import 'package:talkie/app/shared/services/camera_service.dart';
 import 'package:talkie/app/shared/widgets/back_button.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -150,12 +151,32 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Container(
           padding: EdgeInsets.only(
             top: 10,
-            left: 16,
-            right: 16,
+            left: 12,
+            right: 12,
             bottom: kIsWeb ? 16 : 8 + screen.padding.bottom,
           ),
           child: Row(
             children: [
+              SizedBox(
+                width: 40,
+                height: 40,
+                child: TextButton(
+                  onPressed: () {
+                    CameraService.takePhoto();
+                  },
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.zero,
+                  ),
+                  child: SvgPicture.asset(
+                    'assets/icons/camera.svg',
+                    width: 24,
+                    colorFilter: const ColorFilter.mode(
+                      AppColors.neutralDisabled,
+                      BlendMode.srcIn,
+                    ),
+                  ),
+                ),
+              ),
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(

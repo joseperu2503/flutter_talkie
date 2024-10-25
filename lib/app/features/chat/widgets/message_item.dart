@@ -53,20 +53,23 @@ class MessageItem extends StatelessWidget {
                 ? CrossAxisAlignment.end
                 : CrossAxisAlignment.start,
             children: [
-              Text(
-                message.content,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w400,
-                  color: message.isSender
-                      ? AppColors.neutralOffWhite
-                      : context.isDarkMode
-                          ? AppColors.neutralOffWhite
-                          : AppColors.neutralActive,
-                  height: 22 / 14,
-                  leadingDistribution: TextLeadingDistribution.even,
+              if (message.isImage && message.fileUrl != null)
+                Image.network(message.fileUrl!),
+              if (message.content != null)
+                Text(
+                  message.content!,
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w400,
+                    color: message.isSender
+                        ? AppColors.neutralOffWhite
+                        : context.isDarkMode
+                            ? AppColors.neutralOffWhite
+                            : AppColors.neutralActive,
+                    height: 22 / 14,
+                    leadingDistribution: TextLeadingDistribution.even,
+                  ),
                 ),
-              ),
               const Height(4),
               Text(
                 DateFormat('HH:mm').format(message.timestamp.toLocal()),
