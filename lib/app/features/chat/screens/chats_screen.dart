@@ -47,24 +47,33 @@ class _ChatsScreenState extends State<ChatsScreen> {
               ),
             ),
           ),
-          Obx(
-            () => SliverPadding(
+          Obx(() {
+            final chats = [...chatController.chats]
+                .where((c) => c.lastMessage != null)
+                .toList();
+
+            chats.sort((a, b) {
+              // Obtener la fecha del ultimo mensaje
+              DateTime timestampA = a.lastMessage!.timestamp;
+              DateTime timestampB = b.lastMessage!.timestamp;
+
+              // Comparar las fechas
+              return timestampB.compareTo(timestampA);
+            });
+
+            return SliverPadding(
               padding: const EdgeInsets.only(
                 top: 16,
               ),
               sliver: SliverList.builder(
                 itemBuilder: (context, index) {
-                  final chat = chatController.chats
-                      .where((c) => c.lastMessage != null)
-                      .toList()[index];
+                  final chat = chats[index];
                   return ChatItem(chat: chat);
                 },
-                itemCount: chatController.chats
-                    .where((c) => c.lastMessage != null)
-                    .length,
+                itemCount: chats.where((c) => c.lastMessage != null).length,
               ),
-            ),
-          ),
+            );
+          }),
         ],
       ),
       floatingActionButton: SizedBox(
