@@ -142,9 +142,11 @@ class _ChatScreenState extends State<ChatScreen> {
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           color: context.isDarkMode ? AppColors.neutralActive : AppColors.white,
-          border: const Border(
+          border: Border(
             top: BorderSide(
-              color: AppColors.neutralLine,
+              color: context.isDarkMode
+                  ? AppColors.neutralDark
+                  : AppColors.neutralLine,
             ),
           ),
         ),

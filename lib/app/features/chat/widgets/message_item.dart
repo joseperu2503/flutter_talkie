@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/chat/models/chat.dart';
@@ -65,7 +66,16 @@ class _MessageItemState extends State<MessageItem>
                 : CrossAxisAlignment.start,
             children: [
               if (widget.message.isImage && widget.message.fileUrl != null)
-                Image.network(widget.message.fileUrl!),
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(4),
+                  child: CachedNetworkImage(
+                    imageUrl: widget.message.fileUrl!,
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator(),
+                    errorWidget: (context, url, error) =>
+                        const Icon(Icons.error),
+                  ),
+                ),
               if (widget.message.content != null)
                 Text(
                   widget.message.content!,
@@ -73,11 +83,11 @@ class _MessageItemState extends State<MessageItem>
                     fontSize: 14,
                     fontWeight: FontWeight.w400,
                     color: widget.message.isSender
-                        ? AppColors.neutralOffWhite
+                        ? AppColors.white
                         : context.isDarkMode
                             ? AppColors.neutralOffWhite
                             : AppColors.neutralActive,
-                    height: 22 / 14,
+                    height: 24 / 14,
                     leadingDistribution: TextLeadingDistribution.even,
                   ),
                 ),
@@ -90,7 +100,7 @@ class _MessageItemState extends State<MessageItem>
                   color: widget.message.isSender
                       ? AppColors.white
                       : AppColors.neutralDisabled,
-                  height: 22 / 10,
+                  height: 16 / 10,
                   leadingDistribution: TextLeadingDistribution.even,
                 ),
               ),
