@@ -4,6 +4,7 @@ import 'package:talkie/app/features/chat/models/chat.dart';
 import 'package:talkie/app/features/chat/services/chat_service.dart';
 import 'package:talkie/app/features/chat/sockets/chat_socket.dart';
 import 'package:talkie/app/shared/enums/loading_status.dart';
+import 'package:talkie/app/shared/services/camera_service.dart';
 import 'package:talkie/app/shared/widgets/snackbar.dart';
 import 'package:get/get.dart';
 
@@ -117,5 +118,18 @@ class ChatController extends GetxController {
 
   disconnectSocket() {
     socket?.disconnect();
+  }
+
+  sendImage() async {
+    final String? path = await CameraService.takePhoto();
+
+    if (path == null) return;
+    if (chatId.value == null) return;
+
+    try {
+      await ChatService.uploadPhoto(path: path, chatId: chatId.value!);
+    } on ServiceException catch (e) {
+      SnackbarService.show(e.message, type: SnackbarType.error);
+    }
   }
 }

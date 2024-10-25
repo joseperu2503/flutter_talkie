@@ -7,7 +7,6 @@ import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/chat/controllers/chat_controller.dart';
 import 'package:talkie/app/features/chat/models/chat.dart';
 import 'package:talkie/app/features/chat/widgets/message_item.dart';
-import 'package:talkie/app/shared/services/camera_service.dart';
 import 'package:talkie/app/shared/widgets/back_button.dart';
 
 class ChatScreen extends StatefulWidget {
@@ -162,7 +161,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 height: 40,
                 child: TextButton(
                   onPressed: () {
-                    CameraService.takePhoto();
+                    chatController.sendImage();
                   },
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.zero,

@@ -6,7 +6,7 @@ class CameraService {
 
     final XFile? image = await picker.pickImage(
       source: ImageSource.gallery,
-      imageQuality: 80,
+      imageQuality: 50,
     );
     if (image == null) return null;
     return image.path;
