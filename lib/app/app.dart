@@ -45,12 +45,11 @@ class _AppState extends State<App> with WidgetsBindingObserver {
       },
     );
 
-    notificationsController.init();
-
     final (validToken, timeRemainingInSeconds) =
         await AuthService.verifyToken();
 
     if (validToken) {
+      notificationsController.init();
       authController.initAutoLogout();
       chatController.connectSocket();
       chatController.getChats();
