@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:talkie/app/app.dart';
 import 'package:talkie/app/core/constants/environment.dart';
@@ -5,12 +6,17 @@ import 'package:talkie/app/core/router/app_router.dart';
 import 'package:talkie/app/core/theme/app_theme.dart';
 import 'package:get/get.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:talkie/firebase_options.dart';
 
 void main() async {
   await Environment.initEnvironment();
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
 
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   runApp(const MainApp());
 }

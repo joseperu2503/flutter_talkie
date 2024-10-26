@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1071103158051",
+    "project_id": "talkie-e43eb",
+    "storage_bucket": "talkie-e43eb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1071103158051:android:718a084ef6d271b4c64e96",
+        "android_client_info": {
+          "package_name": "com.joseperezgil.talkie"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvbyQI0l6XEHpwgfYEqGbqOFd_5EhDO-U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
