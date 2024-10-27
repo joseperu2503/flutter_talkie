@@ -110,5 +110,13 @@
   </picture>
   <script src="flutter_bootstrap.js" async=""></script>
 
-
+  <script>
+    if ('serviceWorker' in navigator) {
+      // Service workers are supported. Use them.
+      window.addEventListener('load', function () {
+        // ADD THIS LINE
+        navigator.serviceWorker.register('/firebase-messaging-sw.js');
+      });
+    }
+  </script>
 </body></html>

@@ -6,4 +6,6 @@ class Environment {
   }
 
   static String baseUrl = dotenv.get('BASE_URL');
+  static String firebaseWebPushVapidKey =
+      dotenv.get('FIREBASE_WEB_PUSH_VAPID_KEY');
 }

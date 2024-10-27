@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
+import 'package:talkie/app/core/core.dart';
 
 final FirebaseMessaging messaging = FirebaseMessaging.instance;
 
@@ -33,7 +35,9 @@ class FcmService {
   initNotifications() async {
     final settings = await requestPermission();
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      final token = await messaging.getToken();
+      final token = await messaging.getToken(
+        vapidKey: kIsWeb ? Environment.firebaseWebPushVapidKey : null,
+      );
 
       if (token == null) {
         throw 'An error occurred while obtaining the token.';
