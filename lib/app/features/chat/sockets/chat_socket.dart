@@ -17,7 +17,6 @@ class ChatSocket {
 
   Future<void> connect() async {
     final token = await StorageService.get<String>(StorageKeys.token);
-    print(token);
     //* Configuración del socket */
     socket = io.io(
       '${Environment.baseUrl}/chats',
@@ -40,7 +39,7 @@ class ChatSocket {
 
     //** Escuchar Socket */
     socket.on('messageReceived', (dynamic data) {
-      print('messageReceived $data');
+      // print('messageReceived $data');
       MessagesReceived messageReceived = MessagesReceived.fromJson(data);
       onMessageReceived(messageReceived);
     });
@@ -48,7 +47,7 @@ class ChatSocket {
     //** Escuchar Socket */
     socket.on('chatUpdated', (dynamic data) {
       Chat chatUpdated = Chat.fromJson(data);
-      print('chatUpdated ${chatUpdated.id}');
+      // print('chatUpdated ${chatUpdated.id}');
 
       onChatUpdated(chatUpdated);
     });
@@ -57,7 +56,7 @@ class ChatSocket {
     socket.on('contactUpdated', (dynamic data) {
       Contact contact = Contact.fromJson(data);
 
-      print('contactUpdated $contact');
+      // print('contactUpdated $contact');
       onContactUpdated(contact);
     });
 
@@ -72,11 +71,11 @@ class ChatSocket {
     });
   }
 
+  //** Emitir evento enviando un nuevo mensaje */
   sendMessage({
     required String content,
     required String chatId,
   }) {
-    //** Emitir */
     Map<String, dynamic> data = {
       "content": content,
       "chatId": chatId,
@@ -85,18 +84,17 @@ class ChatSocket {
     socket.emit('sendMessage', data);
   }
 
-  //** Emitir */
-  void updateUserStatus({
+  //** Emitir evento indicando si el dispositivo está conectado */
+  void updateDeviceConnectionStatus({
     required bool isConnected,
   }) {
-    print(isConnected);
-    // Emitir evento indicando que el usuario está conectado
-    socket.emit('updateUserStatus', {
+    // print(isConnected);
+    socket.emit('updateDeviceConnectionStatus', {
       'isConnected': isConnected,
     });
   }
 
-  //** Emitir */
+  //** Emitir evento evento indicando que un chat fue leido*/
   markChatAsRead({
     required String chatId,
   }) {

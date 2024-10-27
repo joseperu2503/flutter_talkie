@@ -61,12 +61,12 @@ class _AppState extends State<App> with WidgetsBindingObserver {
     super.didChangeAppLifecycleState(state);
     final chatController = Get.find<ChatController>();
     if (state == AppLifecycleState.resumed) {
-      chatController.socket?.updateUserStatus(isConnected: true);
+      chatController.socket?.updateDeviceConnectionStatus(isConnected: true);
       // print('App en primer plano');
     }
 
     if (state == AppLifecycleState.paused) {
-      chatController.socket?.updateUserStatus(isConnected: false);
+      chatController.socket?.updateDeviceConnectionStatus(isConnected: false);
       // print('App en segundo plano');
     }
   }
