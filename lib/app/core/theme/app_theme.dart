@@ -23,6 +23,7 @@ class AppTheme {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.white38,
           padding: EdgeInsets.zero,
           backgroundColor: AppColors.brandColorDefault,
           elevation: 0,
@@ -55,11 +56,12 @@ class AppTheme {
       ),
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          foregroundColor: Colors.black12,
+          foregroundColor: Colors.white38,
         ),
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: ElevatedButton.styleFrom(
+          foregroundColor: Colors.white38,
           padding: EdgeInsets.zero,
           backgroundColor: AppColors.brandColorDarkMode,
           elevation: 0,

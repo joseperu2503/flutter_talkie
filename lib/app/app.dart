@@ -63,7 +63,9 @@ class _AppState extends State<App> with WidgetsBindingObserver {
     if (state == AppLifecycleState.resumed) {
       chatController.socket?.updateUserStatus(isConnected: true);
       // print('App en primer plano');
-    } else if (state == AppLifecycleState.paused) {
+    }
+
+    if (state == AppLifecycleState.paused) {
       chatController.socket?.updateUserStatus(isConnected: false);
       // print('App en segundo plano');
     }
