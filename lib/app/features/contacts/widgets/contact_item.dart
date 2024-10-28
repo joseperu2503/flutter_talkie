@@ -131,7 +131,9 @@ class ContactItem extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Last seen ${timeago.format(chat.receiver.lastConnection)}',
+                    chat.receiver.isConnected
+                        ? 'Online'
+                        : 'Last seen ${timeago.format(chat.receiver.lastConnection)}',
                     style: const TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
