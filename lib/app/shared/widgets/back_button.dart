@@ -31,8 +31,8 @@ class CustomBackButton extends StatelessWidget {
             kIsWeb || Platform.isAndroid
                 ? 'assets/icons/arrow_back_material.svg'
                 : 'assets/icons/arrow_back_ios.svg',
-            width: 32,
-            height: 32,
+            width: 24,
+            height: 24,
             colorFilter: ColorFilter.mode(
               context.isDarkMode
                   ? AppColors.neutralOffWhite
