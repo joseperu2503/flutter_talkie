@@ -41,7 +41,7 @@ class _MessageItemState extends State<MessageItem>
             color: widget.message.isSender
                 ? context.isDarkMode
                     ? AppColors.brandColorDarkMode
-                    : AppColors.brandColorDefault
+                    : AppColors.brandColorDarkMode
                 : context.isDarkMode
                     ? AppColors.neutralActive
                     : AppColors.white,
