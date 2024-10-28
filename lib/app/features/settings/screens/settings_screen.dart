@@ -5,6 +5,7 @@ import 'package:talkie/app/features/auth/controllers/auth_controller.dart';
 import 'package:talkie/app/features/settings/widgets/menu_item.dart';
 import 'package:talkie/app/features/settings/widgets/theme_dialog.dart';
 import 'package:get/get.dart';
+import 'package:talkie/app/shared/widgets/user_image.dart';
 
 class SettingsScreen extends StatefulWidget {
   const SettingsScreen({super.key});
@@ -65,28 +66,15 @@ class _SettingsScreenState extends State<SettingsScreen> {
                   ),
                   child: Row(
                     children: [
-                      Container(
-                        width: 50,
-                        height: 50,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: context.isDarkMode
-                              ? AppColors.neutralDark
-                              : AppColors.neutralLine,
-                        ),
-                        alignment: Alignment.center,
-                        child: SvgPicture.asset(
-                          'assets/icons/profile.svg',
-                          width: 24,
-                          height: 24,
-                          colorFilter: ColorFilter.mode(
-                            context.isDarkMode
-                                ? AppColors.neutralOffWhite
-                                : AppColors.neutralActive,
-                            BlendMode.srcIn,
-                          ),
-                        ),
-                      ),
+                      Obx(() {
+                        final user = authController.user.value;
+                        return UserImage(
+                          name: user?.name ?? '',
+                          surname: user?.surname ?? '',
+                          photo: user?.photo,
+                          isConnected: true,
+                        );
+                      }),
                       const Width(20),
                       Obx(() {
                         final user = authController.user.value;
