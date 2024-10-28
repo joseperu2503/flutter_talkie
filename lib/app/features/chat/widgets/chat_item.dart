@@ -6,6 +6,7 @@ import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/chat/controllers/chat_controller.dart';
 import 'package:talkie/app/features/chat/models/chat.dart';
 import 'package:talkie/app/features/chat/screens/chat_screen.dart';
+import 'package:talkie/app/shared/widgets/user_image.dart';
 
 class ChatItem extends StatelessWidget {
   const ChatItem({
@@ -44,61 +45,11 @@ class ChatItem extends StatelessWidget {
           height: 56,
           child: Row(
             children: [
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: chat.receiver.photo != null
-                        ? Image.network(
-                            chat.receiver.photo!,
-                            width: 48,
-                            height: 48,
-                          )
-                        : Container(
-                            width: 48,
-                            height: 48,
-                            color: context.isDarkMode
-                                ? AppColors.brandColorDarkMode
-                                : AppColors.brandColorDefault,
-                            child: Center(
-                              child: Text(
-                                '${chat.receiver.name[0]}${chat.receiver.surname[0]}',
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700,
-                                  color: AppColors.white,
-                                  height: 24 / 14,
-                                  leadingDistribution:
-                                      TextLeadingDistribution.even,
-                                ),
-                              ),
-                            ),
-                          ),
-                  ),
-                  if (chat.receiver.isConnected)
-                    Positioned(
-                      top: -6,
-                      right: -6,
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: AppColors.white,
-                        ),
-                        width: 16,
-                        height: 16,
-                        alignment: Alignment.center,
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: AppColors.accentSuccess,
-                          ),
-                          width: 12,
-                          height: 12,
-                        ),
-                      ),
-                    )
-                ],
+              UserImage(
+                name: chat.receiver.name,
+                surname: chat.receiver.surname,
+                photo: chat.receiver.photo,
+                isConnected: chat.receiver.isConnected,
               ),
               const Width(12),
               Expanded(
@@ -112,12 +63,12 @@ class ChatItem extends StatelessWidget {
                           child: Text(
                             '${chat.receiver.name} ${chat.receiver.surname}',
                             style: TextStyle(
-                              fontSize: 14,
+                              fontSize: 15,
                               fontWeight: FontWeight.w600,
                               color: context.isDarkMode
                                   ? AppColors.white
                                   : AppColors.neutralActive,
-                              height: 24 / 14,
+                              height: 20 / 15,
                               leadingDistribution: TextLeadingDistribution.even,
                             ),
                             maxLines: 1,
@@ -127,11 +78,12 @@ class ChatItem extends StatelessWidget {
                         Text(
                           formatTimestamp(chat.lastMessage?.timestamp),
                           style: const TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w400,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500,
                             color: AppColors.neutralDisabled,
-                            height: 16 / 10,
+                            height: 16 / 13,
                             leadingDistribution: TextLeadingDistribution.even,
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ],

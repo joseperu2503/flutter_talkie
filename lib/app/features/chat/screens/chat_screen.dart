@@ -8,6 +8,8 @@ import 'package:talkie/app/features/chat/controllers/chat_controller.dart';
 import 'package:talkie/app/features/chat/models/chat.dart';
 import 'package:talkie/app/features/chat/widgets/message_item.dart';
 import 'package:talkie/app/shared/widgets/back_button.dart';
+import 'package:talkie/app/shared/widgets/user_image.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({
@@ -82,21 +84,48 @@ class _ChatScreenState extends State<ChatScreen> {
                   children: [
                     if (Breakpoints.isMdDown(context))
                       const Padding(
-                        padding: EdgeInsets.only(right: 12),
+                        padding: EdgeInsets.only(right: 4),
                         child: CustomBackButton(),
                       ),
+                    UserImage(
+                      name: chat.receiver.name,
+                      surname: chat.receiver.surname,
+                      photo: chat.receiver.photo,
+                      size: 40,
+                      isConnected: chat.receiver.isConnected,
+                    ),
+                    const Width(12),
                     Expanded(
-                      child: Text(
-                        '${chat.receiver.name} ${chat.receiver.surname}',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.w600,
-                          color: context.isDarkMode
-                              ? AppColors.white
-                              : AppColors.neutralActive,
-                          height: 25 / 18,
-                          leadingDistribution: TextLeadingDistribution.even,
-                        ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '${chat.receiver.name} ${chat.receiver.surname}',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
+                              color: context.isDarkMode
+                                  ? AppColors.white
+                                  : AppColors.neutralActive,
+                              height: 24 / 16,
+                              leadingDistribution: TextLeadingDistribution.even,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                          Text(
+                            chat.receiver.isConnected
+                                ? 'Online'
+                                : 'Last seen ${timeago.format(chat.receiver.lastConnection)}',
+                            style: const TextStyle(
+                              fontSize: 13,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.neutralDisabled,
+                              height: 20 / 13,
+                              leadingDistribution: TextLeadingDistribution.even,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],

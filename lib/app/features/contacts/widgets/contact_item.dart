@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:get/get.dart';
 import 'package:talkie/app/core/widgets/width.dart';
+import 'package:talkie/app/shared/widgets/user_image.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 import 'package:talkie/app/core/constants/app_colors.dart';
@@ -57,61 +58,11 @@ class ContactItem extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Stack(
-                clipBehavior: Clip.none,
-                children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.circular(16),
-                    child: chat.receiver.photo != null
-                        ? Image.network(
-                            chat.receiver.photo!,
-                            width: 48,
-                            height: 48,
-                          )
-                        : Container(
-                            width: 48,
-                            height: 48,
-                            color: context.isDarkMode
-                                ? AppColors.brandColorDarkMode
-                                : AppColors.brandColorDefault,
-                            child: Center(
-                              child: Text(
-                                '${chat.receiver.name[0]}${chat.receiver.surname[0]}',
-                                style: const TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w700,
-                                  color: AppColors.white,
-                                  height: 24 / 14,
-                                  leadingDistribution:
-                                      TextLeadingDistribution.even,
-                                ),
-                              ),
-                            ),
-                          ),
-                  ),
-                  if (chat.receiver.isConnected)
-                    Positioned(
-                      top: -6,
-                      right: -6,
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: AppColors.white,
-                        ),
-                        width: 16,
-                        height: 16,
-                        alignment: Alignment.center,
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: AppColors.accentSuccess,
-                          ),
-                          width: 12,
-                          height: 12,
-                        ),
-                      ),
-                    )
-                ],
+              UserImage(
+                name: chat.receiver.name,
+                surname: chat.receiver.surname,
+                photo: chat.receiver.photo,
+                isConnected: chat.receiver.isConnected,
               ),
               const Width(12),
               Column(
@@ -121,13 +72,14 @@ class ContactItem extends StatelessWidget {
                   Text(
                     chat.receiver.name,
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 15,
                       fontWeight: FontWeight.w600,
                       color: context.isDarkMode
                           ? AppColors.white
                           : AppColors.neutralActive,
-                      height: 24 / 14,
+                      height: 20 / 15,
                       leadingDistribution: TextLeadingDistribution.even,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                   Text(
@@ -135,11 +87,12 @@ class ContactItem extends StatelessWidget {
                         ? 'Online'
                         : 'Last seen ${timeago.format(chat.receiver.lastConnection)}',
                     style: const TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.w400,
+                      fontSize: 13,
+                      fontWeight: FontWeight.w500,
                       color: AppColors.neutralDisabled,
-                      height: 20 / 12,
+                      height: 20 / 13,
                       leadingDistribution: TextLeadingDistribution.even,
+                      overflow: TextOverflow.ellipsis,
                     ),
                   ),
                 ],
