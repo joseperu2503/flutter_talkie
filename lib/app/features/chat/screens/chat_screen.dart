@@ -214,7 +214,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     color: context.isDarkMode
                         ? AppColors.neutralDark
                         : AppColors.neutralOffWhite,
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(4),
                   ),
                   height: 44,
                   child: TextFormField(
@@ -229,7 +229,7 @@ class _ChatScreenState extends State<ChatScreen> {
                     ),
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(4),
                         borderSide: const BorderSide(
                           color: Colors.transparent,
                         ),
@@ -238,13 +238,13 @@ class _ChatScreenState extends State<ChatScreen> {
                         borderSide: const BorderSide(
                           color: Colors.transparent,
                         ),
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(4),
                       ),
                       focusedBorder: OutlineInputBorder(
                         borderSide: const BorderSide(
                           color: Colors.transparent,
                         ),
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(4),
                       ),
                       hintText: 'Message',
                       hintStyle: const TextStyle(
@@ -254,10 +254,10 @@ class _ChatScreenState extends State<ChatScreen> {
                         color: AppColors.neutralDisabled,
                       ),
                       contentPadding: const EdgeInsets.only(
-                        top: 15,
-                        left: 20,
-                        right: 20,
-                        bottom: 15,
+                        top: 10,
+                        left: 8,
+                        right: 8,
+                        bottom: 10,
                       ),
                       isCollapsed: true,
                     ),
