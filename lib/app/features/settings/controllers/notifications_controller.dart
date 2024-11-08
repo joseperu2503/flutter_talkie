@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 class NotificationsController extends GetxController {
   init() {
     fcmService.onInit = (token) {
-      print('firebase token $token');
       createFcmToken(token);
     };
     fcmService.initNotifications();
