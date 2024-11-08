@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'package:image_picker/image_picker.dart';
 
 class CameraService {
-  static Future<String?> selectPhoto() async {
+  static Future<CustomFile?> selectPhoto() async {
     final ImagePicker picker = ImagePicker();
 
     final XFile? image = await picker.pickImage(
@@ -10,7 +10,16 @@ class CameraService {
       imageQuality: 50,
     );
     if (image == null) return null;
-    return image.path;
+
+    final Uint8List bytes = await image.readAsBytes();
+    final int size = bytes.lengthInBytes;
+    final String name = image.name;
+
+    return CustomFile(
+      bytes: bytes,
+      name: name,
+      size: size,
+    );
   }
 
   static Future<CustomFile?> takePhoto() async {
