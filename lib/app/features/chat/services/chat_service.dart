@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/chat/models/chat.dart';
+import 'package:talkie/app/shared/services/camera_service.dart';
 
 class ChatService {
   static Future<List<Chat>> getChats() async {
@@ -14,12 +15,15 @@ class ChatService {
   }
 
   static Future<void> uploadPhoto({
-    required String path,
+    required CustomFile file,
     required String chatId,
   }) async {
     try {
       final FormData data = FormData.fromMap({
-        'file': MultipartFile.fromFileSync(path),
+        'file': MultipartFile.fromBytes(
+          file.bytes,
+          filename: file.name,
+        ),
         'chatId': chatId,
       });
 

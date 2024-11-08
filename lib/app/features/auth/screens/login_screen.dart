@@ -87,6 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.emailAddress,
+                        autofillHints: const [AutofillHints.email],
                       ),
                     ),
                     const Height(18),
@@ -99,6 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         },
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.visiblePassword,
+                        autofillHints: const [AutofillHints.password],
                         isPassword: true,
                         onFieldSubmitted: (value) {
                           loginController.login();

@@ -121,13 +121,13 @@ class ChatController extends GetxController {
   }
 
   sendImage() async {
-    final String? path = await CameraService.takePhoto();
+    final path = await CameraService.takePhoto();
 
     if (path == null) return;
     if (chatId.value == null) return;
 
     try {
-      await ChatService.uploadPhoto(path: path, chatId: chatId.value!);
+      await ChatService.uploadPhoto(file: path, chatId: chatId.value!);
     } on ServiceException catch (e) {
       SnackbarService.show(e.message, type: SnackbarType.error);
     }

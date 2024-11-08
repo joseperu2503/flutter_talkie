@@ -20,6 +20,7 @@ class CustomTextField extends StatefulWidget {
     this.readOnly = false,
     this.isPassword = false,
     this.prefixIcon,
+    this.autofillHints,
   });
 
   final FormxInput<String> value;
@@ -34,7 +35,7 @@ class CustomTextField extends StatefulWidget {
   final bool readOnly;
   final bool isPassword;
   final String? prefixIcon;
-
+  final Iterable<String>? autofillHints;
   @override
   State<CustomTextField> createState() => _CustomTextFieldState();
 }
@@ -171,6 +172,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
             },
             focusNode: _effectiveFocusNode,
             keyboardType: widget.keyboardType,
+            autofillHints: widget.autofillHints,
             inputFormatters: widget.inputFormatters,
             textInputAction: widget.textInputAction,
             onFieldSubmitted: widget.onFieldSubmitted,
