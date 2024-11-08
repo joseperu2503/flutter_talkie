@@ -16,6 +16,12 @@ flutter build apk --release
 flutter build ios --release
 ```
 
+## Compilar web
+
+```bash
+flutter build web --release
+```
+
 ## Cambiar icono de la app
 
 ```bash
