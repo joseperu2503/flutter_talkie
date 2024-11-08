@@ -34,7 +34,7 @@ class ChatSocket {
 
     //** Socket se conecta */
     socket.onConnect((_) {
-      print('Connected to WebSocket ${socket.id}');
+      // print('Connected to WebSocket ${socket.id}');
     });
 
     //** Escuchar Socket */
