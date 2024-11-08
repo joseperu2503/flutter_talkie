@@ -102,8 +102,8 @@ class _SnackbarContentState extends State<_SnackbarContent> {
             bottom: Breakpoints.isMdUp(context)
                 ? null
                 : max(screen.padding.bottom, 20),
-            right: (Breakpoints.isMdUp(context)) ? 62 : 20,
-            left: (Breakpoints.isMdUp(context)) ? null : 20,
+            right: Breakpoints.isMdUp(context) ? 62 : 20,
+            left: Breakpoints.isMdUp(context) ? null : 20,
             child: Wrap(
               direction: Axis.vertical,
               runAlignment: Breakpoints.isMdUp(context)
@@ -171,59 +171,50 @@ class _CustomSnackbar extends StatelessWidget {
 
     return Stack(
       children: [
-        ClipRRect(
-          borderRadius: const BorderRadius.all(
-            Radius.circular(10),
+        Container(
+          constraints: BoxConstraints(
+            minWidth: 320,
+            maxWidth: MediaQuery.of(context).size.width - 40,
+            minHeight: 64,
           ),
-          child: Container(
-            constraints: BoxConstraints(
-              minWidth: 320,
-              maxWidth: MediaQuery.of(context).size.width - 40,
-              minHeight: 64,
+          decoration: BoxDecoration(
+            color: backgroundColor,
+            borderRadius: const BorderRadius.all(
+              Radius.circular(10),
             ),
-            decoration: BoxDecoration(
-              color: backgroundColor,
-              borderRadius: const BorderRadius.all(
-                Radius.circular(10),
-              ),
-              border: Border.all(
-                color: color,
-              ),
+            border: Border.all(
+              color: color,
             ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Container(
-                  width: 5,
-                  height: 64,
-                  color: color,
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Width(16),
+              SvgPicture.asset(
+                icon,
+                height: 24,
+                width: 24,
+                colorFilter: ColorFilter.mode(
+                  color,
+                  BlendMode.srcIn,
                 ),
-                const Width(11),
-                SvgPicture.asset(
-                  icon,
-                  height: 24,
-                  width: 24,
-                  colorFilter: ColorFilter.mode(
-                    color,
-                    BlendMode.srcIn,
+              ),
+              const Width(9),
+              Expanded(
+                flex: Breakpoints.isMdUp(context) ? 0 : 1,
+                child: Text(
+                  message,
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                    color: color,
+                    height: 20 / 16,
+                    leadingDistribution: TextLeadingDistribution.even,
                   ),
                 ),
-                const Width(9),
-                Expanded(
-                  child: Text(
-                    message,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: color,
-                      height: 20 / 16,
-                      leadingDistribution: TextLeadingDistribution.even,
-                    ),
-                  ),
-                ),
-                const Width(40),
-              ],
-            ),
+              ),
+              const Width(40),
+            ],
           ),
         ),
         Positioned(

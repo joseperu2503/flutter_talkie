@@ -66,14 +66,19 @@ class _MessageItemState extends State<MessageItem>
                 : CrossAxisAlignment.start,
             children: [
               if (widget.message.isImage && widget.message.fileUrl != null)
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(4),
-                  child: CachedNetworkImage(
-                    imageUrl: widget.message.fileUrl!,
-                    placeholder: (context, url) =>
-                        const CircularProgressIndicator(),
-                    errorWidget: (context, url, error) =>
-                        const Icon(Icons.error),
+                Container(
+                  constraints: const BoxConstraints(
+                    maxWidth: 240,
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(4),
+                    child: CachedNetworkImage(
+                      imageUrl: widget.message.fileUrl!,
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                    ),
                   ),
                 ),
               if (widget.message.content != null)
