@@ -131,11 +131,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
               ),
               contentPadding: const EdgeInsets.only(
                 top: 10,
-                left: 8,
-                right: 8,
+                left: 12,
+                right: 12,
                 bottom: 10,
               ),
-              isCollapsed: true,
               hintText: widget.hintText,
               hintStyle: const TextStyle(
                 fontSize: 14,

@@ -255,11 +255,10 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                       contentPadding: const EdgeInsets.only(
                         top: 10,
-                        left: 8,
-                        right: 8,
+                        left: 12,
+                        right: 12,
                         bottom: 10,
                       ),
-                      isCollapsed: true,
                     ),
                     onFieldSubmitted: (value) {
                       if (messageController.text.trim().isEmpty) return;
