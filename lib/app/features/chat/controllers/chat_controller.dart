@@ -69,20 +69,13 @@ class ChatController extends GetxController {
   }
 
   void updateChat(Chat chat) {
-    // Buscar si el chat ya existe en la lista
-    final Chat? existingChat =
-        chats.firstWhereOrNull((element) => element.id == chat.id);
-
-    if (existingChat != null) {
-      // Si el chat existe, eliminarlo de la lista
-      chats.remove(existingChat);
-    }
-
-    // Insertar el chat al inicio de la lista
-    chats.insert(0, chat);
-
-    // Refrescar la lista de chats para notificar cambios
-    chats.refresh();
+    chats.value = chats.map((c) {
+      if (c.id == chat.id) {
+        chat.messages = c.messages;
+        return chat;
+      }
+      return c;
+    }).toList();
   }
 
   void updatedContat(Contact contact) {
@@ -128,6 +121,29 @@ class ChatController extends GetxController {
 
     try {
       await ChatService.uploadPhoto(file: path, chatId: chatId.value!);
+    } on ServiceException catch (e) {
+      SnackbarService.show(e.message, type: SnackbarType.error);
+    }
+  }
+
+  getMessages(String chatId) async {
+    try {
+      final Chat? chat = chats.firstWhereOrNull((chat) => chat.id == chatId);
+      if (chat == null) return;
+
+      String? lastMessageId =
+          chat.messages.isNotEmpty ? chat.messages.last.id : null;
+      final newMessages = await ChatService.getMessages(chatId, lastMessageId);
+
+      chats.value = chats.map((c) {
+        if (c.id == chatId) {
+          final messages = [...chat.messages, ...newMessages];
+
+          c.messages = messages;
+        }
+
+        return c;
+      }).toList();
     } on ServiceException catch (e) {
       SnackbarService.show(e.message, type: SnackbarType.error);
     }

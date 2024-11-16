@@ -32,4 +32,23 @@ class ChatService {
       throw ServiceException('An error occurred while upload photo.', e);
     }
   }
+
+  static Future<List<Message>> getMessages(
+    String chatId,
+    String? lastMessageId,
+  ) async {
+    try {
+      Map<String, dynamic> queryParameters = {
+        "lastMessageId": lastMessageId,
+      };
+      final response = await Api.get(
+        '/chats/$chatId/messages',
+        queryParameters: queryParameters,
+      );
+
+      return List<Message>.from(response.data.map((x) => Message.fromJson(x)));
+    } catch (e) {
+      throw ServiceException('An error occurred while load messages', e);
+    }
+  }
 }

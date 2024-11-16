@@ -24,29 +24,43 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  final TextEditingController _messageController = TextEditingController();
+  final ScrollController _scrollController = ScrollController();
+
   @override
   void initState() {
     super.initState();
-    messageController.addListener(() {
+    _messageController.addListener(() {
       setState(() {});
     });
-    final chatController = Get.find<ChatController>();
     chatController.markChatAsRead(widget.chatId);
+
+    chatController.getMessages(widget.chatId);
+
+    _scrollController.addListener(_onScroll);
   }
 
   final FocusNode _focusNode = FocusNode();
 
   @override
   void dispose() {
-    messageController.dispose();
+    _messageController.dispose();
+    _scrollController.dispose();
+
     super.dispose();
   }
 
-  TextEditingController messageController = TextEditingController();
+  void _onScroll() {
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      chatController.getMessages(widget.chatId);
+    }
+  }
+
+  final chatController = Get.find<ChatController>();
 
   @override
   Widget build(BuildContext context) {
-    final chatController = Get.find<ChatController>();
     final screen = MediaQuery.of(context);
 
     return Scaffold(
@@ -145,6 +159,7 @@ class _ChatScreenState extends State<ChatScreen> {
           }
 
           return CustomScrollView(
+            controller: _scrollController,
             reverse: true,
             slivers: [
               SliverPadding(
@@ -218,7 +233,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   height: 44,
                   child: TextFormField(
-                    controller: messageController,
+                    controller: _messageController,
                     style: TextStyle(
                       color: context.isDarkMode
                           ? AppColors.neutralOffWhite
@@ -261,14 +276,14 @@ class _ChatScreenState extends State<ChatScreen> {
                       ),
                     ),
                     onFieldSubmitted: (value) {
-                      if (messageController.text.trim().isEmpty) return;
+                      if (_messageController.text.trim().isEmpty) return;
                       chatController.sendMessage(
-                        messageController.text.trim(),
+                        _messageController.text.trim(),
                         widget.chatId,
                       );
 
                       setState(() {
-                        messageController.clear();
+                        _messageController.clear();
                       });
                       _focusNode.requestFocus();
                     },
@@ -284,29 +299,29 @@ class _ChatScreenState extends State<ChatScreen> {
                 width: 50,
                 height: 50,
                 child: TextButton(
-                  onPressed: messageController.text.trim().isEmpty
+                  onPressed: _messageController.text.trim().isEmpty
                       ? null
                       : () {
-                          if (messageController.text.trim().isEmpty) return;
+                          if (_messageController.text.trim().isEmpty) return;
 
                           chatController.sendMessage(
-                            messageController.text.trim(),
+                            _messageController.text.trim(),
                             widget.chatId,
                           );
 
                           setState(() {
-                            messageController.text = '';
+                            _messageController.text = '';
                           });
                         },
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.zero,
                   ),
                   child: SvgPicture.asset(
-                    messageController.text.trim().isEmpty
+                    _messageController.text.trim().isEmpty
                         ? 'assets/icons/send_outlined.svg'
                         : 'assets/icons/send_solid.svg',
                     colorFilter: ColorFilter.mode(
-                      messageController.text.trim().isEmpty
+                      _messageController.text.trim().isEmpty
                           ? AppColors.neutralDisabled
                           : context.isDarkMode
                               ? AppColors.brandColorDarkMode
