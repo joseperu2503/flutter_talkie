@@ -1,14 +1,12 @@
 class Chat {
   String id;
   Message? lastMessage;
-  List<Message> messages;
   Contact receiver;
   int unreadMessagesCount;
 
   Chat({
     required this.id,
     required this.lastMessage,
-    required this.messages,
     required this.receiver,
     required this.unreadMessagesCount,
   });
@@ -18,8 +16,6 @@ class Chat {
         lastMessage: json["lastMessage"] == null
             ? null
             : Message.fromJson(json["lastMessage"]),
-        messages: List<Message>.from(
-            json["messages"].map((x) => Message.fromJson(x))),
         receiver: Contact.fromJson(json["receiver"]),
         unreadMessagesCount: json["unreadMessagesCount"],
       );
@@ -27,7 +23,6 @@ class Chat {
   Map<String, dynamic> toJson() => {
         "id": id,
         "lastMessage": lastMessage?.toJson(),
-        "messages": List<dynamic>.from(messages.map((x) => x.toJson())),
         "receiver": receiver.toJson(),
         "unreadMessagesCount": unreadMessagesCount,
       };

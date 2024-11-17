@@ -28,16 +28,29 @@ class _ChatScreenState extends State<ChatScreen> {
   final ScrollController _scrollController = ScrollController();
 
   @override
+  void didUpdateWidget(covariant ChatScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.chatId != widget.chatId) {
+      getData();
+    }
+  }
+
+  @override
   void initState() {
     super.initState();
     _messageController.addListener(() {
       setState(() {});
     });
+
+    _scrollController.addListener(_onScroll);
+    getData();
+  }
+
+  getData() {
     chatController.markChatAsRead(widget.chatId);
 
     chatController.getMessages(widget.chatId);
-
-    _scrollController.addListener(_onScroll);
   }
 
   final FocusNode _focusNode = FocusNode();
@@ -151,12 +164,8 @@ class _ChatScreenState extends State<ChatScreen> {
       ),
       body: Obx(
         () {
-          final Chat? chat = chatController.chats
-              .firstWhereOrNull((chat) => chat.id == widget.chatId);
-
-          if (chat == null) {
-            return Container();
-          }
+          final existingMessages =
+              chatController.messages.value[widget.chatId] ?? [];
 
           return CustomScrollView(
             controller: _scrollController,
@@ -170,13 +179,13 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
                 sliver: SliverList.builder(
                   itemBuilder: (context, index) {
-                    final message = chat.messages[index];
+                    final message = existingMessages[index];
                     return MessageItem(
                       key: ValueKey(message.id),
                       message: message,
                     );
                   },
-                  itemCount: chat.messages.length,
+                  itemCount: existingMessages.length,
                 ),
               )
             ],
@@ -208,7 +217,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 height: 40,
                 child: TextButton(
                   onPressed: () {
-                    chatController.sendImage();
+                    chatController.sendImage(widget.chatId);
                   },
                   style: TextButton.styleFrom(
                     padding: EdgeInsets.zero,

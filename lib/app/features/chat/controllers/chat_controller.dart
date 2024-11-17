@@ -11,11 +11,7 @@ import 'package:get/get.dart';
 class ChatController extends GetxController {
   Rx<LoadingStatus> loading = LoadingStatus.none.obs;
   RxList<Chat> chats = <Chat>[].obs;
-  Rx<String?> chatId = Rx<String?>(null);
-
-  setChatId(String? id) {
-    chatId.value = id;
-  }
+  Rx<Map<String, List<Message>>> messages = Rx<Map<String, List<Message>>>({});
 
   getChats() async {
     loading.value = LoadingStatus.loading;
@@ -56,22 +52,21 @@ class ChatController extends GetxController {
   }
 
   addMessageToChat(Message message, String chatId) {
-    final Chat? chat = chats.firstWhereOrNull((chat) => chat.id == chatId);
+    // final Chat? chat = chats.firstWhereOrNull((chat) => chat.id == chatId);
 
-    if (chat == null) return;
+    // if (chat == null) return;
 
-    List<Message> messages = chat.messages;
+    // List<Message> messages = chat.messages;
 
-    messages.insert(0, message);
-    chat.messages = messages;
+    // messages.insert(0, message);
+    // chat.messages = messages;
 
-    chats.refresh();
+    // chats.refresh();
   }
 
   void updateChat(Chat chat) {
     chats.value = chats.map((c) {
       if (c.id == chat.id) {
-        chat.messages = c.messages;
         return chat;
       }
       return c;
@@ -113,14 +108,13 @@ class ChatController extends GetxController {
     socket?.disconnect();
   }
 
-  sendImage() async {
+  sendImage(String chatId) async {
     final path = await CameraService.takePhoto();
 
     if (path == null) return;
-    if (chatId.value == null) return;
 
     try {
-      await ChatService.uploadPhoto(file: path, chatId: chatId.value!);
+      await ChatService.uploadPhoto(file: path, chatId: chatId);
     } on ServiceException catch (e) {
       SnackbarService.show(e.message, type: SnackbarType.error);
     }
@@ -128,22 +122,22 @@ class ChatController extends GetxController {
 
   getMessages(String chatId) async {
     try {
-      final Chat? chat = chats.firstWhereOrNull((chat) => chat.id == chatId);
-      if (chat == null) return;
-
+      // Obtener el último mensaje almacenado en el mapa de mensajes.
+      final existingMessages = messages.value[chatId] ?? [];
       String? lastMessageId =
-          chat.messages.isNotEmpty ? chat.messages.last.id : null;
+          existingMessages.isNotEmpty ? existingMessages.last.id : null;
+
+      // Obtener los nuevos mensajes desde el servicio.
       final newMessages = await ChatService.getMessages(chatId, lastMessageId);
 
-      chats.value = chats.map((c) {
-        if (c.id == chatId) {
-          final messages = [...chat.messages, ...newMessages];
+      // Combinar los mensajes existentes con los nuevos.
+      final updatedMessages = [...existingMessages, ...newMessages];
 
-          c.messages = messages;
-        }
-
-        return c;
-      }).toList();
+      // Actualizar el mapa de mensajes.
+      messages.value = {
+        ...messages.value,
+        chatId: updatedMessages,
+      };
     } on ServiceException catch (e) {
       SnackbarService.show(e.message, type: SnackbarType.error);
     }

@@ -27,7 +27,6 @@ class ContactItem extends StatelessWidget {
       height: 84,
       child: TextButton(
         onPressed: () {
-          chatController.setChatId(chat.id);
           context.go('/chats');
           if (Breakpoints.isMdDown(context)) {
             Navigator.of(context, rootNavigator: true).push(

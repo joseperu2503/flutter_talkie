@@ -3,8 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:talkie/app/core/constants/breakpoints.dart';
 import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/auth/controllers/auth_controller.dart';
-import 'package:talkie/app/features/chat/controllers/chat_controller.dart';
-import 'package:talkie/app/features/chat/screens/chat_screen.dart';
 import 'package:talkie/app/shared/widgets/custom_bottom_navigation_bar.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -20,7 +18,6 @@ class InternalLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authController = Get.find<AuthController>();
-    final chatController = Get.find<ChatController>();
 
     return Scaffold(
       backgroundColor: AppColors.white,
@@ -31,41 +28,40 @@ class InternalLayout extends StatelessWidget {
               Expanded(
                 flex: Breakpoints.isMdUp(context) ? 0 : 1,
                 child: Container(
-                  width: Breakpoints.isMdUp(context) ? 450 : null,
                   padding: EdgeInsets.only(
                     left: Breakpoints.isMdUp(context) ? 80 : 0,
                   ),
-                  child: navigationShell,
+                  child: SizedBox(
+                    width: Breakpoints.isMdUp(context) ? 450 : null,
+                  ),
                 ),
               ),
               if (Breakpoints.isMdUp(context))
-                Obx(
-                  () => chatController.chatId.value == null
-                      ? Expanded(
-                          child: Container(
-                            color: context.isDarkMode
-                                ? AppColors.neutralDark
-                                : AppColors.neutralOffWhite,
-                            child: Center(
-                              child: context.isDarkMode
-                                  ? SvgPicture.asset(
-                                      'assets/icons/icon_bg_dark.svg',
-                                      width: 300,
-                                    )
-                                  : SvgPicture.asset(
-                                      'assets/icons/icon_bg.svg',
-                                      width: 300,
-                                    ),
+                Expanded(
+                  child: Container(
+                    color: context.isDarkMode
+                        ? AppColors.neutralDark
+                        : AppColors.neutralOffWhite,
+                    child: Center(
+                      child: context.isDarkMode
+                          ? SvgPicture.asset(
+                              'assets/icons/icon_bg_dark.svg',
+                              width: 300,
+                            )
+                          : SvgPicture.asset(
+                              'assets/icons/icon_bg.svg',
+                              width: 300,
                             ),
-                          ),
-                        )
-                      : Expanded(
-                          child: ChatScreen(
-                            chatId: chatController.chatId.value!,
-                          ),
-                        ),
+                    ),
+                  ),
                 ),
             ],
+          ),
+          Container(
+            padding: EdgeInsets.only(
+              left: Breakpoints.isMdUp(context) ? 80 : 0,
+            ),
+            child: navigationShell,
           ),
           if (Breakpoints.isMdUp(context))
             Container(
