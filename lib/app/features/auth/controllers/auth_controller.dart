@@ -6,6 +6,7 @@ import 'package:talkie/app/features/auth/services/auth_service.dart';
 import 'package:talkie/app/features/chat/controllers/chat_controller.dart';
 import 'package:talkie/app/shared/widgets/snackbar.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
 class AuthController extends GetxController {
   Rx<AuthUser?> user = Rx<AuthUser?>(null);
@@ -52,6 +53,6 @@ class AuthController extends GetxController {
     _cancelTimer();
     final ChatController chatController = Get.find<ChatController>();
     chatController.socket?.disconnect();
-    appRouter.go('/');
+    rootNavigatorKey.currentContext!.go('/');
   }
 }

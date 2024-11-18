@@ -8,6 +8,7 @@ import 'package:talkie/app/shared/enums/loading_status.dart';
 import 'package:talkie/app/shared/plugins/formx/formx.dart';
 import 'package:talkie/app/shared/widgets/snackbar.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
 class RegisterController extends GetxController {
   Rx<FormxInput<String>> name = FormxInput<String>(
@@ -88,7 +89,7 @@ class RegisterController extends GetxController {
       await StorageService.set<String>(StorageKeys.token, loginResponse.token);
       await StorageService.set<AuthUser>(StorageKeys.user, loginResponse.user);
 
-      appRouter.go('/chats');
+      rootNavigatorKey.currentContext!.go('/chats');
 
       final AuthController authController = Get.find<AuthController>();
       authController.initAutoLogout();

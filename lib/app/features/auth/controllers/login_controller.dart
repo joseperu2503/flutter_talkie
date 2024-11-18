@@ -10,6 +10,7 @@ import 'package:talkie/app/shared/enums/loading_status.dart';
 import 'package:talkie/app/shared/plugins/formx/formx.dart';
 import 'package:talkie/app/shared/widgets/snackbar.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
 class LoginController extends GetxController {
   Rx<FormxInput<String>> email = FormxInput<String>(
@@ -57,7 +58,7 @@ class LoginController extends GetxController {
       await StorageService.set<AuthUser>(StorageKeys.user, loginResponse.user);
 
       _setRemember();
-      appRouter.go('/chats');
+      rootNavigatorKey.currentContext!.go('/chats');
 
       final AuthController authController = Get.find<AuthController>();
       final ChatController chatController = Get.find<ChatController>();

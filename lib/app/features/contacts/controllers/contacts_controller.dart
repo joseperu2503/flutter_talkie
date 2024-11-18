@@ -5,6 +5,7 @@ import 'package:talkie/app/shared/enums/loading_status.dart';
 import 'package:talkie/app/shared/plugins/formx/formx.dart';
 import 'package:talkie/app/shared/widgets/snackbar.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
 class ContactsController extends GetxController {
   Rx<LoadingStatus> loading = LoadingStatus.none.obs;
@@ -37,7 +38,7 @@ class ContactsController extends GetxController {
       final response = await ContactsService.addContact(username.value.value);
       loading.value = LoadingStatus.success;
       SnackbarService.show(response.message, type: SnackbarType.success);
-      appRouter.pop();
+      rootNavigatorKey.currentContext!.pop();
     } on ServiceException catch (e) {
       loading.value = LoadingStatus.error;
 
