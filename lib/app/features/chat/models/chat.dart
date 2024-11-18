@@ -36,6 +36,7 @@ class Message {
   bool isSender;
   String? fileUrl;
   bool isImage;
+  String chatId;
 
   Message({
     required this.id,
@@ -45,6 +46,7 @@ class Message {
     required this.isSender,
     required this.fileUrl,
     required this.isImage,
+    required this.chatId,
   });
 
   factory Message.fromJson(Map<String, dynamic> json) => Message(
@@ -55,6 +57,7 @@ class Message {
         isSender: json["isSender"],
         fileUrl: json["fileUrl"],
         isImage: json["isImage"],
+        chatId: json["chatId"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -65,6 +68,7 @@ class Message {
         "isSender": isSender,
         "fileUrl": fileUrl,
         "isImage": isImage,
+        "chatId": chatId,
       };
 }
 

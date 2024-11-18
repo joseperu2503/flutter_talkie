@@ -35,10 +35,7 @@ class ChatController extends GetxController {
     if (!validToken) return;
     socket = ChatSocket(
       onMessageReceived: (messageReceived) {
-        addMessageToChat(
-          messageReceived.message,
-          messageReceived.chatId,
-        );
+        addMessageToChat(messageReceived.message);
       },
       onChatUpdated: (chat) {
         updateChat(chat);
@@ -51,17 +48,21 @@ class ChatController extends GetxController {
     await socket?.connect();
   }
 
-  addMessageToChat(Message message, String chatId) {
-    // final Chat? chat = chats.firstWhereOrNull((chat) => chat.id == chatId);
+  addMessageToChat(Message message) {
+    // Obtener el último mensaje almacenado en el mapa de mensajes.
+    final existingMessages = messages.value[message.chatId] ?? [];
 
-    // if (chat == null) return;
+    // Combinar los mensajes existentes con los nuevos.
+    final updatedMessages = [
+      message,
+      ...existingMessages,
+    ];
 
-    // List<Message> messages = chat.messages;
-
-    // messages.insert(0, message);
-    // chat.messages = messages;
-
-    // chats.refresh();
+    // Actualizar el mapa de mensajes.
+    messages.value = {
+      ...messages.value,
+      message.chatId: updatedMessages,
+    };
   }
 
   void updateChat(Chat chat) {
