@@ -1,10 +1,8 @@
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
-import 'package:talkie/app/core/constants/breakpoints.dart';
 import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/chat/models/chat.dart';
-import 'package:talkie/app/features/chat/screens/chat_screen.dart';
 import 'package:talkie/app/shared/widgets/user_image.dart';
 import 'package:go_router/go_router.dart';
 
