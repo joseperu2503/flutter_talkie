@@ -7,6 +7,9 @@ import 'package:talkie/app/shared/widgets/custom_bottom_navigation_bar.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
+const double sidebarWidth = 80;
+const double leftWidth = 450;
+
 class InternalLayout extends StatelessWidget {
   const InternalLayout({
     super.key,

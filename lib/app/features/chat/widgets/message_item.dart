@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:talkie/app/core/constants/breakpoints.dart';
 import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/chat/models/chat.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
+import 'package:talkie/app/shared/layouts/internal_layout.dart';
 
 class MessageItem extends StatefulWidget {
   const MessageItem({
@@ -35,7 +37,9 @@ class _MessageItemState extends State<MessageItem>
             bottom: 8,
           ),
           constraints: BoxConstraints(
-            maxWidth: MediaQuery.of(context).size.width * 0.7,
+            maxWidth: Breakpoints.isMdDown(context)
+                ? MediaQuery.of(context).size.width * 0.7
+                : leftWidth * 0.7,
           ),
           decoration: BoxDecoration(
             color: widget.message.isSender
