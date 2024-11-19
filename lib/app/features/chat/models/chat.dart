@@ -40,6 +40,8 @@ class Message {
   String? temporalId;
   int? statusId;
 
+  final List<MessageReceiver>? receivers;
+
   Message({
     required this.id,
     required this.content,
@@ -51,6 +53,7 @@ class Message {
     required this.chatId,
     this.temporalId,
     this.statusId,
+    required this.receivers,
   });
 
   factory Message.fromJson(Map<String, dynamic> json) => Message(
@@ -64,6 +67,8 @@ class Message {
         chatId: json["chatId"],
         temporalId: json["temporalId"],
         statusId: json["statusId"],
+        receivers: List<MessageReceiver>.from(
+            json["receivers"].map((x) => MessageReceiver.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -77,6 +82,30 @@ class Message {
         "chatId": chatId,
         "temporalId": temporalId,
         "statusId": statusId,
+      };
+}
+
+class MessageReceiver {
+  final DateTime? deliveredAt;
+  final DateTime? readAt;
+
+  MessageReceiver({
+    this.deliveredAt,
+    this.readAt,
+  });
+
+  factory MessageReceiver.fromJson(Map<String, dynamic> json) =>
+      MessageReceiver(
+        deliveredAt: json["delivered_at"] == null
+            ? null
+            : DateTime.parse(json["delivered_at"]),
+        readAt:
+            json["read_at"] == null ? null : DateTime.parse(json["read_at"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "delivered_at": deliveredAt?.toIso8601String(),
+        "read_at": readAt?.toIso8601String(),
       };
 }
 

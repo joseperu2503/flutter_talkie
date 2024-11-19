@@ -133,6 +133,7 @@ class ChatController extends GetxController {
         chatId: chatId,
         temporalId: temporalId,
         statusId: null,
+        receivers: [],
       );
 
       // Combinar los mensajes existentes con los nuevos.
