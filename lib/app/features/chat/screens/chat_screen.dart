@@ -173,6 +173,7 @@ class _ChatScreenState extends State<ChatScreen> {
             slivers: [
               SliverPadding(
                 padding: const EdgeInsets.only(
+                  top: 24,
                   left: 16,
                   right: 16,
                   bottom: 12,
