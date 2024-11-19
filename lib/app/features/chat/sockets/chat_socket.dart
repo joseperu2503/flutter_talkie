@@ -48,7 +48,7 @@ class ChatSocket {
 
     //** Escuchar Socket */
     socket.on('messageDelivered', (dynamic data) {
-      // print('messageReceived $data');
+      // print('messageDelivered $data');
       Message messageDelivered = Message.fromJson(data);
       onMessageDelivered(messageDelivered);
     });

@@ -29,16 +29,15 @@ class Chat {
 }
 
 class Message {
-  String id;
-  String? content;
-  DateTime timestamp;
-  Sender sender;
-  bool isSender;
-  String? fileUrl;
-  bool isImage;
-  String chatId;
-  String? temporalId;
-
+  final String id;
+  final String? content;
+  final DateTime timestamp;
+  final Sender sender;
+  final bool isSender;
+  final String? fileUrl;
+  final bool isImage;
+  final String chatId;
+  final String? temporalId;
   final List<MessageReceiver> receivers;
 
   Message({

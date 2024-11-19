@@ -37,7 +37,7 @@ class ChatController extends GetxController {
     if (!validToken) return;
     socket = ChatSocket(
       onMessageReceived: (messageReceived) {
-        updateMessage(messageReceived);
+        onMessageReceived(messageReceived);
       },
       onChatUpdated: (chat) {
         updateChat(chat);
@@ -46,14 +46,14 @@ class ChatController extends GetxController {
         updatedContat(contact);
       },
       onMessageDelivered: (messageReceived) {
-        updateMessage(messageReceived);
+        onMessageDelivered(messageReceived);
       },
     );
 
     await socket?.connect();
   }
 
-  updateMessage(Message message) {
+  onMessageReceived(Message message) {
     // Obtener el último mensaje almacenado en el mapa de mensajes.
     final existingMessages = messages.value[message.chatId] ?? [];
 
@@ -69,6 +69,27 @@ class ChatController extends GetxController {
     } else {
       // Si no existe, agregar el nuevo mensaje al inicio de la lista.
       existingMessages.insert(0, message);
+    }
+
+    // Actualizar el mapa de mensajes.
+    messages.value = {
+      ...messages.value,
+      message.chatId: existingMessages,
+    };
+  }
+
+  onMessageDelivered(Message message) {
+    // Obtener el último mensaje almacenado en el mapa de mensajes.
+    final existingMessages = messages.value[message.chatId] ?? [];
+
+    // Buscar si existe un mensaje con el mismo id o temporalId.
+    final index = existingMessages.indexWhere((existingMessage) =>
+        existingMessage.id == message.id ||
+        existingMessage.temporalId == message.temporalId);
+
+    if (index != -1) {
+      // Si existe, reemplazar el mensaje en la posición encontrada.
+      existingMessages[index] = message;
     }
 
     // Actualizar el mapa de mensajes.
