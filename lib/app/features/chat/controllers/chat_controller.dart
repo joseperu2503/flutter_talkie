@@ -99,10 +99,11 @@ class ChatController extends GetxController {
   }
 
   sendMessage(String content, String chatId) async {
-    socket?.sendMessage(
-      content: content,
-      chatId: chatId,
-    );
+    try {
+      await ChatService.sendMessage(content: content, chatId: chatId);
+    } on ServiceException catch (e) {
+      SnackbarService.show(e.message, type: SnackbarType.error);
+    }
   }
 
   disconnectSocket() {
@@ -115,7 +116,7 @@ class ChatController extends GetxController {
     if (path == null) return;
 
     try {
-      await ChatService.uploadPhoto(file: path, chatId: chatId);
+      await ChatService.sendFile(file: path, chatId: chatId);
     } on ServiceException catch (e) {
       SnackbarService.show(e.message, type: SnackbarType.error);
     }

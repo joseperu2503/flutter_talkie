@@ -32,89 +32,109 @@ class _MessageItemState extends State<MessageItem>
           ? MainAxisAlignment.end
           : MainAxisAlignment.start,
       children: [
-        Container(
-          margin: const EdgeInsets.only(
-            bottom: 8,
-          ),
-          constraints: BoxConstraints(
-            maxWidth: Breakpoints.isMdDown(context)
-                ? MediaQuery.of(context).size.width * 0.7
-                : leftWidth * 0.7,
-          ),
-          decoration: BoxDecoration(
-            color: widget.message.isSender
-                ? context.isDarkMode
-                    ? AppColors.brandColorDarkMode
-                    : AppColors.brandColorDarkMode
-                : context.isDarkMode
-                    ? AppColors.neutralActive
-                    : AppColors.white,
-            borderRadius: BorderRadius.only(
-              topLeft: widget.message.isSender
-                  ? const Radius.circular(16)
-                  : const Radius.circular(0),
-              topRight: const Radius.circular(16),
-              bottomLeft: const Radius.circular(16),
-              bottomRight: widget.message.isSender
-                  ? const Radius.circular(0)
-                  : const Radius.circular(16),
-            ),
-          ),
-          padding: const EdgeInsets.symmetric(
-            horizontal: 10,
-            vertical: 10,
-          ),
-          child: Column(
-            crossAxisAlignment: widget.message.isSender
-                ? CrossAxisAlignment.end
-                : CrossAxisAlignment.start,
-            children: [
-              if (widget.message.isImage && widget.message.fileUrl != null)
-                Container(
-                  constraints: const BoxConstraints(
-                    maxWidth: 240,
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(4),
-                    child: CachedNetworkImage(
-                      imageUrl: widget.message.fileUrl!,
-                      placeholder: (context, url) =>
-                          const CircularProgressIndicator(),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.error),
+        Stack(
+          children: [
+            Container(
+              margin: const EdgeInsets.only(
+                bottom: 8,
+              ),
+              constraints: BoxConstraints(
+                maxWidth: Breakpoints.isMdDown(context)
+                    ? MediaQuery.of(context).size.width * 0.7
+                    : leftWidth * 0.7,
+              ),
+              decoration: BoxDecoration(
+                color: widget.message.isSender
+                    ? context.isDarkMode
+                        ? AppColors.brandColorDarkMode
+                        : AppColors.brandColorDarkMode
+                    : context.isDarkMode
+                        ? AppColors.neutralActive
+                        : AppColors.white,
+                borderRadius: BorderRadius.only(
+                  topLeft: widget.message.isSender
+                      ? const Radius.circular(12)
+                      : const Radius.circular(0),
+                  topRight: const Radius.circular(12),
+                  bottomLeft: const Radius.circular(12),
+                  bottomRight: widget.message.isSender
+                      ? const Radius.circular(0)
+                      : const Radius.circular(12),
+                ),
+              ),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 10,
+                vertical: 8,
+              ),
+              child: Column(
+                crossAxisAlignment: widget.message.isSender
+                    ? CrossAxisAlignment.end
+                    : CrossAxisAlignment.start,
+                children: [
+                  if (widget.message.isImage && widget.message.fileUrl != null)
+                    Container(
+                      constraints: const BoxConstraints(
+                        maxWidth: 240,
+                      ),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(4),
+                        child: CachedNetworkImage(
+                          imageUrl: widget.message.fileUrl!,
+                          placeholder: (context, url) =>
+                              const CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error),
+                        ),
+                      ),
                     ),
-                  ),
-                ),
-              if (widget.message.content != null)
-                Text(
-                  widget.message.content!,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w400,
-                    color: widget.message.isSender
-                        ? AppColors.white
-                        : context.isDarkMode
-                            ? AppColors.neutralOffWhite
-                            : AppColors.neutralActive,
-                    height: 24 / 14,
-                    leadingDistribution: TextLeadingDistribution.even,
-                  ),
-                ),
-              const Height(4),
-              Text(
+                  if (widget.message.content != null)
+                    Text.rich(
+                      TextSpan(
+                        children: [
+                          TextSpan(
+                            text: widget.message.content!,
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              color: widget.message.isSender
+                                  ? AppColors.white
+                                  : context.isDarkMode
+                                      ? AppColors.neutralOffWhite
+                                      : AppColors.neutralActive,
+                              height: 24 / 14,
+                              leadingDistribution: TextLeadingDistribution.even,
+                            ),
+                          ),
+                          const WidgetSpan(
+                            alignment: PlaceholderAlignment.middle,
+                            child: SizedBox(
+                              width: 35,
+                              height: 24,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                ],
+              ),
+            ),
+            Positioned(
+              bottom: 10,
+              right: 10,
+              child: Text(
                 DateFormat('HH:mm').format(widget.message.timestamp.toLocal()),
                 style: TextStyle(
                   fontSize: 10,
                   fontWeight: FontWeight.w400,
                   color: widget.message.isSender
-                      ? AppColors.white
+                      ? AppColors.neutralOffWhite
                       : AppColors.neutralDisabled,
                   height: 16 / 10,
                   leadingDistribution: TextLeadingDistribution.even,
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ],
     );

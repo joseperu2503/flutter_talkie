@@ -14,7 +14,7 @@ class ChatService {
     }
   }
 
-  static Future<void> uploadPhoto({
+  static Future<void> sendFile({
     required CustomFile file,
     required String chatId,
   }) async {
@@ -30,6 +30,22 @@ class ChatService {
       await Api.post('/chats/send/file', data: data);
     } catch (e) {
       throw ServiceException('An error occurred while upload photo.', e);
+    }
+  }
+
+  static Future<void> sendMessage({
+    required String content,
+    required String chatId,
+  }) async {
+    try {
+      Map<String, dynamic> form = {
+        'content': content,
+        'chatId': chatId,
+      };
+
+      await Api.post('/chats/send/message', data: form);
+    } catch (e) {
+      throw ServiceException('An error occurred while send message.', e);
     }
   }
 
