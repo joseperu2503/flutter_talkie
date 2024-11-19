@@ -5,6 +5,8 @@ import 'package:socket_io_client/socket_io_client.dart' as io;
 class ChatSocket {
   late io.Socket socket;
   final void Function(Message messageReceived) onMessageReceived;
+  final void Function(Message messageReceived) onMessageDelivered;
+
   final void Function(Chat chat) onChatUpdated;
   final void Function(Contact contact) onContactUpdated;
 
@@ -12,6 +14,7 @@ class ChatSocket {
     required this.onMessageReceived,
     required this.onChatUpdated,
     required this.onContactUpdated,
+    required this.onMessageDelivered,
   });
 
   Future<void> connect() async {
@@ -41,6 +44,13 @@ class ChatSocket {
       // print('messageReceived $data');
       Message messageReceived = Message.fromJson(data);
       onMessageReceived(messageReceived);
+    });
+
+    //** Escuchar Socket */
+    socket.on('messageDelivered', (dynamic data) {
+      // print('messageReceived $data');
+      Message messageDelivered = Message.fromJson(data);
+      onMessageDelivered(messageDelivered);
     });
 
     //** Escuchar Socket */

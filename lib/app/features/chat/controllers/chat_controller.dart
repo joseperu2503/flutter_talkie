@@ -37,7 +37,7 @@ class ChatController extends GetxController {
     if (!validToken) return;
     socket = ChatSocket(
       onMessageReceived: (messageReceived) {
-        onMessageReceived(messageReceived);
+        updateMessage(messageReceived);
       },
       onChatUpdated: (chat) {
         updateChat(chat);
@@ -45,12 +45,15 @@ class ChatController extends GetxController {
       onContactUpdated: (contact) {
         updatedContat(contact);
       },
+      onMessageDelivered: (messageReceived) {
+        updateMessage(messageReceived);
+      },
     );
 
     await socket?.connect();
   }
 
-  onMessageReceived(Message message) {
+  updateMessage(Message message) {
     // Obtener el último mensaje almacenado en el mapa de mensajes.
     final existingMessages = messages.value[message.chatId] ?? [];
 
@@ -132,7 +135,6 @@ class ChatController extends GetxController {
         isImage: false,
         chatId: chatId,
         temporalId: temporalId,
-        statusId: null,
         receivers: [],
       );
 
@@ -148,7 +150,7 @@ class ChatController extends GetxController {
         chatId: updatedMessages,
       };
 
-      final message = await ChatService.sendMessage(
+      await ChatService.sendMessage(
         content: content,
         chatId: chatId,
         temporalId: temporalId,

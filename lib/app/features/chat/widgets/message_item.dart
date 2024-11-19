@@ -26,6 +26,9 @@ class _MessageItemState extends State<MessageItem>
 
   @override
   Widget build(BuildContext context) {
+    final sended = widget.message.receivers.isNotEmpty;
+
+    final delivered = sended && widget.message.receivers[0].deliveredAt != null;
     super.build(context);
     return Row(
       mainAxisAlignment: widget.message.isSender
@@ -136,16 +139,28 @@ class _MessageItemState extends State<MessageItem>
                       leadingDistribution: TextLeadingDistribution.even,
                     ),
                   ),
-                  const Width(4),
-                  Icon(
-                    widget.message.statusId == null
-                        ? Icons.schedule
-                        : Icons.check,
-                    size: 14,
-                    color: widget.message.isSender
-                        ? AppColors.neutralOffWhite
-                        : AppColors.neutralDisabled,
-                  )
+                  if (widget.message.isSender)
+                    Row(
+                      children: [
+                        const Width(4),
+                        if (!delivered)
+                          Icon(
+                            sended ? Icons.check : Icons.schedule,
+                            size: 14,
+                            color: widget.message.isSender
+                                ? AppColors.neutralOffWhite
+                                : AppColors.neutralDisabled,
+                          ),
+                        if (delivered)
+                          Icon(
+                            Icons.done_all,
+                            size: 14,
+                            color: widget.message.isSender
+                                ? AppColors.neutralOffWhite
+                                : AppColors.neutralDisabled,
+                          ),
+                      ],
+                    )
                 ],
               ),
             ),

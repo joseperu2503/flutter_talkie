@@ -38,9 +38,8 @@ class Message {
   bool isImage;
   String chatId;
   String? temporalId;
-  int? statusId;
 
-  final List<MessageReceiver>? receivers;
+  final List<MessageReceiver> receivers;
 
   Message({
     required this.id,
@@ -52,7 +51,6 @@ class Message {
     required this.isImage,
     required this.chatId,
     this.temporalId,
-    this.statusId,
     required this.receivers,
   });
 
@@ -66,7 +64,6 @@ class Message {
         isImage: json["isImage"],
         chatId: json["chatId"],
         temporalId: json["temporalId"],
-        statusId: json["statusId"],
         receivers: List<MessageReceiver>.from(
             json["receivers"].map((x) => MessageReceiver.fromJson(x))),
       );
@@ -81,7 +78,6 @@ class Message {
         "isImage": isImage,
         "chatId": chatId,
         "temporalId": temporalId,
-        "statusId": statusId,
       };
 }
 
