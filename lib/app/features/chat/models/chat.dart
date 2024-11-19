@@ -31,7 +31,7 @@ class Chat {
 class Message {
   final String id;
   final String? content;
-  final DateTime timestamp;
+  final DateTime sentAt;
   final Sender sender;
   final bool isSender;
   final String? fileUrl;
@@ -43,7 +43,7 @@ class Message {
   Message({
     required this.id,
     required this.content,
-    required this.timestamp,
+    required this.sentAt,
     required this.sender,
     required this.isSender,
     required this.fileUrl,
@@ -56,7 +56,7 @@ class Message {
   factory Message.fromJson(Map<String, dynamic> json) => Message(
         id: json["id"],
         content: json["content"],
-        timestamp: DateTime.parse(json["timestamp"]),
+        sentAt: DateTime.parse(json["sentAt"]),
         sender: Sender.fromJson(json["sender"]),
         isSender: json["isSender"],
         fileUrl: json["fileUrl"],
@@ -70,7 +70,7 @@ class Message {
   Map<String, dynamic> toJson() => {
         "id": id,
         "content": content,
-        "timestamp": timestamp.toIso8601String(),
+        "sentAt": sentAt.toIso8601String(),
         "sender": sender.toJson(),
         "isSender": isSender,
         "fileUrl": fileUrl,

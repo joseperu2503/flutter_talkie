@@ -63,7 +63,7 @@ class ChatItem extends StatelessWidget {
                           ),
                         ),
                         Text(
-                          formatTimestamp(chat.lastMessage?.timestamp),
+                          formatTimestamp(chat.lastMessage?.sentAt),
                           style: const TextStyle(
                             fontSize: 13,
                             fontWeight: FontWeight.w500,

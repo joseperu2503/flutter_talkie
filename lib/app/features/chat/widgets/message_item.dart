@@ -128,7 +128,7 @@ class _MessageItemState extends State<MessageItem>
                 children: [
                   Text(
                     DateFormat('HH:mm')
-                        .format(widget.message.timestamp.toLocal()),
+                        .format(widget.message.sentAt.toLocal()),
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,

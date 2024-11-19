@@ -54,8 +54,8 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
             chats.sort((a, b) {
               // Obtener la fecha del ultimo mensaje
-              DateTime timestampA = a.lastMessage!.timestamp;
-              DateTime timestampB = b.lastMessage!.timestamp;
+              DateTime timestampA = a.lastMessage!.sentAt;
+              DateTime timestampB = b.lastMessage!.sentAt;
 
               // Comparar las fechas
               return timestampB.compareTo(timestampA);

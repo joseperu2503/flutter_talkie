@@ -143,7 +143,7 @@ class ChatController extends GetxController {
       final Message temporalMessage = Message(
         id: temporalId,
         content: content,
-        timestamp: DateTime.now(),
+        sentAt: DateTime.now(),
         sender: Sender(
           id: user.id,
           name: user.name,
