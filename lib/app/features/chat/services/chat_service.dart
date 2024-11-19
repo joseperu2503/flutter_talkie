@@ -33,17 +33,20 @@ class ChatService {
     }
   }
 
-  static Future<void> sendMessage({
+  static Future<Message> sendMessage({
     required String content,
     required String chatId,
+    required String temporalId,
   }) async {
     try {
       Map<String, dynamic> form = {
         'content': content,
         'chatId': chatId,
+        'temporalId': temporalId,
       };
 
-      await Api.post('/chats/send/message', data: form);
+      final response = await Api.post('/chats/send/message', data: form);
+      return Message.fromJson(response.data);
     } catch (e) {
       throw ServiceException('An error occurred while send message.', e);
     }

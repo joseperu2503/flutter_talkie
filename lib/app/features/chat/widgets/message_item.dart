@@ -101,14 +101,14 @@ class _MessageItemState extends State<MessageItem>
                                   : context.isDarkMode
                                       ? AppColors.neutralOffWhite
                                       : AppColors.neutralActive,
-                              height: 24 / 14,
+                              height: 20 / 14,
                               leadingDistribution: TextLeadingDistribution.even,
                             ),
                           ),
                           const WidgetSpan(
                             alignment: PlaceholderAlignment.middle,
                             child: SizedBox(
-                              width: 35,
+                              width: 60,
                               height: 24,
                             ),
                           ),
@@ -119,19 +119,34 @@ class _MessageItemState extends State<MessageItem>
               ),
             ),
             Positioned(
-              bottom: 10,
+              bottom: 12,
               right: 10,
-              child: Text(
-                DateFormat('HH:mm').format(widget.message.timestamp.toLocal()),
-                style: TextStyle(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w400,
-                  color: widget.message.isSender
-                      ? AppColors.neutralOffWhite
-                      : AppColors.neutralDisabled,
-                  height: 16 / 10,
-                  leadingDistribution: TextLeadingDistribution.even,
-                ),
+              child: Row(
+                children: [
+                  Text(
+                    DateFormat('HH:mm')
+                        .format(widget.message.timestamp.toLocal()),
+                    style: TextStyle(
+                      fontSize: 12,
+                      fontWeight: FontWeight.w400,
+                      color: widget.message.isSender
+                          ? AppColors.neutralOffWhite
+                          : AppColors.neutralDisabled,
+                      height: 1.2,
+                      leadingDistribution: TextLeadingDistribution.even,
+                    ),
+                  ),
+                  const Width(4),
+                  Icon(
+                    widget.message.statusId == null
+                        ? Icons.schedule
+                        : Icons.check,
+                    size: 14,
+                    color: widget.message.isSender
+                        ? AppColors.neutralOffWhite
+                        : AppColors.neutralDisabled,
+                  )
+                ],
               ),
             ),
           ],

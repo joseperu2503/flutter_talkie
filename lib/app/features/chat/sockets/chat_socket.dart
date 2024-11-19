@@ -1,11 +1,10 @@
 import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/chat/models/chat.dart';
-import 'package:talkie/app/features/chat/models/message_received.dart';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class ChatSocket {
   late io.Socket socket;
-  final void Function(MessagesReceived messageReceived) onMessageReceived;
+  final void Function(Message messageReceived) onMessageReceived;
   final void Function(Chat chat) onChatUpdated;
   final void Function(Contact contact) onContactUpdated;
 
@@ -40,7 +39,7 @@ class ChatSocket {
     //** Escuchar Socket */
     socket.on('messageReceived', (dynamic data) {
       // print('messageReceived $data');
-      MessagesReceived messageReceived = MessagesReceived.fromJson(data);
+      Message messageReceived = Message.fromJson(data);
       onMessageReceived(messageReceived);
     });
 

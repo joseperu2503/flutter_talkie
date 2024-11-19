@@ -1,4 +1,5 @@
 import 'package:talkie/app/core/core.dart';
+import 'package:talkie/app/features/auth/controllers/auth_controller.dart';
 import 'package:talkie/app/features/auth/services/auth_service.dart';
 import 'package:talkie/app/features/chat/models/chat.dart';
 import 'package:talkie/app/features/chat/services/chat_service.dart';
@@ -7,6 +8,7 @@ import 'package:talkie/app/shared/enums/loading_status.dart';
 import 'package:talkie/app/shared/services/camera_service.dart';
 import 'package:talkie/app/shared/widgets/snackbar.dart';
 import 'package:get/get.dart';
+import 'package:uuid/uuid.dart';
 
 class ChatController extends GetxController {
   Rx<LoadingStatus> loading = LoadingStatus.none.obs;
@@ -35,7 +37,7 @@ class ChatController extends GetxController {
     if (!validToken) return;
     socket = ChatSocket(
       onMessageReceived: (messageReceived) {
-        addMessageToChat(messageReceived.message);
+        onMessageReceived(messageReceived);
       },
       onChatUpdated: (chat) {
         updateChat(chat);
@@ -48,20 +50,28 @@ class ChatController extends GetxController {
     await socket?.connect();
   }
 
-  addMessageToChat(Message message) {
+  onMessageReceived(Message message) {
     // Obtener el último mensaje almacenado en el mapa de mensajes.
     final existingMessages = messages.value[message.chatId] ?? [];
 
-    // Combinar los mensajes existentes con los nuevos.
-    final updatedMessages = [
-      message,
-      ...existingMessages,
-    ];
+    // Buscar si existe un mensaje con el mismo id o temporalId.
+    final index = existingMessages.indexWhere((existingMessage) =>
+        existingMessage.id == message.id ||
+        (message.temporalId != null &&
+            existingMessage.temporalId == message.temporalId));
+
+    if (index != -1) {
+      // Si existe, reemplazar el mensaje en la posición encontrada.
+      existingMessages[index] = message;
+    } else {
+      // Si no existe, agregar el nuevo mensaje al inicio de la lista.
+      existingMessages.insert(0, message);
+    }
 
     // Actualizar el mapa de mensajes.
     messages.value = {
       ...messages.value,
-      message.chatId: updatedMessages,
+      message.chatId: existingMessages,
     };
   }
 
@@ -100,7 +110,48 @@ class ChatController extends GetxController {
 
   sendMessage(String content, String chatId) async {
     try {
-      await ChatService.sendMessage(content: content, chatId: chatId);
+      final String temporalId = const Uuid().v4();
+      final AuthController authController = Get.find<AuthController>();
+      final user = authController.user.value;
+      if (user == null) return;
+      final existingMessages = messages.value[chatId] ?? [];
+
+      final Message temporalMessage = Message(
+        id: temporalId,
+        content: content,
+        timestamp: DateTime.now(),
+        sender: Sender(
+          id: user.id,
+          name: user.name,
+          surname: user.surname,
+          email: user.email,
+          photo: user.photo,
+        ),
+        isSender: true,
+        fileUrl: null,
+        isImage: false,
+        chatId: chatId,
+        temporalId: temporalId,
+        statusId: null,
+      );
+
+      // Combinar los mensajes existentes con los nuevos.
+      final updatedMessages = [
+        temporalMessage,
+        ...existingMessages,
+      ];
+
+      // Actualizar el mapa de mensajes.
+      messages.value = {
+        ...messages.value,
+        chatId: updatedMessages,
+      };
+
+      final message = await ChatService.sendMessage(
+        content: content,
+        chatId: chatId,
+        temporalId: temporalId,
+      );
     } on ServiceException catch (e) {
       SnackbarService.show(e.message, type: SnackbarType.error);
     }

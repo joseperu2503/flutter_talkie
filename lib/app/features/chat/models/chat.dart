@@ -37,6 +37,8 @@ class Message {
   String? fileUrl;
   bool isImage;
   String chatId;
+  String? temporalId;
+  int? statusId;
 
   Message({
     required this.id,
@@ -47,6 +49,8 @@ class Message {
     required this.fileUrl,
     required this.isImage,
     required this.chatId,
+    this.temporalId,
+    this.statusId,
   });
 
   factory Message.fromJson(Map<String, dynamic> json) => Message(
@@ -58,6 +62,8 @@ class Message {
         fileUrl: json["fileUrl"],
         isImage: json["isImage"],
         chatId: json["chatId"],
+        temporalId: json["temporalId"],
+        statusId: json["statusId"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -69,6 +75,8 @@ class Message {
         "fileUrl": fileUrl,
         "isImage": isImage,
         "chatId": chatId,
+        "temporalId": temporalId,
+        "statusId": statusId,
       };
 }
 
