@@ -4,8 +4,9 @@ import 'package:socket_io_client/socket_io_client.dart' as io;
 
 class ChatSocket {
   late io.Socket socket;
-  final void Function(Message messageReceived) onMessageReceived;
-  final void Function(Message messageReceived) onMessageDelivered;
+  final void Function(Message message) onMessageReceived;
+  final void Function(Message message) onMessageDelivered;
+  final void Function(Message message) onMessageRead;
 
   final void Function(Chat chat) onChatUpdated;
   final void Function(Contact contact) onContactUpdated;
@@ -15,6 +16,7 @@ class ChatSocket {
     required this.onChatUpdated,
     required this.onContactUpdated,
     required this.onMessageDelivered,
+    required this.onMessageRead,
   });
 
   Future<void> connect() async {
@@ -42,15 +44,22 @@ class ChatSocket {
     //** Escuchar Socket */
     socket.on('messageReceived', (dynamic data) {
       // print('messageReceived $data');
-      Message messageReceived = Message.fromJson(data);
-      onMessageReceived(messageReceived);
+      Message message = Message.fromJson(data);
+      onMessageReceived(message);
     });
 
     //** Escuchar Socket */
     socket.on('messageDelivered', (dynamic data) {
       // print('messageDelivered $data');
-      Message messageDelivered = Message.fromJson(data);
-      onMessageDelivered(messageDelivered);
+      Message message = Message.fromJson(data);
+      onMessageDelivered(message);
+    });
+
+    //** Escuchar Socket */
+    socket.on('messageRead', (dynamic data) {
+      // print('messageDelivered $data');
+      Message message = Message.fromJson(data);
+      onMessageRead(message);
     });
 
     //** Escuchar Socket */

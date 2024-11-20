@@ -36,8 +36,8 @@ class ChatController extends GetxController {
 
     if (!validToken) return;
     socket = ChatSocket(
-      onMessageReceived: (messageReceived) {
-        onMessageReceived(messageReceived);
+      onMessageReceived: (message) {
+        onMessageReceived(message);
       },
       onChatUpdated: (chat) {
         updateChat(chat);
@@ -45,8 +45,11 @@ class ChatController extends GetxController {
       onContactUpdated: (contact) {
         updatedContat(contact);
       },
-      onMessageDelivered: (messageReceived) {
-        onMessageDelivered(messageReceived);
+      onMessageDelivered: (message) {
+        onMessageDelivered(message);
+      },
+      onMessageRead: (messages) {
+        onMessageRead(messages);
       },
     );
 
@@ -61,7 +64,8 @@ class ChatController extends GetxController {
     final index = existingMessages.indexWhere((existingMessage) =>
         existingMessage.id == message.id ||
         (message.temporalId != null &&
-            existingMessage.temporalId == message.temporalId));
+            (existingMessage.temporalId == message.temporalId &&
+                message.temporalId != null)));
 
     if (index != -1) {
       // Si existe, reemplazar el mensaje en la posición encontrada.
@@ -83,9 +87,8 @@ class ChatController extends GetxController {
     final existingMessages = messages.value[message.chatId] ?? [];
 
     // Buscar si existe un mensaje con el mismo id o temporalId.
-    final index = existingMessages.indexWhere((existingMessage) =>
-        existingMessage.id == message.id ||
-        existingMessage.temporalId == message.temporalId);
+    final index = existingMessages
+        .indexWhere((existingMessage) => existingMessage.id == message.id);
 
     if (index != -1) {
       // Si existe, reemplazar el mensaje en la posición encontrada.
@@ -96,6 +99,27 @@ class ChatController extends GetxController {
     messages.value = {
       ...messages.value,
       message.chatId: existingMessages,
+    };
+  }
+
+  onMessageRead(Message message) {
+    final String chatId = message.chatId;
+    // Obtener el último mensaje almacenado en el mapa de mensajes.
+    final existingMessages = messages.value[chatId] ?? [];
+
+    // Buscar si existe un mensaje con el mismo id o temporalId.
+    int index = existingMessages
+        .indexWhere((existingMessage) => existingMessage.id == message.id);
+
+    if (index != -1) {
+      // Si existe, reemplazar el mensaje en la posición encontrada.
+      existingMessages[index] = message;
+    }
+
+    // Actualizar el mapa de mensajes.
+    messages.value = {
+      ...messages.value,
+      chatId: existingMessages,
     };
   }
 

@@ -26,9 +26,11 @@ class _MessageItemState extends State<MessageItem>
 
   @override
   Widget build(BuildContext context) {
-    final sended = widget.message.receivers.isNotEmpty;
+    final sent = widget.message.receivers.isNotEmpty;
 
-    final delivered = sended && widget.message.receivers[0].deliveredAt != null;
+    final delivered = sent && widget.message.receivers[0].deliveredAt != null;
+    final read = sent && widget.message.receivers[0].readAt != null;
+
     super.build(context);
     return Row(
       mainAxisAlignment: widget.message.isSender
@@ -127,8 +129,7 @@ class _MessageItemState extends State<MessageItem>
               child: Row(
                 children: [
                   Text(
-                    DateFormat('HH:mm')
-                        .format(widget.message.sentAt.toLocal()),
+                    DateFormat('HH:mm').format(widget.message.sentAt.toLocal()),
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.w400,
@@ -143,21 +144,21 @@ class _MessageItemState extends State<MessageItem>
                     Row(
                       children: [
                         const Width(4),
-                        if (!delivered)
+                        if (!delivered && !read)
                           Icon(
-                            sended ? Icons.check : Icons.schedule,
+                            sent ? Icons.check : Icons.schedule,
                             size: 14,
                             color: widget.message.isSender
                                 ? AppColors.neutralOffWhite
                                 : AppColors.neutralDisabled,
                           ),
-                        if (delivered)
+                        if (delivered || read)
                           Icon(
                             Icons.done_all,
-                            size: 14,
-                            color: widget.message.isSender
-                                ? AppColors.neutralOffWhite
-                                : AppColors.neutralDisabled,
+                            size: 16,
+                            color: read
+                                ? AppColors.read
+                                : AppColors.neutralOffWhite,
                           ),
                       ],
                     )
