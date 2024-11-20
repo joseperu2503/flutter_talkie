@@ -60,12 +60,6 @@ appRouterMobile(String initialLocation, RouterType routerType) {
         parentNavigatorKey: rootNavigatorKey,
         redirect: unprotectedRoute,
       ),
-      GoRoute(
-        path: '/chat',
-        builder: (context, state) => const ChatsScreen(),
-        parentNavigatorKey: rootNavigatorKey,
-        redirect: protectedRoute,
-      ),
       StatefulShellRoute.indexedStack(
         parentNavigatorKey: rootNavigatorKey,
         builder: (context, state, navigationShell) {

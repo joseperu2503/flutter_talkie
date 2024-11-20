@@ -12,6 +12,8 @@ class AuthController extends GetxController {
   Rx<AuthUser?> user = Rx<AuthUser?>(null);
 
   Future<void> getUser() async {
+    final (validToken, _) = await AuthService.verifyToken();
+    if (!validToken) return;
     try {
       final AuthUser user = await AuthService.getUser();
 
@@ -40,11 +42,15 @@ class AuthController extends GetxController {
         await AuthService.verifyToken();
 
     if (validToken) {
-      getUser();
-
-      _timer = Timer(Duration(seconds: timeRemainingInSeconds), () {
-        logout();
-      });
+      if (timeRemainingInSeconds > 3600) {
+        _timer = Timer(const Duration(seconds: 3600), () {
+          initAutoLogout();
+        });
+      } else {
+        _timer = Timer(Duration(seconds: timeRemainingInSeconds), () {
+          logout();
+        });
+      }
     }
   }
 

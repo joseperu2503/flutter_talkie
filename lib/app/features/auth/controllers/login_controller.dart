@@ -66,6 +66,7 @@ class LoginController extends GetxController {
           Get.find<NotificationsController>();
 
       authController.initAutoLogout();
+      authController.getUser();
       chatController.connectSocket();
       chatController.getChats();
       notificationsController.init();

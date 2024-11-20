@@ -51,6 +51,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
     if (validToken) {
       notificationsController.init();
       authController.initAutoLogout();
+      authController.getUser();
       chatController.connectSocket();
       chatController.getChats();
     }
