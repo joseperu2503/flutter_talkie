@@ -43,6 +43,15 @@ class RegisterController extends GetxController {
 
   Rx<LoadingStatus> loading = LoadingStatus.none.obs;
 
+  initData() {
+    name.value = name.value.unTouch().updateValue('');
+    surname.value = surname.value.unTouch().updateValue('');
+    email.value = email.value.unTouch().updateValue('');
+    password.value = password.value.unTouch().updateValue('');
+    phone.value = phone.value.unTouch().updateValue('');
+    username.value = username.value.unTouch().updateValue('');
+  }
+
   changeEmail(FormxInput<String> value) {
     email.value = value;
   }

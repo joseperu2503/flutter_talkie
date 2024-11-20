@@ -18,6 +18,7 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   @override
   void initState() {
+    registerController.initData();
     super.initState();
   }
 
@@ -185,9 +186,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ' Login Now',
                             style: TextStyle(
                               fontSize: 14,
-                              fontWeight: FontWeight.w400,
+                              fontWeight: FontWeight.w600,
                               color: context.isDarkMode
-                                  ? AppColors.brandColorDarkMode
+                                  ? AppColors.brandColorDarkMode2
                                   : AppColors.brandColorDefault,
                               height: 24 / 14,
                               leadingDistribution: TextLeadingDistribution.even,
