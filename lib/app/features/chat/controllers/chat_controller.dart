@@ -124,12 +124,15 @@ class ChatController extends GetxController {
   }
 
   void updateChat(Chat chat) {
-    chats.value = chats.map((c) {
-      if (c.id == chat.id) {
-        return chat;
-      }
-      return c;
-    }).toList();
+    final index = chats.indexWhere((c) => c.id == chat.id);
+
+    if (index != -1) {
+      // Si existe, actualizar el chat en la posición correspondiente
+      chats[index] = chat;
+    } else {
+      // Si no existe, agregarlo a la lista
+      chats.add(chat);
+    }
   }
 
   void updatedContat(Contact contact) {
