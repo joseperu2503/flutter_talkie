@@ -6,6 +6,7 @@ class AppColors {
   static const Color neutralDisabled = Color(0xffADB5BD);
   static const Color neutralBody = Color(0xff1B2B48);
   static const Color neutralDark = Color(0xff152033);
+  static const Color neutralWeak = Color(0xffA4A4A4);
 
   static const Color neutralLine = Color(0xffEDEDED);
 

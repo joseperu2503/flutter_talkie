@@ -6,6 +6,7 @@ import 'package:talkie/app/features/chat/models/chat.dart';
 import 'package:intl/intl.dart';
 import 'package:get/get.dart';
 import 'package:talkie/app/shared/layouts/internal_layout.dart';
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 
 class MessageItem extends StatefulWidget {
   const MessageItem({
@@ -23,6 +24,8 @@ class _MessageItemState extends State<MessageItem>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
+
+  final _utils = EmojiPickerUtils();
 
   @override
   Widget build(BuildContext context) {
@@ -97,7 +100,6 @@ class _MessageItemState extends State<MessageItem>
                       TextSpan(
                         children: [
                           TextSpan(
-                            text: widget.message.content!,
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
@@ -108,6 +110,13 @@ class _MessageItemState extends State<MessageItem>
                                       : AppColors.neutralActive,
                               height: 20 / 14,
                               leadingDistribution: TextLeadingDistribution.even,
+                            ),
+                            children: _utils.setEmojiTextStyle(
+                              widget.message.content!,
+                              emojiStyle: DefaultEmojiTextStyle.copyWith(
+                                fontSize: 20,
+                                height: 24 / 20,
+                              ),
                             ),
                           ),
                           const WidgetSpan(

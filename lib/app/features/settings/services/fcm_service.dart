@@ -35,16 +35,18 @@ class FcmService {
   initNotifications() async {
     final settings = await requestPermission();
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-      final token = await messaging.getToken(
-        vapidKey: kIsWeb ? Environment.firebaseWebPushVapidKey : null,
-      );
+      try {
+        final token = await messaging.getToken(
+          vapidKey: kIsWeb ? Environment.firebaseWebPushVapidKey : null,
+        );
 
-      if (token == null) {
-        throw 'An error occurred while obtaining the token.';
-      }
+        if (token == null) {
+          throw 'An error occurred while obtaining the token.';
+        }
 
-      _onInit(token);
-      initListeners();
+        _onInit(token);
+        initListeners();
+      } catch (_) {}
     } else {
       throw 'Notification permissions not authorized.';
     }
