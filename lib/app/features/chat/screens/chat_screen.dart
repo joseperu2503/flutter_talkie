@@ -277,7 +277,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                   : AppColors.neutralOffWhite,
                               borderRadius: BorderRadius.circular(4),
                             ),
-                            height: 44,
+                            // height: 44,
                             child: Row(
                               children: [
                                 Expanded(
@@ -324,9 +324,11 @@ class _ChatScreenState extends State<ChatScreen> {
                                         bottom: 10,
                                       ),
                                     ),
+                                    maxLines: 3,
+                                    minLines: 1,
                                     keyboardType: _emojiShowing
                                         ? TextInputType.none
-                                        : null,
+                                        : TextInputType.multiline,
                                     onTap: () {
                                       if (_emojiShowing) {
                                         setState(() {
@@ -437,6 +439,11 @@ class _ChatScreenState extends State<ChatScreen> {
                       offstage: !_emojiShowing,
                       child: EmojiPicker(
                         textEditingController: _controller,
+                        onEmojiSelected: (category, emoji) {
+                          setState(() {
+                            
+                          });
+                        },
                         config: Config(
                           height: 256,
                           checkPlatformCompatibility: true,

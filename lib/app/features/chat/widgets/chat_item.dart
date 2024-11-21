@@ -1,3 +1,4 @@
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -79,17 +80,40 @@ class ChatItem extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                          child: Text(
-                            chat.lastMessage?.content ?? '',
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.neutralDisabled,
-                              height: 20 / 12,
-                              leadingDistribution: TextLeadingDistribution.even,
-                            ),
+                          child: Text.rich(
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w400,
+                                    color: context.isDarkMode
+                                        ? AppColors.neutralOffWhite
+                                        : AppColors.neutralBody,
+                                    height: 20 / 12,
+                                    leadingDistribution:
+                                        TextLeadingDistribution.even,
+                                  ),
+                                  children:
+                                      EmojiPickerUtils().setEmojiTextStyle(
+                                    chat.lastMessage?.content ?? '',
+                                    emojiStyle: DefaultEmojiTextStyle.copyWith(
+                                      fontSize: 16,
+                                      height: 20 / 16,
+                                    ),
+                                  ),
+                                ),
+                                const WidgetSpan(
+                                  alignment: PlaceholderAlignment.middle,
+                                  child: SizedBox(
+                                    width: 60,
+                                    height: 24,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         const Width(4),
