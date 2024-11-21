@@ -21,6 +21,11 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        scrolledUnderElevation: 0,
+        automaticallyImplyLeading: false,
+        toolbarHeight: 0,
+      ),
       body: CustomScrollView(
         physics: const ClampingScrollPhysics(),
         slivers: [
@@ -29,10 +34,10 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Center(
               child: Container(
                 padding: const EdgeInsets.only(
-                  top: 4,
+                  top: 40,
                   right: 24,
                   left: 24,
-                  bottom: 8,
+                  bottom: 40,
                 ),
                 constraints: const BoxConstraints(
                   maxWidth: 500,

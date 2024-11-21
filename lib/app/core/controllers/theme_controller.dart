@@ -12,6 +12,7 @@ class ThemeController extends GetxController {
 
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
+        statusBarColor: Colors.transparent,
         systemNavigationBarColor:
             theme == ThemeMode.dark ? AppColors.neutralActive : AppColors.white,
       ),
