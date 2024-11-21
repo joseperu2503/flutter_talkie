@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:talkie/app/core/core.dart';
 import 'package:get/get.dart';
 
@@ -8,6 +9,13 @@ class ThemeController extends GetxController {
   Future<void> changeTheme(ThemeMode theme) async {
     await StorageService.set<String>('theme', theme.toString());
     themeMode.value = theme;
+
+    SystemChrome.setSystemUIOverlayStyle(
+      SystemUiOverlayStyle(
+        systemNavigationBarColor:
+            theme == ThemeMode.dark ? AppColors.neutralActive : AppColors.white,
+      ),
+    );
     Get.changeThemeMode(themeMode.value);
   }
 
