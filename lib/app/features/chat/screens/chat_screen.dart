@@ -347,16 +347,16 @@ class _ChatScreenState extends State<ChatScreen> {
                                           ? TextInputType.none
                                           : TextInputType.multiline,
                                       onTap: () {
-                                        if (_emojiShowing) {
+                                        //** Cuando los emojies estan activos y es mobile desaparece los emojies y aparece el teclado */
+                                        if (_emojiShowing && !kIsWeb) {
                                           setState(() {
                                             _emojiShowing = false;
+                                            _focusNode.unfocus();
+
                                             WidgetsBinding.instance
                                                 .addPostFrameCallback((_) {
                                               _focusNode.requestFocus();
                                             });
-                                            _focusNode.unfocus();
-                                            WidgetsBinding.instance
-                                                .addPostFrameCallback((_) {});
                                           });
                                         }
                                       },
@@ -467,6 +467,9 @@ class _ChatScreenState extends State<ChatScreen> {
                             right: 0,
                             child: EmojiPicker(
                               textEditingController: _controller,
+                              onEmojiSelected: (category, emoji) {
+                                _focusNode.requestFocus();
+                              },
                               config: Config(
                                 height: 256,
                                 checkPlatformCompatibility: true,
