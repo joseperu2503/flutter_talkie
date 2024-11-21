@@ -120,10 +120,10 @@ class _MessageItemState extends State<MessageItem>
                               ),
                             ),
                           ),
-                          const WidgetSpan(
+                          WidgetSpan(
                             alignment: PlaceholderAlignment.middle,
                             child: SizedBox(
-                              width: 60,
+                              width: widget.message.isSender ? 60 : 45,
                               height: 24,
                             ),
                           ),
@@ -167,7 +167,7 @@ class _MessageItemState extends State<MessageItem>
                             Icons.done_all,
                             size: 16,
                             color: read
-                                ? AppColors.read
+                                ? AppColors.accentSuccess
                                 : AppColors.neutralOffWhite,
                           ),
                       ],

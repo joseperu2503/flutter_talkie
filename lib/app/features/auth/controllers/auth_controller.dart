@@ -19,7 +19,10 @@ class AuthController extends GetxController {
 
       setuser(user);
     } catch (e) {
-      SnackbarService.show('Ocurrio un error');
+      SnackbarService.show(
+        'An error occurred while loading the user',
+        type: SnackbarType.error,
+      );
     }
   }
 

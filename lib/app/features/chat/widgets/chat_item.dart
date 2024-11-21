@@ -17,6 +17,12 @@ class ChatItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sent = chat.lastMessage?.receivers.isNotEmpty ?? false;
+
+    final delivered =
+        sent && chat.lastMessage?.receivers[0].deliveredAt != null;
+    final read = sent && chat.lastMessage?.receivers[0].readAt != null;
+
     return SizedBox(
       height: 72,
       child: TextButton(
@@ -79,6 +85,28 @@ class ChatItem extends StatelessWidget {
                     const Height(2),
                     Row(
                       children: [
+                        if (chat.lastMessage?.isSender == true)
+                          Row(
+                            children: [
+                              if (!delivered && !read)
+                                Icon(
+                                  sent ? Icons.check : Icons.schedule,
+                                  size: 14,
+                                  color: chat.lastMessage?.isSender == true
+                                      ? AppColors.neutralOffWhite
+                                      : AppColors.neutralDisabled,
+                                ),
+                              if (delivered || read)
+                                Icon(
+                                  Icons.done_all,
+                                  size: 16,
+                                  color: read
+                                      ? AppColors.accentSuccess
+                                      : AppColors.neutralOffWhite,
+                                ),
+                              const Width(4),
+                            ],
+                          ),
                         Expanded(
                           child: Text.rich(
                             maxLines: 1,

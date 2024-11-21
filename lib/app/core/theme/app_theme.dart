@@ -4,7 +4,7 @@ import 'package:talkie/app/core/constants/app_colors.dart';
 class AppTheme {
   static ThemeData getTheme() {
     return ThemeData(
-      // fontFamily: 'Mulish',
+      fontFamily: 'Mulish',
       brightness: Brightness.light,
       scaffoldBackgroundColor: AppColors.white,
       appBarTheme: const AppBarTheme(
@@ -42,7 +42,7 @@ class AppTheme {
 
   static ThemeData getDarkTheme() {
     return ThemeData(
-      // fontFamily: 'Mulish',
+      fontFamily: 'Mulish',
       brightness: Brightness.dark,
       scaffoldBackgroundColor: AppColors.neutralActive,
       appBarTheme: const AppBarTheme(
