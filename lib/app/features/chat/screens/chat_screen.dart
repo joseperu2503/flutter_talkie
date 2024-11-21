@@ -39,6 +39,7 @@ class _ChatScreenState extends State<ChatScreen> {
 
   final EmojiTextEditingController _controller = EmojiTextEditingController(
     emojiTextStyle: DefaultEmojiTextStyle.copyWith(
+      fontFamily: 'NotoColorEmoji',
       fontSize: 20,
       height: 24 / 20,
     ),
@@ -485,7 +486,7 @@ class _ChatScreenState extends State<ChatScreen> {
                                   color: AppColors.neutralWeak,
                                 ),
                                 emojiTextStyle: DefaultEmojiTextStyle.copyWith(
-                                  fontFamily: 'Mulish',
+                                  fontFamily: 'NotoColorEmoji',
                                   fontSize: 24,
                                 ),
                                 emojiViewConfig: const EmojiViewConfig(

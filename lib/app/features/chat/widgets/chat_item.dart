@@ -100,6 +100,7 @@ class ChatItem extends StatelessWidget {
                                       EmojiPickerUtils().setEmojiTextStyle(
                                     chat.lastMessage?.content ?? '',
                                     emojiStyle: DefaultEmojiTextStyle.copyWith(
+                                      fontFamily: 'NotoColorEmoji',
                                       fontSize: 16,
                                       height: 20 / 16,
                                     ),

@@ -114,6 +114,7 @@ class _MessageItemState extends State<MessageItem>
                             children: _utils.setEmojiTextStyle(
                               widget.message.content!,
                               emojiStyle: DefaultEmojiTextStyle.copyWith(
+                                fontFamily: 'NotoColorEmoji',
                                 fontSize: 20,
                                 height: 24 / 20,
                               ),
