@@ -90,8 +90,10 @@ class _ChatScreenState extends State<ChatScreen> {
           setState(() {
             _emojiShowing = false;
           });
-        } else if (!kIsWeb) {
-          context.pop();
+        } else {
+          if (context.canPop()) {
+            context.pop();
+          }
         }
       },
       child: Scaffold(
