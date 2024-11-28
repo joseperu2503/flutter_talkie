@@ -21,6 +21,7 @@ class InternalLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authController = Get.find<AuthController>();
+    final screen = MediaQuery.of(context);
 
     return Scaffold(
       backgroundColor: AppColors.white,
@@ -67,9 +68,15 @@ class InternalLayout extends StatelessWidget {
             child: navigationShell,
           ),
           if (Breakpoints.isMdUp(context))
+            //** Sidebar */
             Container(
               clipBehavior: Clip.antiAlias,
-              padding: const EdgeInsets.all(16),
+              padding: EdgeInsets.only(
+                top: 16 + screen.padding.top,
+                left: 16,
+                right: 16,
+                bottom: 16,
+              ),
               width: 80,
               decoration: BoxDecoration(
                 color: context.isDarkMode
