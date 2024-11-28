@@ -20,7 +20,8 @@ class AppColors {
 
   static const Color brandColorBackground = Color(0xffD2D5F9);
   static const Color brandColorDark = Color(0xff001A83);
-  static const Color brandColorDefault = Color(0xff002DE3);
+  // static const Color brandColorDefault = Color(0xff002DE3);
+  static const Color brandColorDefault = brandColorDarkMode;
   static const Color brandColorDarkMode = Color(0xff375FFF);
   static const Color brandColorDarkMode2 = Color.fromARGB(255, 87, 119, 247);
 
