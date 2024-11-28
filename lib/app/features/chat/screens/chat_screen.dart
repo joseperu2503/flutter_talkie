@@ -11,7 +11,6 @@ import 'package:talkie/app/shared/widgets/back_button.dart';
 import 'package:talkie/app/shared/widgets/user_image.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
-import 'package:go_router/go_router.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({
@@ -86,14 +85,10 @@ class _ChatScreenState extends State<ChatScreen> {
     return PopScope(
       canPop: !_emojiShowing,
       onPopInvokedWithResult: (didPop, result) {
-        if (_emojiShowing) {
+        if (!didPop) {
           setState(() {
             _emojiShowing = false;
           });
-        } else {
-          if (context.canPop()) {
-            context.pop();
-          }
         }
       },
       child: Scaffold(

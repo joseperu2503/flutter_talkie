@@ -75,14 +75,21 @@ appRouterMobile(String initialLocation, RouterType routerType) {
                   if (Breakpoints.isMdDown(context)) {
                     return child;
                   }
-                  return Row(
-                    children: [
-                      SizedBox(
-                        width: Breakpoints.isMdUp(context) ? 450 : null,
-                        child: const ChatsScreen(),
-                      ),
-                      Expanded(child: child),
-                    ],
+                  return Scaffold(
+                    appBar: AppBar(
+                      toolbarHeight: 0,
+                      scrolledUnderElevation: 0,
+                    ),
+                    backgroundColor: Colors.transparent,
+                    body: Row(
+                      children: [
+                        SizedBox(
+                          width: Breakpoints.isMdUp(context) ? 450 : null,
+                          child: const ChatsScreen(),
+                        ),
+                        Expanded(child: child),
+                      ],
+                    ),
                   );
                 },
                 routes: [
