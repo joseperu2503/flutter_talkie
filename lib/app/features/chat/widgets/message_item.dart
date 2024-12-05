@@ -158,9 +158,7 @@ class _MessageItemState extends State<MessageItem>
                           Icon(
                             sent ? Icons.check : Icons.schedule,
                             size: 14,
-                            color: widget.message.isSender
-                                ? AppColors.neutralOffWhite
-                                : AppColors.neutralDisabled,
+                            color: AppColors.neutralDisabled,
                           ),
                         if (delivered || read)
                           Icon(

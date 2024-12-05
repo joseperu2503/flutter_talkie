@@ -92,9 +92,7 @@ class ChatItem extends StatelessWidget {
                                 Icon(
                                   sent ? Icons.check : Icons.schedule,
                                   size: 14,
-                                  color: chat.lastMessage?.isSender == true
-                                      ? AppColors.neutralOffWhite
-                                      : AppColors.neutralDisabled,
+                                  color: AppColors.neutralDisabled,
                                 ),
                               if (delivered || read)
                                 Icon(
@@ -102,9 +100,9 @@ class ChatItem extends StatelessWidget {
                                   size: 16,
                                   color: read
                                       ? AppColors.accentSuccess
-                                      : AppColors.neutralOffWhite,
+                                      : AppColors.neutralDisabled,
                                 ),
-                              const Width(4),
+                              const Width(3),
                             ],
                           ),
                         Expanded(
