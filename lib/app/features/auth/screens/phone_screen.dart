@@ -22,12 +22,12 @@ class _PhoneScreenState extends State<PhoneScreen> {
   @override
   void initState() {
     loginController.initData();
-    countridesController.getCountries();
+    countriesController.getCountries();
     super.initState();
   }
 
   final loginController = Get.put(LoginController());
-  final countridesController = Get.find<CountriesController>();
+  final countriesController = Get.find<CountriesController>();
   final registerController = Get.put<RegisterController>(RegisterController());
 
   @override
@@ -122,7 +122,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
                               );
 
                               if (country != null) {
-                                countridesController.changeCountry(country);
+                                countriesController.changeCountry(country);
                               }
                             },
                             child: Obx(
@@ -145,7 +145,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
                                   TextSpan(
                                     children: [
                                       ...EmojiPickerUtils().setEmojiTextStyle(
-                                        countridesController
+                                        countriesController
                                                 .country.value?.flag ??
                                             '',
                                         emojiStyle:
@@ -157,7 +157,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
                                       ),
                                       TextSpan(
                                         text:
-                                            '  ${countridesController.country.value?.dialCode ?? ''}',
+                                            '  ${countriesController.country.value?.dialCode ?? ''}',
                                         style: TextStyle(
                                           color: context.isDarkMode
                                               ? AppColors.neutralOffWhite
@@ -185,6 +185,9 @@ class _PhoneScreenState extends State<PhoneScreen> {
                               },
                               textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.phone,
+                              inputFormatters: [
+                                countriesController.phoneFormatter.value,
+                              ],
                             ),
                           ),
                         ),

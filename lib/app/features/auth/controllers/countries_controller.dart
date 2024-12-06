@@ -1,3 +1,4 @@
+import 'package:mask_input_formatter/mask_input_formatter.dart';
 import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/auth/models/country.dart';
 import 'package:talkie/app/features/auth/services/countries_service.dart';
@@ -26,6 +27,12 @@ class CountriesController extends GetxController {
 
   void changeCountry(Country? newCountry) {
     country.value = newCountry;
+
+    if (newCountry != null) {
+      phoneFormatter.value = MaskInputFormatter(
+        mask: newCountry.mask.replaceAll('9', '#'),
+      );
+    }
   }
 
   getCountries() async {
@@ -35,12 +42,19 @@ class CountriesController extends GetxController {
       final String? countryCode = await IpService.getCountryFromIP();
 
       if (countryCode != null) {
-        country.value = countries.firstWhereOrNull((Country country) {
+        final country = countries.firstWhereOrNull((Country country) {
           return country.code == countryCode;
         });
+
+        changeCountry(country);
       }
     } on ServiceException catch (e) {
       SnackbarService.show(e.message, type: SnackbarType.error);
     }
   }
+
+  Rx<MaskInputFormatter> phoneFormatter =
+      Rx<MaskInputFormatter>(MaskInputFormatter(
+    mask: '',
+  ));
 }
