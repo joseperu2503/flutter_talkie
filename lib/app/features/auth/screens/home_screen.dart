@@ -96,7 +96,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     CustomElevatedButton(
                       text: 'Start Messaging',
                       onPressed: () {
-                        context.push('/login');
+                        context.push('/phone');
                       },
                     ),
                     const Spacer(),
