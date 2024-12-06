@@ -48,9 +48,9 @@ class AuthService {
     }
   }
 
-  static Future<AuthUser> getUser() async {
+  static Future<AuthUser> getProfile() async {
     try {
-      final response = await Api.get('/auth/me');
+      final response = await Api.get('/user/profile');
 
       return AuthUser.fromJson(response.data);
     } catch (e) {
@@ -58,7 +58,7 @@ class AuthService {
     }
   }
 
-  static Future<AuthUser> changePersonalData({
+  static Future<AuthUser> updateProfile({
     required String name,
     required String surname,
     required String email,
@@ -71,7 +71,7 @@ class AuthService {
         "email": email,
         "phone": phone,
       };
-      final response = await Api.put('/auth/update', data: form);
+      final response = await Api.put('/user/profile', data: form);
 
       return AuthUser.fromJson(response.data);
     } catch (e) {

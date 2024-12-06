@@ -15,7 +15,7 @@ class AuthController extends GetxController {
     final (validToken, _) = await AuthService.verifyToken();
     if (!validToken) return;
     try {
-      final AuthUser user = await AuthService.getUser();
+      final AuthUser user = await AuthService.getProfile();
 
       setuser(user);
     } catch (e) {
