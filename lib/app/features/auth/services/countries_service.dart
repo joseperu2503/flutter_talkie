@@ -1,5 +1,5 @@
 import 'package:talkie/app/core/core.dart';
-import 'package:talkie/app/features/auth/models/auth_user.dart';
+import 'package:talkie/app/features/auth/models/country.dart';
 
 class CountriesService {
   static Future<List<Country>> getCountries() async {

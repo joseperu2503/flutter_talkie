@@ -1,10 +1,13 @@
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:talkie/app/features/auth/components/countries_dialog.dart';
+import 'package:talkie/app/features/auth/controllers/register_controller.dart';
+import 'package:talkie/app/features/auth/models/country.dart';
 import 'package:talkie/app/shared/widgets/custom_text_field.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/auth/controllers/login_controller.dart';
+import 'package:talkie/app/features/auth/controllers/countries_controller.dart';
 import 'package:talkie/app/shared/widgets/back_button.dart';
 import 'package:talkie/app/shared/widgets/custom_elevated_button.dart';
 
@@ -19,10 +22,13 @@ class _PhoneScreenState extends State<PhoneScreen> {
   @override
   void initState() {
     loginController.initData();
+    countridesController.getCountries();
     super.initState();
   }
 
   final loginController = Get.put(LoginController());
+  final countridesController = Get.find<CountriesController>();
+  final registerController = Get.put<RegisterController>(RegisterController());
 
   @override
   Widget build(BuildContext context) {
@@ -101,88 +107,95 @@ class _PhoneScreenState extends State<PhoneScreen> {
                       ),
                     ),
                     const Height(40),
-                    GestureDetector(
-                      onTap: () {
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return const CountriesDialog();
-                          },
-                        );
-                      },
-                      child: Obx(
-                        () => CustomTextField(
-                          hintText: 'Email',
-                          value: loginController.email.value,
-                          onChanged: (value) {
-                            loginController.changeEmail(value);
-                          },
-                          textInputAction: TextInputAction.next,
-                          keyboardType: TextInputType.emailAddress,
-                          autofillHints: const [AutofillHints.email],
-                        ),
-                      ),
-                    ),
-                    const Height(18),
-                    Obx(
-                      () => CustomTextField(
-                        hintText: 'Password',
-                        value: loginController.password.value,
-                        onChanged: (value) {
-                          loginController.changePassword(value);
-                        },
-                        textInputAction: TextInputAction.done,
-                        keyboardType: TextInputType.visiblePassword,
-                        autofillHints: const [AutofillHints.password],
-                        isPassword: true,
-                        onFieldSubmitted: (value) {
-                          loginController.login();
-                        },
-                      ),
-                    ),
-                    const Height(40),
-                    CustomElevatedButton(
-                      text: 'Log In',
-                      onPressed: () {
-                        loginController.login();
-                      },
-                    ),
-                    const Spacer(),
-                    const Height(40),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          'Don’t have an account?',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: context.isDarkMode
-                                ? AppColors.neutralOffWhite
-                                : AppColors.neutralActive,
-                            height: 24 / 14,
-                            leadingDistribution: TextLeadingDistribution.even,
+                        SizedBox(
+                          child: GestureDetector(
+                            behavior: HitTestBehavior.translucent,
+                            onTap: () async {
+                              final Country? country = await showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return const CountriesDialog();
+                                },
+                              );
+
+                              if (country != null) {
+                                countridesController.changeCountry(country);
+                              }
+                            },
+                            child: Obx(
+                              () => Container(
+                                height: 44,
+                                decoration: BoxDecoration(
+                                  color: context.isDarkMode
+                                      ? AppColors.neutralDark
+                                      : AppColors.neutralOffWhite,
+                                  borderRadius: BorderRadius.circular(4),
+                                ),
+                                alignment: Alignment.centerLeft,
+                                padding: const EdgeInsets.only(
+                                  top: 10,
+                                  left: 12,
+                                  right: 12,
+                                  bottom: 10,
+                                ),
+                                child: Text.rich(
+                                  TextSpan(
+                                    children: [
+                                      ...EmojiPickerUtils().setEmojiTextStyle(
+                                        countridesController
+                                                .country.value?.flag ??
+                                            '',
+                                        emojiStyle:
+                                            DefaultEmojiTextStyle.copyWith(
+                                          fontFamily: 'NotoColorEmoji',
+                                          fontSize: 16,
+                                          height: 20 / 16,
+                                        ),
+                                      ),
+                                      TextSpan(
+                                        text:
+                                            '  ${countridesController.country.value?.dialCode ?? ''}',
+                                        style: TextStyle(
+                                          color: context.isDarkMode
+                                              ? AppColors.neutralOffWhite
+                                              : AppColors.neutralActive,
+                                          fontSize: 14,
+                                          height: 24 / 14,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            context.push('/register');
-                          },
-                          behavior: HitTestBehavior.translucent,
-                          child: Text(
-                            ' Register Now',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: context.isDarkMode
-                                  ? AppColors.brandColorDarkMode2
-                                  : AppColors.brandColorDefault,
-                              height: 24 / 14,
-                              leadingDistribution: TextLeadingDistribution.even,
+                        const Width(8),
+                        Expanded(
+                          child: Obx(
+                            () => CustomTextField(
+                              hintText: 'Phone Number',
+                              value: registerController.phone.value,
+                              onChanged: (value) {
+                                registerController.changePhone(value);
+                              },
+                              textInputAction: TextInputAction.next,
+                              keyboardType: TextInputType.phone,
                             ),
                           ),
                         ),
                       ],
+                    ),
+                    const Height(81),
+                    CustomElevatedButton(
+                      text: 'Continue',
+                      onPressed: () {
+                        loginController.login();
+                      },
                     ),
                     SizedBox(
                       height: 32 + screen.padding.bottom,
