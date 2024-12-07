@@ -82,6 +82,8 @@ class PhoneController extends GetxController {
 
       if (response.exists) {
         rootNavigatorKey.currentContext!.push('/password');
+      } else {
+        rootNavigatorKey.currentContext!.push('/register');
       }
     } on ServiceException catch (e) {
       SnackbarService.show(e.message);

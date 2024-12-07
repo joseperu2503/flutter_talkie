@@ -62,7 +62,7 @@ class LoginController extends GetxController {
           countryId: phoneController.country.value!.id,
         ),
         password: password.value.value,
-        type: LoginType.phone,
+        type: AuthMethod.phone,
       );
 
       await StorageService.set<String>(StorageKeys.token, loginResponse.token);

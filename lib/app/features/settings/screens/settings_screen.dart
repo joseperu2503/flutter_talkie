@@ -97,7 +97,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ),
                             const Height(2),
                             Text(
-                              user == null ? '' : user.phone.number,
+                              user == null ? '' : user.phone?.number ?? '',
                               style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,

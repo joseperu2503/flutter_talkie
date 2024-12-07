@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/auth/controllers/auth_controller.dart';
+import 'package:talkie/app/features/auth/controllers/login_controller.dart';
+import 'package:talkie/app/features/auth/controllers/phone_controller.dart';
 import 'package:talkie/app/features/auth/models/auth_user.dart';
 import 'package:talkie/app/features/auth/models/login_response.dart';
+import 'package:talkie/app/features/auth/models/phone_request.dart';
 import 'package:talkie/app/features/auth/services/auth_service.dart';
 import 'package:talkie/app/features/chat/controllers/chat_controller.dart';
 import 'package:talkie/app/shared/enums/loading_status.dart';
@@ -22,24 +25,9 @@ class RegisterController extends GetxController {
     validators: [Validators.required()],
   ).obs;
 
-  Rx<FormxInput<String>> email = FormxInput<String>(
-    value: '',
-    validators: [Validators.required<String>(), Validators.email()],
-  ).obs;
-
   Rx<FormxInput<String>> password = FormxInput<String>(
     value: '',
     validators: [Validators.required()],
-  ).obs;
-
-  Rx<FormxInput<String>> phone = FormxInput<String>(
-    value: '',
-    validators: [Validators.required<String>()],
-  ).obs;
-
-  Rx<FormxInput<String>> username = FormxInput<String>(
-    value: '',
-    validators: [Validators.required<String>()],
   ).obs;
 
   Rx<LoadingStatus> loading = LoadingStatus.none.obs;
@@ -47,14 +35,7 @@ class RegisterController extends GetxController {
   initData() {
     name.value = name.value.unTouch().updateValue('');
     surname.value = surname.value.unTouch().updateValue('');
-    email.value = email.value.unTouch().updateValue('');
     password.value = password.value.unTouch().updateValue('');
-    phone.value = phone.value.unTouch().updateValue('');
-    username.value = username.value.unTouch().updateValue('');
-  }
-
-  changeEmail(FormxInput<String> value) {
-    email.value = value;
   }
 
   changePassword(FormxInput<String> value) {
@@ -69,31 +50,33 @@ class RegisterController extends GetxController {
     surname.value = value;
   }
 
-  changePhone(FormxInput<String> value) {
-    phone.value = value;
-  }
-
-  changeUsername(FormxInput<String> value) {
-    username.value = value;
-  }
-
   register() async {
     FocusManager.instance.primaryFocus?.unfocus();
 
-    email.value = email.value.touch();
-    password.value = password.value.touch();
+    final phoneController = Get.find<PhoneController>();
+    final loginController = Get.find<LoginController>();
 
-    if (!Formx.validate([email.value, password.value])) return;
+    if (phoneController.phone.value.isInvalid ||
+        phoneController.country.value == null) return;
+
+    name.value = name.value.touch();
+    password.value = password.value.touch();
+    surname.value = surname.value.touch();
+
+    if (!Formx.validate([name.value, surname.value, password.value])) return;
     loading.value = LoadingStatus.loading;
 
     try {
       final LoginResponse loginResponse = await AuthService.register(
-        email: email.value.value,
+        email: loginController.email.value.value,
         password: password.value.value,
         name: name.value.value,
         surname: surname.value.value,
-        phone: phone.value.value,
-        username: username.value.value,
+        phone: PhoneRequest(
+          number: phoneController.phone.value.value,
+          countryId: phoneController.country.value!.id,
+        ),
+        type: AuthMethod.phone,
       );
 
       await StorageService.set<String>(StorageKeys.token, loginResponse.token);

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:talkie/app/shared/widgets/custom_text_field.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-
 import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/auth/controllers/register_controller.dart';
 import 'package:talkie/app/shared/widgets/back_button.dart';
@@ -67,7 +66,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Text(
-                      'Hello! Register to get\nstarted',
+                      'Create Your Account',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w700,
@@ -77,20 +76,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             : AppColors.neutralActive,
                         leadingDistribution: TextLeadingDistribution.even,
                       ),
+                      textAlign: TextAlign.center,
                     ),
-                    const Height(40),
-                    Obx(
-                      () => CustomTextField(
-                        hintText: 'Username',
-                        value: registerController.username.value,
-                        onChanged: (value) {
-                          registerController.changeUsername(value);
-                        },
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.name,
+                    const Height(8),
+                    Center(
+                      child: Container(
+                        constraints: const BoxConstraints(
+                          maxWidth: 295,
+                        ),
+                        child: Text(
+                          'Please enter your details to create a new account. It only takes a few steps!',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w400,
+                            height: 24 / 14,
+                            color: context.isDarkMode
+                                ? AppColors.neutralOffWhite
+                                : AppColors.neutralActive,
+                            leadingDistribution: TextLeadingDistribution.even,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
-                    const Height(18),
+                    const Height(40),
                     Obx(
                       () => CustomTextField(
                         hintText: 'Name',
@@ -112,30 +121,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.name,
-                      ),
-                    ),
-                    const Height(18),
-                    Obx(
-                      () => CustomTextField(
-                        hintText: 'Email',
-                        value: registerController.email.value,
-                        onChanged: (value) {
-                          registerController.changeEmail(value);
-                        },
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.emailAddress,
-                      ),
-                    ),
-                    const Height(18),
-                    Obx(
-                      () => CustomTextField(
-                        hintText: 'Phone',
-                        value: registerController.phone.value,
-                        onChanged: (value) {
-                          registerController.changePhone(value);
-                        },
-                        textInputAction: TextInputAction.next,
-                        keyboardType: TextInputType.phone,
                       ),
                     ),
                     const Height(18),

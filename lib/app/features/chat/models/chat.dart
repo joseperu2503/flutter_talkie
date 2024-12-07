@@ -108,7 +108,7 @@ class Sender {
   int id;
   String name;
   String surname;
-  String email;
+  String? email;
   String? photo;
 
   Sender({

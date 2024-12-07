@@ -2,11 +2,10 @@ import 'package:talkie/app/features/auth/models/country.dart';
 
 class AuthUser {
   final int id;
-  final String email;
+  final String? email;
   final String name;
   final String surname;
-  final Phone phone;
-  final String username;
+  final Phone? phone;
   final String? photo;
 
   AuthUser({
@@ -15,7 +14,6 @@ class AuthUser {
     required this.name,
     required this.surname,
     required this.phone,
-    required this.username,
     required this.photo,
   });
 
@@ -24,8 +22,7 @@ class AuthUser {
         email: json["email"],
         name: json["name"],
         surname: json["surname"],
-        phone: Phone.fromJson(json["phone"]),
-        username: json["username"],
+        phone: json["phone"] == null ? null : Phone.fromJson(json["phone"]),
         photo: json["photo"],
       );
 
@@ -34,8 +31,7 @@ class AuthUser {
         "email": email,
         "name": name,
         "surname": surname,
-        "phone": phone.toJson(),
-        "username": username,
+        "phone": phone?.toJson(),
         "photo": photo,
       };
 }

@@ -5,14 +5,14 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:talkie/app/features/auth/models/phone_request.dart';
 import 'package:talkie/app/features/auth/models/verify_phone.dart';
 
-enum LoginType { email, phone }
+enum AuthMethod { email, phone }
 
 class AuthService {
   static Future<LoginResponse> login({
     required String? email,
     required PhoneRequest? phone,
     required String password,
-    required LoginType type,
+    required AuthMethod type,
   }) async {
     try {
       Map<String, dynamic> form = {
@@ -33,19 +33,19 @@ class AuthService {
   static Future<LoginResponse> register({
     required String name,
     required String surname,
-    required String email,
-    required String phone,
-    required String username,
+    required String? email,
+    required PhoneRequest? phone,
     required String password,
+    required AuthMethod type,
   }) async {
     try {
       Map<String, dynamic> form = {
         "name": name,
         "surname": surname,
         "email": email,
-        "phone": phone,
-        "username": username,
+        "phone": phone?.toJson(),
         "password": password,
+        "type": type.toString().split('.').last,
       };
 
       final response = await Api.post('/auth/register', data: form);
