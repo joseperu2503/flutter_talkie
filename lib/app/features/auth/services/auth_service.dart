@@ -2,16 +2,24 @@ import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/auth/models/auth_user.dart';
 import 'package:talkie/app/features/auth/models/login_response.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:talkie/app/features/auth/models/phone_request.dart';
+import 'package:talkie/app/features/auth/models/verify_phone.dart';
+
+enum LoginType { email, phone }
 
 class AuthService {
   static Future<LoginResponse> login({
-    required String email,
+    required String? email,
+    required PhoneRequest? phone,
     required String password,
+    required LoginType type,
   }) async {
     try {
       Map<String, dynamic> form = {
+        "phone": phone?.toJson(),
         "email": email,
         "password": password,
+        "type": type.toString().split('.').last,
       };
 
       final response = await Api.post('/auth/login', data: form);
@@ -55,6 +63,24 @@ class AuthService {
       return AuthUser.fromJson(response.data);
     } catch (e) {
       throw ServiceException('An error occurred while loading the user.', e);
+    }
+  }
+
+  static Future<VerifyPhoneResponse> verifyPhone({
+    required int countryId,
+    required String number,
+  }) async {
+    try {
+      Map<String, dynamic> form = {
+        "countryId": countryId,
+        "number": number,
+      };
+
+      final response = await Api.post('/auth/verify-phone', data: form);
+
+      return VerifyPhoneResponse.fromJson(response.data);
+    } catch (e) {
+      throw ServiceException('An error occurred while verify the phone.', e);
     }
   }
 

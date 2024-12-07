@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:talkie/app/core/constants/breakpoints.dart';
 import 'package:talkie/app/features/auth/screens/home_screen.dart';
+import 'package:talkie/app/features/auth/screens/password_screen.dart';
 import 'package:talkie/app/features/auth/screens/phone_screen.dart';
 import 'package:talkie/app/features/auth/screens/register_screen.dart';
 import 'package:talkie/app/features/auth/services/auth_service.dart';
@@ -58,6 +59,12 @@ appRouterMobile(String initialLocation, RouterType routerType) {
       GoRoute(
         path: '/phone',
         builder: (context, state) => const PhoneScreen(),
+        parentNavigatorKey: rootNavigatorKey,
+        redirect: unprotectedRoute,
+      ),
+      GoRoute(
+        path: '/password',
+        builder: (context, state) => const PasswordScreen(),
         parentNavigatorKey: rootNavigatorKey,
         redirect: unprotectedRoute,
       ),

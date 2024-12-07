@@ -1,13 +1,11 @@
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:talkie/app/features/auth/components/countries_dialog.dart';
-import 'package:talkie/app/features/auth/controllers/register_controller.dart';
 import 'package:talkie/app/features/auth/models/country.dart';
 import 'package:talkie/app/shared/widgets/custom_text_field.dart';
 import 'package:get/get.dart';
 import 'package:talkie/app/core/core.dart';
-import 'package:talkie/app/features/auth/controllers/login_controller.dart';
-import 'package:talkie/app/features/auth/controllers/countries_controller.dart';
+import 'package:talkie/app/features/auth/controllers/phone_controller.dart';
 import 'package:talkie/app/shared/widgets/back_button.dart';
 import 'package:talkie/app/shared/widgets/custom_elevated_button.dart';
 
@@ -21,14 +19,11 @@ class PhoneScreen extends StatefulWidget {
 class _PhoneScreenState extends State<PhoneScreen> {
   @override
   void initState() {
-    loginController.initData();
-    countriesController.getCountries();
+    phoneController.getCountries();
     super.initState();
   }
 
-  final loginController = Get.put(LoginController());
-  final countriesController = Get.find<CountriesController>();
-  final registerController = Get.put<RegisterController>(RegisterController());
+  final phoneController = Get.find<PhoneController>();
 
   @override
   Widget build(BuildContext context) {
@@ -122,7 +117,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
                               );
 
                               if (country != null) {
-                                countriesController.changeCountry(country);
+                                phoneController.changeCountry(country);
                               }
                             },
                             child: Obx(
@@ -145,8 +140,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
                                   TextSpan(
                                     children: [
                                       ...EmojiPickerUtils().setEmojiTextStyle(
-                                        countriesController
-                                                .country.value?.flag ??
+                                        phoneController.country.value?.flag ??
                                             '',
                                         emojiStyle:
                                             DefaultEmojiTextStyle.copyWith(
@@ -157,7 +151,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
                                       ),
                                       TextSpan(
                                         text:
-                                            '  ${countriesController.country.value?.dialCode ?? ''}',
+                                            '  ${phoneController.country.value?.dialCode ?? ''}',
                                         style: TextStyle(
                                           color: context.isDarkMode
                                               ? AppColors.neutralOffWhite
@@ -179,14 +173,14 @@ class _PhoneScreenState extends State<PhoneScreen> {
                           child: Obx(
                             () => CustomTextField(
                               hintText: 'Phone Number',
-                              value: registerController.phone.value,
+                              value: phoneController.phone.value,
                               onChanged: (value) {
-                                registerController.changePhone(value);
+                                phoneController.changePhone(value);
                               },
                               textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.phone,
                               inputFormatters: [
-                                countriesController.phoneFormatter.value,
+                                phoneController.phoneFormatter.value,
                               ],
                             ),
                           ),
@@ -197,7 +191,7 @@ class _PhoneScreenState extends State<PhoneScreen> {
                     CustomElevatedButton(
                       text: 'Continue',
                       onPressed: () {
-                        loginController.login();
+                        phoneController.verifyPhone();
                       },
                     ),
                     SizedBox(

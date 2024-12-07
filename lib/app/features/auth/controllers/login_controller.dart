@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/auth/controllers/auth_controller.dart';
+import 'package:talkie/app/features/auth/controllers/phone_controller.dart';
 import 'package:talkie/app/features/auth/models/auth_user.dart';
 import 'package:talkie/app/features/auth/models/login_response.dart';
+import 'package:talkie/app/features/auth/models/phone_request.dart';
 import 'package:talkie/app/features/auth/services/auth_service.dart';
 import 'package:talkie/app/features/chat/controllers/chat_controller.dart';
 import 'package:talkie/app/features/settings/controllers/notifications_controller.dart';
@@ -41,17 +43,26 @@ class LoginController extends GetxController {
 
   login() async {
     FocusManager.instance.primaryFocus?.unfocus();
+    final phoneController = Get.find<PhoneController>();
 
-    email.value = email.value.touch();
+    if (phoneController.phone.value.isInvalid ||
+        phoneController.country.value == null) return;
+
+    // email.value = email.value.touch();
     password.value = password.value.touch();
 
-    if (!Formx.validate([email.value, password.value])) return;
+    if (!Formx.validate([password.value])) return;
     loading.value = LoadingStatus.loading;
 
     try {
       final LoginResponse loginResponse = await AuthService.login(
         email: email.value.value,
+        phone: PhoneRequest(
+          number: phoneController.phone.value.value,
+          countryId: phoneController.country.value!.id,
+        ),
         password: password.value.value,
+        type: LoginType.phone,
       );
 
       await StorageService.set<String>(StorageKeys.token, loginResponse.token);

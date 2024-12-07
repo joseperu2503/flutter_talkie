@@ -1,7 +1,7 @@
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:talkie/app/core/core.dart';
-import 'package:talkie/app/features/auth/controllers/countries_controller.dart';
+import 'package:talkie/app/features/auth/controllers/phone_controller.dart';
 import 'package:talkie/app/shared/widgets/custom_text_field.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -11,8 +11,7 @@ class CountriesDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final CountriesController countriesController =
-        Get.find<CountriesController>();
+    final PhoneController phoneController = Get.find<PhoneController>();
 
     return Dialog(
       clipBehavior: Clip.hardEdge,
@@ -53,9 +52,9 @@ class CountriesDialog extends StatelessWidget {
                   Obx(
                     () => CustomTextField(
                       hintText: 'Search',
-                      value: countriesController.search.value,
+                      value: phoneController.search.value,
                       onChanged: (value) {
-                        countriesController.changeSearch(value);
+                        phoneController.changeSearch(value);
                       },
                     ),
                   ),
@@ -70,7 +69,7 @@ class CountriesDialog extends StatelessWidget {
                     bottom: 24,
                   ),
                   itemBuilder: (context, index) {
-                    final country = countriesController.countries[index];
+                    final country = phoneController.countries[index];
                     return ListTile(
                       contentPadding: const EdgeInsets.only(
                         left: 32,
@@ -121,7 +120,7 @@ class CountriesDialog extends StatelessWidget {
                       ),
                     );
                   },
-                  itemCount: countriesController.countries.length,
+                  itemCount: phoneController.countries.length,
                 ),
               ),
             ),

@@ -1,13 +1,17 @@
+import 'package:flutter/material.dart';
 import 'package:mask_input_formatter/mask_input_formatter.dart';
 import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/auth/models/country.dart';
+import 'package:talkie/app/features/auth/models/verify_phone.dart';
+import 'package:talkie/app/features/auth/services/auth_service.dart';
 import 'package:talkie/app/features/auth/services/countries_service.dart';
 import 'package:talkie/app/shared/plugins/formx/formx.dart';
 import 'package:talkie/app/shared/services/ip_service.dart';
 import 'package:talkie/app/shared/widgets/snackbar.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 
-class CountriesController extends GetxController {
+class PhoneController extends GetxController {
   Rx<FormxInput<String>> search = const FormxInput<String>(
     value: '',
   ).obs;
@@ -25,6 +29,11 @@ class CountriesController extends GetxController {
     validators: [Validators.required<String>()],
   ).obs;
 
+  Rx<MaskInputFormatter> phoneFormatter =
+      Rx<MaskInputFormatter>(MaskInputFormatter(
+    mask: '#######################',
+  ));
+
   void changeCountry(Country? newCountry) {
     country.value = newCountry;
 
@@ -33,6 +42,10 @@ class CountriesController extends GetxController {
         mask: newCountry.mask.replaceAll('9', '#'),
       );
     }
+  }
+
+  changePhone(FormxInput<String> value) {
+    phone.value = value;
   }
 
   getCountries() async {
@@ -53,8 +66,25 @@ class CountriesController extends GetxController {
     }
   }
 
-  Rx<MaskInputFormatter> phoneFormatter =
-      Rx<MaskInputFormatter>(MaskInputFormatter(
-    mask: '',
-  ));
+  verifyPhone() async {
+    FocusManager.instance.primaryFocus?.unfocus();
+
+    if (country.value == null) return;
+
+    phone.value = phone.value.touch();
+    if (!Formx.validate([phone.value])) return;
+
+    try {
+      final VerifyPhoneResponse response = await AuthService.verifyPhone(
+        number: phone.value.value,
+        countryId: country.value!.id,
+      );
+
+      if (response.exists) {
+        rootNavigatorKey.currentContext!.push('/password');
+      }
+    } on ServiceException catch (e) {
+      SnackbarService.show(e.message);
+    }
+  }
 }

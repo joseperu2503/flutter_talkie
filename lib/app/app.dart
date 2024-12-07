@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:talkie/app/core/controllers/theme_controller.dart';
 import 'package:talkie/app/features/auth/controllers/auth_controller.dart';
-import 'package:talkie/app/features/auth/controllers/countries_controller.dart';
+import 'package:talkie/app/features/auth/controllers/phone_controller.dart';
 import 'package:talkie/app/features/auth/services/auth_service.dart';
 import 'package:talkie/app/features/chat/controllers/chat_controller.dart';
 import 'package:talkie/app/features/settings/controllers/notifications_controller.dart';
@@ -36,7 +36,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
     final chatController = Get.put<ChatController>(ChatController());
     final themeController = Get.put<ThemeController>(ThemeController());
 
-    Get.put<CountriesController>(CountriesController());
+    Get.put<PhoneController>(PhoneController());
 
     final notificationsController =
         Get.put<NotificationsController>(NotificationsController());
