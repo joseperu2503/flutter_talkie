@@ -127,6 +127,13 @@ class LoginController extends GetxController {
 
   RxList<Country> countries = <Country>[].obs;
 
+  get filteredCountries {
+    final searchQuery = search.value.value.trim().toLowerCase();
+    return countries.where((c) {
+      return c.name.toLowerCase().contains(searchQuery);
+    }).toList();
+  }
+
   Rx<Country?> country = Rx<Country?>(null);
 
   Rx<FormxInput<String>> phone = FormxInput<String>(

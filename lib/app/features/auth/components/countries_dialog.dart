@@ -69,7 +69,7 @@ class CountriesDialog extends StatelessWidget {
                     bottom: 24,
                   ),
                   itemBuilder: (context, index) {
-                    final country = _loginController.countries[index];
+                    final country = _loginController.filteredCountries[index];
                     return ListTile(
                       contentPadding: const EdgeInsets.only(
                         left: 32,
@@ -120,7 +120,7 @@ class CountriesDialog extends StatelessWidget {
                       ),
                     );
                   },
-                  itemCount: _loginController.countries.length,
+                  itemCount: _loginController.filteredCountries.length,
                 ),
               ),
             ),
