@@ -16,11 +16,11 @@ class PasswordScreen extends StatefulWidget {
 class _PasswordScreenState extends State<PasswordScreen> {
   @override
   void initState() {
-    loginController.initData();
+    _loginController.resetPassword();
     super.initState();
   }
 
-  final loginController = Get.put(LoginController());
+  final _loginController = Get.find<LoginController>();
 
   @override
   Widget build(BuildContext context) {
@@ -102,16 +102,16 @@ class _PasswordScreenState extends State<PasswordScreen> {
                     Obx(
                       () => CustomTextField(
                         hintText: 'Password',
-                        value: loginController.password.value,
+                        value: _loginController.password.value,
                         onChanged: (value) {
-                          loginController.changePassword(value);
+                          _loginController.changePassword(value);
                         },
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.visiblePassword,
                         autofillHints: const [AutofillHints.password],
                         isPassword: true,
                         onFieldSubmitted: (value) {
-                          loginController.login();
+                          _loginController.login();
                         },
                       ),
                     ),
@@ -119,7 +119,7 @@ class _PasswordScreenState extends State<PasswordScreen> {
                     CustomElevatedButton(
                       text: 'Log In',
                       onPressed: () {
-                        loginController.login();
+                        _loginController.login();
                       },
                     ),
                     SizedBox(

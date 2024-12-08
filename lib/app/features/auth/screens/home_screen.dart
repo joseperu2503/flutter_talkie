@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:talkie/app/core/core.dart';
+import 'package:talkie/app/features/auth/controllers/login_controller.dart';
 import 'package:talkie/app/shared/widgets/custom_elevated_button.dart';
 import 'package:go_router/go_router.dart';
 import 'package:get/get.dart';
@@ -16,7 +17,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _loginController.getCountries();
   }
+
+  final _loginController = Get.put<LoginController>(LoginController());
 
   @override
   Widget build(BuildContext context) {

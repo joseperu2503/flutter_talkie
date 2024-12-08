@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:mask_input_formatter/mask_input_formatter.dart';
 import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/auth/controllers/auth_controller.dart';
-import 'package:talkie/app/features/auth/controllers/phone_controller.dart';
 import 'package:talkie/app/features/auth/models/auth_user.dart';
+import 'package:talkie/app/features/auth/models/country.dart';
 import 'package:talkie/app/features/auth/models/login_response.dart';
 import 'package:talkie/app/features/auth/models/phone_request.dart';
+import 'package:talkie/app/features/auth/models/verify_phone.dart';
 import 'package:talkie/app/features/auth/services/auth_service.dart';
+import 'package:talkie/app/features/auth/services/countries_service.dart';
 import 'package:talkie/app/features/chat/controllers/chat_controller.dart';
 import 'package:talkie/app/features/settings/controllers/notifications_controller.dart';
 import 'package:talkie/app/shared/enums/loading_status.dart';
 import 'package:talkie/app/shared/plugins/formx/formx.dart';
+import 'package:talkie/app/shared/services/ip_service.dart';
 import 'package:talkie/app/shared/widgets/snackbar.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -27,14 +31,29 @@ class LoginController extends GetxController {
 
   Rx<LoadingStatus> loading = LoadingStatus.none.obs;
   Rx<bool> rememberMe = false.obs;
+  Rx<AuthMethod> authMethod = AuthMethod.email.obs;
 
   initData() {
     email.value = email.value.unTouch().updateValue('');
+    phone.value = phone.value.unTouch().updateValue('');
+    password.value = password.value.unTouch().updateValue('');
+  }
+
+  resetPassword() {
     password.value = password.value.unTouch().updateValue('');
   }
 
   changeEmail(FormxInput<String> value) {
     email.value = value;
+  }
+
+  toggleAuthMethod() {
+    authMethod.value = authMethod.value == AuthMethod.email
+        ? AuthMethod.phone
+        : AuthMethod.email;
+
+    email.value = email.value.unTouch().updateValue('');
+    phone.value = phone.value.unTouch().updateValue('');
   }
 
   changePassword(FormxInput<String> value) {
@@ -43,26 +62,27 @@ class LoginController extends GetxController {
 
   login() async {
     FocusManager.instance.primaryFocus?.unfocus();
-    final phoneController = Get.find<PhoneController>();
 
-    if (phoneController.phone.value.isInvalid ||
-        phoneController.country.value == null) return;
+    phone.value = phone.value.touch();
+    email.value = email.value.touch();
 
-    // email.value = email.value.touch();
-    password.value = password.value.touch();
-
-    if (!Formx.validate([password.value])) return;
-    loading.value = LoadingStatus.loading;
+    if (authMethod.value == AuthMethod.phone) {
+      if (!Formx.validate([phone.value])) return;
+      if (country.value == null) return;
+    }
+    if (authMethod.value == AuthMethod.email) {
+      if (!Formx.validate([email.value])) return;
+    }
 
     try {
       final LoginResponse loginResponse = await AuthService.login(
         email: email.value.value,
         phone: PhoneRequest(
-          number: phoneController.phone.value.value,
-          countryId: phoneController.country.value!.id,
+          number: phone.value.value,
+          countryId: country.value!.id,
         ),
         password: password.value.value,
-        type: AuthMethod.phone,
+        type: authMethod.value,
       );
 
       await StorageService.set<String>(StorageKeys.token, loginResponse.token);
@@ -95,5 +115,93 @@ class LoginController extends GetxController {
       await StorageService.set<String>(StorageKeys.email, email.value.value);
     }
     await StorageService.set<bool>(StorageKeys.rememberMe, rememberMe.value);
+  }
+
+  Rx<FormxInput<String>> search = const FormxInput<String>(
+    value: '',
+  ).obs;
+
+  changeSearch(FormxInput<String> value) {
+    search.value = value;
+  }
+
+  RxList<Country> countries = <Country>[].obs;
+
+  Rx<Country?> country = Rx<Country?>(null);
+
+  Rx<FormxInput<String>> phone = FormxInput<String>(
+    value: '',
+    validators: [Validators.required<String>()],
+  ).obs;
+
+  Rx<MaskInputFormatter> phoneFormatter =
+      Rx<MaskInputFormatter>(MaskInputFormatter(
+    mask: '#######################',
+  ));
+
+  void changeCountry(Country? newCountry) {
+    country.value = newCountry;
+
+    if (newCountry != null) {
+      phoneFormatter.value = MaskInputFormatter(
+        mask: newCountry.mask.replaceAll('9', '#'),
+      );
+    }
+  }
+
+  changePhone(FormxInput<String> value) {
+    phone.value = value;
+  }
+
+  getCountries() async {
+    try {
+      countries.value = await CountriesService.getCountries();
+
+      final String? countryCode = await IpService.getCountryFromIP();
+
+      if (countryCode != null) {
+        final country = countries.firstWhereOrNull((Country country) {
+          return country.code == countryCode;
+        });
+
+        changeCountry(country);
+      }
+    } on ServiceException catch (e) {
+      SnackbarService.show(e.message, type: SnackbarType.error);
+    }
+  }
+
+  verifyAccount() async {
+    FocusManager.instance.primaryFocus?.unfocus();
+
+    phone.value = phone.value.touch();
+    email.value = email.value.touch();
+
+    if (authMethod.value == AuthMethod.phone) {
+      if (!Formx.validate([phone.value])) return;
+      if (country.value == null) return;
+    }
+    if (authMethod.value == AuthMethod.email) {
+      if (!Formx.validate([email.value])) return;
+    }
+
+    try {
+      final VerifyPhoneResponse response = await AuthService.verifyAccount(
+        email: email.value.value,
+        phone: PhoneRequest(
+          number: phone.value.value,
+          countryId: country.value!.id,
+        ),
+        type: authMethod.value,
+      );
+
+      if (response.exists) {
+        rootNavigatorKey.currentContext!.push('/password');
+      } else {
+        rootNavigatorKey.currentContext!.push('/register');
+      }
+    } on ServiceException catch (e) {
+      SnackbarService.show(e.message);
+    }
   }
 }

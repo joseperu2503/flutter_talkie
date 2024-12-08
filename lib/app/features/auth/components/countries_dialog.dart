@@ -1,7 +1,7 @@
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:talkie/app/core/core.dart';
-import 'package:talkie/app/features/auth/controllers/phone_controller.dart';
+import 'package:talkie/app/features/auth/controllers/login_controller.dart';
 import 'package:talkie/app/shared/widgets/custom_text_field.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -11,7 +11,7 @@ class CountriesDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final PhoneController phoneController = Get.find<PhoneController>();
+    final _loginController = Get.find<LoginController>();
 
     return Dialog(
       clipBehavior: Clip.hardEdge,
@@ -52,9 +52,9 @@ class CountriesDialog extends StatelessWidget {
                   Obx(
                     () => CustomTextField(
                       hintText: 'Search',
-                      value: phoneController.search.value,
+                      value: _loginController.search.value,
                       onChanged: (value) {
-                        phoneController.changeSearch(value);
+                        _loginController.changeSearch(value);
                       },
                     ),
                   ),
@@ -69,7 +69,7 @@ class CountriesDialog extends StatelessWidget {
                     bottom: 24,
                   ),
                   itemBuilder: (context, index) {
-                    final country = phoneController.countries[index];
+                    final country = _loginController.countries[index];
                     return ListTile(
                       contentPadding: const EdgeInsets.only(
                         left: 32,
@@ -120,7 +120,7 @@ class CountriesDialog extends StatelessWidget {
                       ),
                     );
                   },
-                  itemCount: phoneController.countries.length,
+                  itemCount: _loginController.countries.length,
                 ),
               ),
             ),

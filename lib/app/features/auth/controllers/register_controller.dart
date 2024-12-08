@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/auth/controllers/auth_controller.dart';
 import 'package:talkie/app/features/auth/controllers/login_controller.dart';
-import 'package:talkie/app/features/auth/controllers/phone_controller.dart';
 import 'package:talkie/app/features/auth/models/auth_user.dart';
 import 'package:talkie/app/features/auth/models/login_response.dart';
 import 'package:talkie/app/features/auth/models/phone_request.dart';
@@ -53,11 +52,15 @@ class RegisterController extends GetxController {
   register() async {
     FocusManager.instance.primaryFocus?.unfocus();
 
-    final phoneController = Get.find<PhoneController>();
     final loginController = Get.find<LoginController>();
 
-    if (phoneController.phone.value.isInvalid ||
-        phoneController.country.value == null) return;
+    if (loginController.authMethod.value == AuthMethod.phone) {
+      if (!Formx.validate([loginController.phone.value])) return;
+      if (loginController.country.value == null) return;
+    }
+    if (loginController.authMethod.value == AuthMethod.email) {
+      if (!Formx.validate([loginController.email.value])) return;
+    }
 
     name.value = name.value.touch();
     password.value = password.value.touch();
@@ -73,10 +76,10 @@ class RegisterController extends GetxController {
         name: name.value.value,
         surname: surname.value.value,
         phone: PhoneRequest(
-          number: phoneController.phone.value.value,
-          countryId: phoneController.country.value!.id,
+          number: loginController.phone.value.value,
+          countryId: loginController.country.value!.id,
         ),
-        type: AuthMethod.phone,
+        type: loginController.authMethod.value,
       );
 
       await StorageService.set<String>(StorageKeys.token, loginResponse.token);

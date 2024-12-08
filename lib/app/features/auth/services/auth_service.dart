@@ -66,17 +66,19 @@ class AuthService {
     }
   }
 
-  static Future<VerifyPhoneResponse> verifyPhone({
-    required int countryId,
-    required String number,
+  static Future<VerifyPhoneResponse> verifyAccount({
+    required String? email,
+    required PhoneRequest? phone,
+    required AuthMethod type,
   }) async {
     try {
       Map<String, dynamic> form = {
-        "countryId": countryId,
-        "number": number,
+        "phone": phone?.toJson(),
+        "email": email,
+        "type": type.toString().split('.').last,
       };
 
-      final response = await Api.post('/auth/verify-phone', data: form);
+      final response = await Api.post('/auth/verify-account', data: form);
 
       return VerifyPhoneResponse.fromJson(response.data);
     } catch (e) {

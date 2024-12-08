@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:talkie/app/shared/widgets/custom_text_field.dart';
 import 'package:get/get.dart';
-import 'package:go_router/go_router.dart';
 import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/auth/controllers/register_controller.dart';
 import 'package:talkie/app/shared/widgets/back_button.dart';
@@ -139,7 +138,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         },
                       ),
                     ),
-                    const Height(24),
+                    const Height(81),
                     CustomElevatedButton(
                       text: 'Register',
                       onPressed: () {
@@ -147,41 +146,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       },
                     ),
                     const Height(24),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          'Already have an account?',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            color: context.isDarkMode
-                                ? AppColors.neutralOffWhite
-                                : AppColors.neutralActive,
-                            height: 24 / 14,
-                            leadingDistribution: TextLeadingDistribution.even,
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            context.pop();
-                          },
-                          behavior: HitTestBehavior.translucent,
-                          child: Text(
-                            ' Login Now',
-                            style: TextStyle(
-                              fontSize: 14,
-                              fontWeight: FontWeight.w600,
-                              color: context.isDarkMode
-                                  ? AppColors.brandColorDarkMode2
-                                  : AppColors.brandColorDefault,
-                              height: 24 / 14,
-                              leadingDistribution: TextLeadingDistribution.even,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.center,
+                    //   children: [
+                    //     Text(
+                    //       'Already have an account?',
+                    //       style: TextStyle(
+                    //         fontSize: 14,
+                    //         fontWeight: FontWeight.w400,
+                    //         color: context.isDarkMode
+                    //             ? AppColors.neutralOffWhite
+                    //             : AppColors.neutralActive,
+                    //         height: 24 / 14,
+                    //         leadingDistribution: TextLeadingDistribution.even,
+                    //       ),
+                    //     ),
+                    //     GestureDetector(
+                    //       onTap: () {
+                    //         context.pop();
+                    //       },
+                    //       behavior: HitTestBehavior.translucent,
+                    //       child: Text(
+                    //         ' Login Now',
+                    //         style: TextStyle(
+                    //           fontSize: 14,
+                    //           fontWeight: FontWeight.w600,
+                    //           color: context.isDarkMode
+                    //               ? AppColors.brandColorDarkMode2
+                    //               : AppColors.brandColorDefault,
+                    //           height: 24 / 14,
+                    //           leadingDistribution: TextLeadingDistribution.even,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                     SizedBox(
                       height: 80 + screen.padding.bottom,
                     ),
