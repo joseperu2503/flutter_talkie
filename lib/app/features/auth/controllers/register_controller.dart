@@ -6,8 +6,6 @@ import 'package:talkie/app/features/auth/models/auth_user.dart';
 import 'package:talkie/app/features/auth/models/login_response.dart';
 import 'package:talkie/app/features/auth/models/phone_request.dart';
 import 'package:talkie/app/features/auth/services/auth_service.dart';
-import 'package:talkie/app/features/chat/controllers/chat_controller.dart';
-import 'package:talkie/app/shared/enums/loading_status.dart';
 import 'package:talkie/app/shared/plugins/formx/formx.dart';
 import 'package:talkie/app/shared/widgets/snackbar.dart';
 import 'package:get/get.dart';
@@ -29,8 +27,6 @@ class RegisterController extends GetxController {
     validators: [Validators.required()],
   ).obs;
 
-  Rx<LoadingStatus> loading = LoadingStatus.none.obs;
-
   initData() {
     name.value = name.value.unTouch().updateValue('');
     surname.value = surname.value.unTouch().updateValue('');
@@ -49,26 +45,33 @@ class RegisterController extends GetxController {
     surname.value = value;
   }
 
-  register() async {
-    rootNavigatorKey.currentContext!.push('/verify-code');
+  verifyForm() {
     FocusManager.instance.primaryFocus?.unfocus();
 
     final loginController = Get.find<LoginController>();
 
     if (loginController.authMethod.value == AuthMethod.phone) {
-      if (!Formx.validate([loginController.phone.value])) return;
-      if (loginController.country.value == null) return;
+      if (!Formx.validate([loginController.phone.value])) return false;
+      if (loginController.country.value == null) return false;
     }
     if (loginController.authMethod.value == AuthMethod.email) {
-      if (!Formx.validate([loginController.email.value])) return;
+      if (!Formx.validate([loginController.email.value])) return false;
     }
 
     name.value = name.value.touch();
     password.value = password.value.touch();
     surname.value = surname.value.touch();
 
-    if (!Formx.validate([name.value, surname.value, password.value])) return;
-    loading.value = LoadingStatus.loading;
+    if (!Formx.validate([name.value, surname.value, password.value])) {
+      return false;
+    }
+
+    return true;
+  }
+
+  register(String verificationCode) async {
+    if (!verifyForm()) return;
+    final loginController = Get.find<LoginController>();
 
     try {
       final LoginResponse loginResponse = await AuthService.register(
@@ -81,6 +84,7 @@ class RegisterController extends GetxController {
           countryId: loginController.country.value!.id,
         ),
         type: loginController.authMethod.value,
+        verificationCode: verificationCode,
       );
 
       await StorageService.set<String>(StorageKeys.token, loginResponse.token);
@@ -89,17 +93,29 @@ class RegisterController extends GetxController {
       rootNavigatorKey.currentContext!.go('/chats');
 
       final AuthController authController = Get.find<AuthController>();
-      final ChatController chatController = Get.find<ChatController>();
 
-      authController.initAutoLogout();
-      authController.getUser();
-      chatController.connectSocket();
-      chatController.getChats();
-
-      loading.value = LoadingStatus.success;
+      authController.onLogin();
     } on ServiceException catch (e) {
-      loading.value = LoadingStatus.error;
+      SnackbarService.show(e.message);
+    }
+  }
 
+  sendVerificationCode() async {
+    if (!verifyForm()) return;
+    final loginController = Get.find<LoginController>();
+
+    try {
+      await AuthService.sendVerificationCode(
+        email: loginController.email.value.value,
+        phone: PhoneRequest(
+          number: loginController.phone.value.value,
+          countryId: loginController.country.value!.id,
+        ),
+        type: loginController.authMethod.value,
+      );
+
+      rootNavigatorKey.currentContext!.push('/verify-code');
+    } on ServiceException catch (e) {
       SnackbarService.show(e.message);
     }
   }

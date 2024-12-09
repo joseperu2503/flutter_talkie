@@ -6,12 +6,9 @@ import 'package:talkie/app/features/auth/models/auth_user.dart';
 import 'package:talkie/app/features/auth/models/country.dart';
 import 'package:talkie/app/features/auth/models/login_response.dart';
 import 'package:talkie/app/features/auth/models/phone_request.dart';
-import 'package:talkie/app/features/auth/models/verify_phone.dart';
+import 'package:talkie/app/features/auth/models/verify_account_response.dart';
 import 'package:talkie/app/features/auth/services/auth_service.dart';
 import 'package:talkie/app/features/auth/services/countries_service.dart';
-import 'package:talkie/app/features/chat/controllers/chat_controller.dart';
-import 'package:talkie/app/features/settings/controllers/notifications_controller.dart';
-import 'package:talkie/app/shared/enums/loading_status.dart';
 import 'package:talkie/app/shared/plugins/formx/formx.dart';
 import 'package:talkie/app/shared/services/ip_service.dart';
 import 'package:talkie/app/shared/widgets/snackbar.dart';
@@ -29,7 +26,6 @@ class LoginController extends GetxController {
     validators: [Validators.required()],
   ).obs;
 
-  Rx<LoadingStatus> loading = LoadingStatus.none.obs;
   Rx<bool> rememberMe = false.obs;
   Rx<AuthMethod> authMethod = AuthMethod.email.obs;
 
@@ -92,20 +88,9 @@ class LoginController extends GetxController {
       rootNavigatorKey.currentContext!.go('/chats');
 
       final AuthController authController = Get.find<AuthController>();
-      final ChatController chatController = Get.find<ChatController>();
-      final NotificationsController notificationsController =
-          Get.find<NotificationsController>();
 
-      authController.initAutoLogout();
-      authController.getUser();
-      chatController.connectSocket();
-      chatController.getChats();
-      notificationsController.init();
-
-      loading.value = LoadingStatus.success;
+      authController.onLogin();
     } on ServiceException catch (e) {
-      loading.value = LoadingStatus.error;
-
       SnackbarService.show(e.message, type: SnackbarType.error);
     }
   }
@@ -193,7 +178,7 @@ class LoginController extends GetxController {
     }
 
     try {
-      final VerifyPhoneResponse response = await AuthService.verifyAccount(
+      final VerifyAccountResponse response = await AuthService.verifyAccount(
         email: email.value.value,
         phone: PhoneRequest(
           number: phone.value.value,

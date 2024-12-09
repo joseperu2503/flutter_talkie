@@ -1,14 +1,14 @@
-class VerifyPhoneResponse {
+class VerifyAccountResponse {
   final bool success;
   final bool exists;
 
-  VerifyPhoneResponse({
+  VerifyAccountResponse({
     required this.success,
     required this.exists,
   });
 
-  factory VerifyPhoneResponse.fromJson(Map<String, dynamic> json) =>
-      VerifyPhoneResponse(
+  factory VerifyAccountResponse.fromJson(Map<String, dynamic> json) =>
+      VerifyAccountResponse(
         success: json["success"],
         exists: json["exists"],
       );

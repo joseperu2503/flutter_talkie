@@ -4,6 +4,7 @@ import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/auth/models/auth_user.dart';
 import 'package:talkie/app/features/auth/services/auth_service.dart';
 import 'package:talkie/app/features/chat/controllers/chat_controller.dart';
+import 'package:talkie/app/features/settings/controllers/notifications_controller.dart';
 import 'package:talkie/app/shared/widgets/snackbar.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
@@ -36,6 +37,18 @@ class AuthController extends GetxController {
     if (_timer != null) {
       _timer!.cancel();
     }
+  }
+
+  onLogin() {
+    final ChatController chatController = Get.find<ChatController>();
+    final NotificationsController notificationsController =
+        Get.find<NotificationsController>();
+
+    initAutoLogout();
+    getUser();
+    chatController.connectSocket();
+    chatController.getChats();
+    notificationsController.init();
   }
 
   initAutoLogout() async {

@@ -134,7 +134,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         keyboardType: TextInputType.visiblePassword,
                         isPassword: true,
                         onFieldSubmitted: (value) {
-                          registerController.register();
+                          registerController.sendVerificationCode();
                         },
                       ),
                     ),
@@ -142,7 +142,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     CustomElevatedButton(
                       text: 'Register',
                       onPressed: () {
-                        registerController.register();
+                        registerController.sendVerificationCode();
                       },
                     ),
                     const Height(24),

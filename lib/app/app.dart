@@ -4,7 +4,6 @@ import 'package:talkie/app/core/controllers/theme_controller.dart';
 import 'package:talkie/app/features/auth/controllers/auth_controller.dart';
 import 'package:talkie/app/features/auth/services/auth_service.dart';
 import 'package:talkie/app/features/chat/controllers/chat_controller.dart';
-import 'package:talkie/app/features/settings/controllers/notifications_controller.dart';
 import 'package:talkie/app/shared/widgets/snackbar.dart';
 import 'package:get/get.dart';
 
@@ -31,12 +30,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
   }
 
   initServices() async {
-    final authController = Get.put<AuthController>(AuthController());
-    final chatController = Get.put<ChatController>(ChatController());
     final themeController = Get.put<ThemeController>(ThemeController());
-
-    final notificationsController =
-        Get.put<NotificationsController>(NotificationsController());
 
     await themeController.getThemeModeFromStorage();
     Future.delayed(
@@ -50,11 +44,9 @@ class _AppState extends State<App> with WidgetsBindingObserver {
         await AuthService.verifyToken();
 
     if (validToken) {
-      notificationsController.init();
-      authController.initAutoLogout();
-      authController.getUser();
-      chatController.connectSocket();
-      chatController.getChats();
+      final AuthController authController = Get.find<AuthController>();
+
+      authController.onLogin();
     }
   }
 

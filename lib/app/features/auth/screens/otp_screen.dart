@@ -134,7 +134,7 @@ class _OtpScreenState extends State<OtpScreen> {
                       pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
                       showCursor: true,
                       onCompleted: (pin) {
-                        print(pin);
+                        _registerController.register(pin);
                       },
                       autofocus: true,
                     ),
@@ -142,7 +142,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     CustomTextButton(
                       text: 'Resend code',
                       onPressed: () {
-                        _registerController.register();
+                        _registerController.sendVerificationCode();
                       },
                       textStyle: const TextStyle(
                         fontSize: 16,
