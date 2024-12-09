@@ -1,10 +1,10 @@
-import 'package:dio/dio.dart';
 import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/auth/models/auth_user.dart';
 import 'package:talkie/app/features/auth/models/login_response.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:talkie/app/features/auth/models/phone_request.dart';
 import 'package:talkie/app/features/auth/models/send_verification_code_response.dart';
+import 'package:talkie/app/features/auth/models/verification_code_request.dart';
 import 'package:talkie/app/features/auth/models/verify_account_response.dart';
 
 enum AuthMethod { email, phone }
@@ -39,7 +39,7 @@ class AuthService {
     required PhoneRequest? phone,
     required String password,
     required AuthMethod type,
-    required String verificationCode,
+    required VerificationCodeRequest verificationCode,
   }) async {
     try {
       Map<String, dynamic> form = {
@@ -49,16 +49,13 @@ class AuthService {
         "phone": phone?.toJson(),
         "password": password,
         "type": type.toString().split('.').last,
-        "verificationCode": verificationCode,
+        "verificationCode": verificationCode.toJson(),
       };
 
       final response = await Api.post('/auth/register', data: form);
 
       return LoginResponse.fromJson(response.data);
     } catch (e) {
-      if (e is DioException) {
-        print(e.response);
-      }
       throw ServiceException('An error occurred while trying to register.', e);
     }
   }

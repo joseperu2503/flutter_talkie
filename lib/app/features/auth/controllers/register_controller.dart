@@ -5,6 +5,7 @@ import 'package:talkie/app/features/auth/controllers/login_controller.dart';
 import 'package:talkie/app/features/auth/models/auth_user.dart';
 import 'package:talkie/app/features/auth/models/login_response.dart';
 import 'package:talkie/app/features/auth/models/phone_request.dart';
+import 'package:talkie/app/features/auth/models/verification_code_request.dart';
 import 'package:talkie/app/features/auth/services/auth_service.dart';
 import 'package:talkie/app/shared/plugins/formx/formx.dart';
 import 'package:talkie/app/shared/widgets/snackbar.dart';
@@ -26,6 +27,8 @@ class RegisterController extends GetxController {
     value: '',
     validators: [Validators.required()],
   ).obs;
+
+  String? verificationCodeId;
 
   initData() {
     name.value = name.value.unTouch().updateValue('');
@@ -71,6 +74,7 @@ class RegisterController extends GetxController {
 
   register(String verificationCode) async {
     if (!verifyForm()) return;
+    if (verificationCodeId == null) return;
     final loginController = Get.find<LoginController>();
 
     try {
@@ -84,7 +88,10 @@ class RegisterController extends GetxController {
           countryId: loginController.country.value!.id,
         ),
         type: loginController.authMethod.value,
-        verificationCode: verificationCode,
+        verificationCode: VerificationCodeRequest(
+          id: verificationCodeId!,
+          code: verificationCode,
+        ),
       );
 
       await StorageService.set<String>(StorageKeys.token, loginResponse.token);
@@ -105,7 +112,7 @@ class RegisterController extends GetxController {
     final loginController = Get.find<LoginController>();
 
     try {
-      await AuthService.sendVerificationCode(
+      final response = await AuthService.sendVerificationCode(
         email: loginController.email.value.value,
         phone: PhoneRequest(
           number: loginController.phone.value.value,
@@ -113,6 +120,8 @@ class RegisterController extends GetxController {
         ),
         type: loginController.authMethod.value,
       );
+
+      verificationCodeId = response.data.verificationCodeId;
 
       rootNavigatorKey.currentContext!.push('/verify-code');
     } on ServiceException catch (e) {
