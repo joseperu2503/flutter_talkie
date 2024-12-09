@@ -2,55 +2,53 @@ import 'package:flutter/material.dart';
 import 'package:talkie/app/core/core.dart';
 import 'package:get/get.dart';
 
-class CustomTextButton extends StatefulWidget {
+class CustomTextButton extends StatelessWidget {
   const CustomTextButton({
     super.key,
     this.onPressed,
     this.text,
     this.width = double.infinity,
     this.iconLeft,
+    this.textStyle,
   });
 
   final void Function()? onPressed;
   final String? text;
   final double width;
   final Widget? iconLeft;
+  final TextStyle? textStyle;
 
-  @override
-  State<CustomTextButton> createState() => _CustomTextButtonState();
-}
-
-class _CustomTextButtonState extends State<CustomTextButton> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 52,
-      width: widget.width,
+      width: width,
       child: TextButton(
         style: TextButton.styleFrom(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
         ),
-        onPressed: widget.onPressed,
+        onPressed: onPressed,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (widget.iconLeft != null) widget.iconLeft!,
-            if (widget.text != null && widget.iconLeft != null) const Width(10),
-            if (widget.text != null)
+            if (iconLeft != null) iconLeft!,
+            if (text != null && iconLeft != null) const Width(10),
+            if (text != null)
               Text(
-                widget.text!,
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                  color: widget.onPressed == null
-                      ? AppColors.neutralActive
-                      : context.isDarkMode
-                          ? AppColors.neutralOffWhite
-                          : AppColors.neutralActive,
-                  leadingDistribution: TextLeadingDistribution.even,
-                ),
+                text!,
+                style: textStyle ??
+                    TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: onPressed == null
+                          ? AppColors.neutralActive
+                          : context.isDarkMode
+                              ? AppColors.neutralOffWhite
+                              : AppColors.neutralActive,
+                      leadingDistribution: TextLeadingDistribution.even,
+                    ),
               )
           ],
         ),

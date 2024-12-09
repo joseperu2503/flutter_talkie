@@ -50,6 +50,7 @@ class RegisterController extends GetxController {
   }
 
   register() async {
+    rootNavigatorKey.currentContext!.push('/verify-code');
     FocusManager.instance.primaryFocus?.unfocus();
 
     final loginController = Get.find<LoginController>();
