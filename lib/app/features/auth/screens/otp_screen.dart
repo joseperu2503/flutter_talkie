@@ -20,8 +20,8 @@ class _OtpScreenState extends State<OtpScreen> {
     super.initState();
   }
 
-  final _registerController = Get.put(RegisterController());
   final _loginController = Get.find<LoginController>();
+  final _registerController = Get.find<RegisterController>();
 
   @override
   Widget build(BuildContext context) {
@@ -133,8 +133,9 @@ class _OtpScreenState extends State<OtpScreen> {
                       submittedPinTheme: submittedPinTheme,
                       pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
                       showCursor: true,
+                      controller: _registerController.otp,
                       onCompleted: (pin) {
-                        _registerController.register(pin);
+                        _registerController.verifyCode();
                       },
                       autofocus: true,
                     ),

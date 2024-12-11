@@ -6,6 +6,7 @@ import 'package:talkie/app/features/auth/models/phone_request.dart';
 import 'package:talkie/app/features/auth/models/send_verification_code_response.dart';
 import 'package:talkie/app/features/auth/models/verification_code_request.dart';
 import 'package:talkie/app/features/auth/models/verify_account_response.dart';
+import 'package:talkie/app/features/auth/models/verify_code_response.dart';
 
 enum AuthMethod { email, phone }
 
@@ -109,6 +110,21 @@ class AuthService {
     } catch (e) {
       throw ServiceException(
           'An error occurred while sending the verification code.', e);
+    }
+  }
+
+  static Future<VerifyCodeResponse> verifyCode({
+    required VerificationCodeRequest verificationCode,
+  }) async {
+    try {
+      Map<String, dynamic> form = verificationCode.toJson();
+
+      final response = await Api.post('/auth/verify-code', data: form);
+
+      return VerifyCodeResponse.fromJson(response.data);
+    } catch (e) {
+      throw ServiceException(
+          'An error occurred while trying to verify code.', e);
     }
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mask_input_formatter/mask_input_formatter.dart';
 import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/auth/controllers/auth_controller.dart';
+import 'package:talkie/app/features/auth/controllers/register_controller.dart';
 import 'package:talkie/app/features/auth/models/auth_user.dart';
 import 'package:talkie/app/features/auth/models/country.dart';
 import 'package:talkie/app/features/auth/models/login_response.dart';
@@ -190,7 +191,10 @@ class LoginController extends GetxController {
       if (response.exists) {
         rootNavigatorKey.currentContext!.push('/password');
       } else {
-        rootNavigatorKey.currentContext!.push('/register');
+        final registerController = Get.find<RegisterController>();
+
+        await registerController.sendVerificationCode();
+        rootNavigatorKey.currentContext!.push('/verify-code');
       }
     } on ServiceException catch (e) {
       SnackbarService.show(e.message);

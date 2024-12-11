@@ -29,6 +29,7 @@ class RegisterController extends GetxController {
   ).obs;
 
   String? verificationCodeId;
+  TextEditingController otp = TextEditingController();
 
   initData() {
     name.value = name.value.unTouch().updateValue('');
@@ -48,18 +49,13 @@ class RegisterController extends GetxController {
     surname.value = value;
   }
 
-  verifyForm() {
+  _verifyForm() {
     FocusManager.instance.primaryFocus?.unfocus();
 
-    final loginController = Get.find<LoginController>();
+    if (verificationCodeId == null) return false;
+    if (otp.text.length != 4) return false;
 
-    if (loginController.authMethod.value == AuthMethod.phone) {
-      if (!Formx.validate([loginController.phone.value])) return false;
-      if (loginController.country.value == null) return false;
-    }
-    if (loginController.authMethod.value == AuthMethod.email) {
-      if (!Formx.validate([loginController.email.value])) return false;
-    }
+    if (!_verifyForm2()) return false;
 
     name.value = name.value.touch();
     password.value = password.value.touch();
@@ -72,9 +68,22 @@ class RegisterController extends GetxController {
     return true;
   }
 
-  register(String verificationCode) async {
-    if (!verifyForm()) return;
-    if (verificationCodeId == null) return;
+  _verifyForm2() {
+    final loginController = Get.find<LoginController>();
+
+    if (loginController.authMethod.value == AuthMethod.phone) {
+      if (!Formx.validate([loginController.phone.value])) return false;
+      if (loginController.country.value == null) return false;
+    }
+    if (loginController.authMethod.value == AuthMethod.email) {
+      if (!Formx.validate([loginController.email.value])) return false;
+    }
+
+    return true;
+  }
+
+  register() async {
+    if (!_verifyForm()) return;
     final loginController = Get.find<LoginController>();
 
     try {
@@ -90,7 +99,7 @@ class RegisterController extends GetxController {
         type: loginController.authMethod.value,
         verificationCode: VerificationCodeRequest(
           id: verificationCodeId!,
-          code: verificationCode,
+          code: otp.text,
         ),
       );
 
@@ -108,7 +117,7 @@ class RegisterController extends GetxController {
   }
 
   sendVerificationCode() async {
-    if (!verifyForm()) return;
+    if (!_verifyForm2()) return;
     final loginController = Get.find<LoginController>();
 
     try {
@@ -121,9 +130,25 @@ class RegisterController extends GetxController {
         type: loginController.authMethod.value,
       );
 
-      verificationCodeId = response.data.verificationCodeId;
+      otp.text = '';
 
-      rootNavigatorKey.currentContext!.push('/verify-code');
+      verificationCodeId = response.data.verificationCodeId;
+    } on ServiceException catch (e) {
+      SnackbarService.show(e.message);
+      rethrow;
+    }
+  }
+
+  verifyCode() async {
+    try {
+      await AuthService.verifyCode(
+        verificationCode: VerificationCodeRequest(
+          id: verificationCodeId!,
+          code: otp.text,
+        ),
+      );
+
+      rootNavigatorKey.currentContext!.pushReplacement('/register');
     } on ServiceException catch (e) {
       SnackbarService.show(e.message);
     }
