@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/auth/controllers/login_controller.dart';
 import 'package:talkie/app/features/auth/controllers/register_controller.dart';
+import 'package:talkie/app/features/auth/services/auth_service.dart';
 import 'package:talkie/app/shared/widgets/back_button.dart';
 import 'package:pinput/pinput.dart';
 import 'package:talkie/app/shared/widgets/custom_text_button.dart';
@@ -111,18 +112,23 @@ class _OtpScreenState extends State<OtpScreen> {
                         constraints: const BoxConstraints(
                           maxWidth: 295,
                         ),
-                        child: Text(
-                          'We have sent you an SMS with the code to ${_loginController.country.value?.dialCode} ${_loginController.phone.value.value}',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            height: 24 / 14,
-                            color: context.isDarkMode
-                                ? AppColors.neutralOffWhite
-                                : AppColors.neutralActive,
-                            leadingDistribution: TextLeadingDistribution.even,
+                        child: Obx(
+                          () => Text(
+                            _loginController.authMethod.value ==
+                                    AuthMethod.email
+                                ? 'We have sent you an email with the code to ${_loginController.email.value.value}'
+                                : 'We have sent you an SMS with the code to ${_loginController.country.value?.dialCode} ${_loginController.phone.value.value}',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              height: 24 / 14,
+                              color: context.isDarkMode
+                                  ? AppColors.neutralOffWhite
+                                  : AppColors.neutralActive,
+                              leadingDistribution: TextLeadingDistribution.even,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
                         ),
                       ),
                     ),
