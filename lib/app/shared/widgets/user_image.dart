@@ -39,7 +39,9 @@ class UserImage extends StatelessWidget {
                       : AppColors.brandColorDefault,
                   child: Center(
                     child: Text(
-                      '${name[0]}${surname[0]}',
+                      name.isEmpty || surname.isEmpty
+                          ? ''
+                          : '${name[0]}${surname[0]}',
                       style: const TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w700,

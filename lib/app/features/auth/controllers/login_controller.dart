@@ -180,11 +180,13 @@ class LoginController extends GetxController {
 
     try {
       final VerifyAccountResponse response = await AuthService.verifyAccount(
-        email: email.value.value,
-        phone: PhoneRequest(
-          number: phone.value.value,
-          countryId: country.value!.id,
-        ),
+        email: authMethod.value == AuthMethod.email ? email.value.value : null,
+        phone: authMethod.value == AuthMethod.phone
+            ? PhoneRequest(
+                number: phone.value.value,
+                countryId: country.value!.id,
+              )
+            : null,
         type: authMethod.value,
       );
 

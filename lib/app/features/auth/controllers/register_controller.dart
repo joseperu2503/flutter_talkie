@@ -40,7 +40,7 @@ class RegisterController extends GetxController {
 
     if (form.invalid) return false;
 
-    return false;
+    return true;
   }
 
   _verifyForm2() {
