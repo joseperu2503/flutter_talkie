@@ -193,7 +193,7 @@ class LoginController extends GetxController {
       } else {
         final registerController = Get.find<RegisterController>();
 
-        await registerController.sendVerificationCode();
+        registerController.sendVerificationCode();
         rootNavigatorKey.currentContext!.push('/verify-code');
       }
     } on ServiceException catch (e) {

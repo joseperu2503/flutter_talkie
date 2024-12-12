@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:talkie/app/shared/widgets/custom_text_field.dart';
 import 'package:get/get.dart';
+import 'package:reactive_forms/reactive_forms.dart';
 import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/auth/controllers/register_controller.dart';
 import 'package:talkie/app/shared/widgets/back_button.dart';
 import 'package:talkie/app/shared/widgets/custom_elevated_button.dart';
+import 'package:talkie/app/shared/widgets/custom_text_field3.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -61,130 +62,122 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 constraints: const BoxConstraints(
                   maxWidth: 500,
                 ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(
-                      'Create Your Account',
-                      style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w700,
-                        height: 30 / 24,
-                        color: context.isDarkMode
-                            ? AppColors.neutralOffWhite
-                            : AppColors.neutralActive,
-                        leadingDistribution: TextLeadingDistribution.even,
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const Height(8),
-                    Center(
-                      child: Container(
-                        constraints: const BoxConstraints(
-                          maxWidth: 295,
+                child: ReactiveForm(
+                  formGroup: registerController.form,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        'Create Your Account',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w700,
+                          height: 30 / 24,
+                          color: context.isDarkMode
+                              ? AppColors.neutralOffWhite
+                              : AppColors.neutralActive,
+                          leadingDistribution: TextLeadingDistribution.even,
                         ),
-                        child: Text(
-                          'Please enter your details to create a new account. It only takes a few steps!',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w400,
-                            height: 24 / 14,
-                            color: context.isDarkMode
-                                ? AppColors.neutralOffWhite
-                                : AppColors.neutralActive,
-                            leadingDistribution: TextLeadingDistribution.even,
+                        textAlign: TextAlign.center,
+                      ),
+                      const Height(8),
+                      Center(
+                        child: Container(
+                          constraints: const BoxConstraints(
+                            maxWidth: 295,
                           ),
-                          textAlign: TextAlign.center,
+                          child: Text(
+                            'Please enter your details to create a new account. It only takes a few steps!',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w400,
+                              height: 24 / 14,
+                              color: context.isDarkMode
+                                  ? AppColors.neutralOffWhite
+                                  : AppColors.neutralActive,
+                              leadingDistribution: TextLeadingDistribution.even,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
                         ),
                       ),
-                    ),
-                    const Height(40),
-                    Obx(
-                      () => CustomTextField(
+                      const Height(40),
+                      const CustomTextField3(
                         hintText: 'Name',
-                        value: registerController.name.value,
-                        onChanged: (value) {
-                          registerController.changeName(value);
-                        },
+                        formControlName: 'name',
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.name,
                       ),
-                    ),
-                    const Height(18),
-                    Obx(
-                      () => CustomTextField(
+                      const Height(18),
+                      const CustomTextField3(
                         hintText: 'Surname',
-                        value: registerController.surname.value,
-                        onChanged: (value) {
-                          registerController.changeSurname(value);
-                        },
+                        formControlName: 'surname',
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.name,
                       ),
-                    ),
-                    const Height(18),
-                    Obx(
-                      () => CustomTextField(
+                      const Height(18),
+                      const CustomTextField3(
                         hintText: 'Password',
-                        value: registerController.password.value,
-                        onChanged: (value) {
-                          registerController.changePassword(value);
-                        },
+                        formControlName: 'password',
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.visiblePassword,
                         isPassword: true,
-                        onFieldSubmitted: (value) {
-                          registerController.register();
+                      ),
+                      const Height(18),
+                      const Height(81),
+                      ReactiveFormConsumer(
+                        builder: (context, form, child) {
+                          return CustomElevatedButton(
+                            text: 'Register',
+                            onPressed: form.valid
+                                ? () {
+                                    registerController.register();
+                                  }
+                                : null,
+                          );
                         },
                       ),
-                    ),
-                    const Height(81),
-                    CustomElevatedButton(
-                      text: 'Register',
-                      onPressed: () {
-                        registerController.register();
-                      },
-                    ),
-                    const Height(24),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.center,
-                    //   children: [
-                    //     Text(
-                    //       'Already have an account?',
-                    //       style: TextStyle(
-                    //         fontSize: 14,
-                    //         fontWeight: FontWeight.w400,
-                    //         color: context.isDarkMode
-                    //             ? AppColors.neutralOffWhite
-                    //             : AppColors.neutralActive,
-                    //         height: 24 / 14,
-                    //         leadingDistribution: TextLeadingDistribution.even,
-                    //       ),
-                    //     ),
-                    //     GestureDetector(
-                    //       onTap: () {
-                    //         context.pop();
-                    //       },
-                    //       behavior: HitTestBehavior.translucent,
-                    //       child: Text(
-                    //         ' Login Now',
-                    //         style: TextStyle(
-                    //           fontSize: 14,
-                    //           fontWeight: FontWeight.w600,
-                    //           color: context.isDarkMode
-                    //               ? AppColors.brandColorDarkMode2
-                    //               : AppColors.brandColorDefault,
-                    //           height: 24 / 14,
-                    //           leadingDistribution: TextLeadingDistribution.even,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //   ],
-                    // ),
-                    SizedBox(
-                      height: 80 + screen.padding.bottom,
-                    ),
-                  ],
+                      const Height(24),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     Text(
+                      //       'Already have an account?',
+                      //       style: TextStyle(
+                      //         fontSize: 14,
+                      //         fontWeight: FontWeight.w400,
+                      //         color: context.isDarkMode
+                      //             ? AppColors.neutralOffWhite
+                      //             : AppColors.neutralActive,
+                      //         height: 24 / 14,
+                      //         leadingDistribution: TextLeadingDistribution.even,
+                      //       ),
+                      //     ),
+                      //     GestureDetector(
+                      //       onTap: () {
+                      //         context.pop();
+                      //       },
+                      //       behavior: HitTestBehavior.translucent,
+                      //       child: Text(
+                      //         ' Login Now',
+                      //         style: TextStyle(
+                      //           fontSize: 14,
+                      //           fontWeight: FontWeight.w600,
+                      //           color: context.isDarkMode
+                      //               ? AppColors.brandColorDarkMode2
+                      //               : AppColors.brandColorDefault,
+                      //           height: 24 / 14,
+                      //           leadingDistribution: TextLeadingDistribution.even,
+                      //         ),
+                      //       ),
+                      //     ),
+                      //   ],
+                      // ),
+                      SizedBox(
+                        height: 80 + screen.padding.bottom,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

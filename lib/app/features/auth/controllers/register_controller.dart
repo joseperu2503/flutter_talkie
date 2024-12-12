@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:reactive_forms/reactive_forms.dart';
 import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/auth/controllers/auth_controller.dart';
 import 'package:talkie/app/features/auth/controllers/login_controller.dart';
@@ -7,47 +8,27 @@ import 'package:talkie/app/features/auth/models/login_response.dart';
 import 'package:talkie/app/features/auth/models/phone_request.dart';
 import 'package:talkie/app/features/auth/models/verification_code_request.dart';
 import 'package:talkie/app/features/auth/services/auth_service.dart';
-import 'package:talkie/app/shared/plugins/formx/formx.dart';
 import 'package:talkie/app/shared/widgets/snackbar.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 class RegisterController extends GetxController {
-  Rx<FormxInput<String>> name = FormxInput<String>(
-    value: '',
-    validators: [Validators.required()],
-  ).obs;
-
-  Rx<FormxInput<String>> surname = FormxInput<String>(
-    value: '',
-    validators: [Validators.required()],
-  ).obs;
-
-  Rx<FormxInput<String>> password = FormxInput<String>(
-    value: '',
-    validators: [Validators.required()],
-  ).obs;
-
   String? verificationCodeId;
   TextEditingController otp = TextEditingController();
 
   initData() {
-    name.value = name.value.unTouch().updateValue('');
-    surname.value = surname.value.unTouch().updateValue('');
-    password.value = password.value.unTouch().updateValue('');
+    form.patchValue({
+      'name': '',
+      'surname': '',
+      'password': '',
+    });
   }
 
-  changePassword(FormxInput<String> value) {
-    password.value = value;
-  }
-
-  changeName(FormxInput<String> value) {
-    name.value = value;
-  }
-
-  changeSurname(FormxInput<String> value) {
-    surname.value = value;
-  }
+  final form = FormGroup({
+    'name': FormControl<String>(validators: [Validators.required]),
+    'surname': FormControl<String>(validators: [Validators.required]),
+    'password': FormControl<String>(validators: [Validators.required]),
+  });
 
   _verifyForm() {
     FocusManager.instance.primaryFocus?.unfocus();
@@ -57,27 +38,21 @@ class RegisterController extends GetxController {
 
     if (!_verifyForm2()) return false;
 
-    name.value = name.value.touch();
-    password.value = password.value.touch();
-    surname.value = surname.value.touch();
+    if (form.invalid) return false;
 
-    if (!Formx.validate([name.value, surname.value, password.value])) {
-      return false;
-    }
-
-    return true;
+    return false;
   }
 
   _verifyForm2() {
-    final loginController = Get.find<LoginController>();
+    // final loginController = Get.find<LoginController>();
 
-    if (loginController.authMethod.value == AuthMethod.phone) {
-      if (!Formx.validate([loginController.phone.value])) return false;
-      if (loginController.country.value == null) return false;
-    }
-    if (loginController.authMethod.value == AuthMethod.email) {
-      if (!Formx.validate([loginController.email.value])) return false;
-    }
+    // if (loginController.authMethod.value == AuthMethod.phone) {
+    //   if (!Formx.validate([loginController.phone.value])) return false;
+    //   if (loginController.country.value == null) return false;
+    // }
+    // if (loginController.authMethod.value == AuthMethod.email) {
+    //   if (!Formx.validate([loginController.email.value])) return false;
+    // }
 
     return true;
   }
@@ -89,9 +64,9 @@ class RegisterController extends GetxController {
     try {
       final LoginResponse loginResponse = await AuthService.register(
         email: loginController.email.value.value,
-        password: password.value.value,
-        name: name.value.value,
-        surname: surname.value.value,
+        password: form.control('password').value,
+        name: form.control('name').value,
+        surname: form.control('surname').value,
         phone: PhoneRequest(
           number: loginController.phone.value.value,
           countryId: loginController.country.value!.id,
@@ -119,6 +94,7 @@ class RegisterController extends GetxController {
   sendVerificationCode() async {
     if (!_verifyForm2()) return;
     final loginController = Get.find<LoginController>();
+    otp.text = '';
 
     try {
       final response = await AuthService.sendVerificationCode(
@@ -129,8 +105,6 @@ class RegisterController extends GetxController {
         ),
         type: loginController.authMethod.value,
       );
-
-      otp.text = '';
 
       verificationCodeId = response.data.verificationCodeId;
     } on ServiceException catch (e) {

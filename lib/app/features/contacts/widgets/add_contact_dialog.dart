@@ -1,7 +1,12 @@
+import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:talkie/app/core/core.dart';
+import 'package:talkie/app/features/auth/components/countries_dialog.dart';
+import 'package:talkie/app/features/auth/models/country.dart';
+import 'package:talkie/app/features/auth/services/auth_service.dart';
 import 'package:talkie/app/features/contacts/controllers/contacts_controller.dart';
 import 'package:talkie/app/shared/widgets/custom_elevated_button.dart';
+import 'package:talkie/app/shared/widgets/custom_text_button.dart';
 import 'package:talkie/app/shared/widgets/custom_text_field.dart';
 import 'package:get/get.dart';
 
@@ -29,7 +34,7 @@ class AddContactDialog extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Add by username',
+              'Add by email or phone',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w700,
@@ -55,24 +60,126 @@ class AddContactDialog extends StatelessWidget {
             ),
             const Height(12),
             Obx(
-              () => CustomTextField(
-                autofocus: true,
-                hintText: 'Enter a username',
-                value: contactsController.username.value,
-                onChanged: (value) {
-                  contactsController.changeUsername(value);
-                },
-              ),
+              () {
+                if (contactsController.authMethod.value == AuthMethod.email) {
+                  return Obx(
+                    () => CustomTextField(
+                      hintText: 'Email',
+                      value: contactsController.email.value,
+                      onChanged: (value) {
+                        contactsController.changeEmail(value);
+                      },
+                      textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.emailAddress,
+                      autofillHints: const [AutofillHints.email],
+                    ),
+                  );
+                }
+
+                return Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      child: GestureDetector(
+                        behavior: HitTestBehavior.translucent,
+                        onTap: () async {
+                          final Country? country = await showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return const CountriesDialog();
+                            },
+                          );
+
+                          if (country != null) {
+                            contactsController.changeCountry(country);
+                          }
+                        },
+                        child: Obx(
+                          () => Container(
+                            height: 44,
+                            decoration: BoxDecoration(
+                              color: context.isDarkMode
+                                  ? AppColors.neutralDark
+                                  : AppColors.neutralOffWhite,
+                              borderRadius: BorderRadius.circular(4),
+                            ),
+                            alignment: Alignment.centerLeft,
+                            padding: const EdgeInsets.only(
+                              top: 10,
+                              left: 12,
+                              right: 12,
+                              bottom: 10,
+                            ),
+                            child: Text.rich(
+                              TextSpan(
+                                children: [
+                                  ...EmojiPickerUtils().setEmojiTextStyle(
+                                    contactsController.country.value?.flag ??
+                                        '',
+                                    emojiStyle: DefaultEmojiTextStyle.copyWith(
+                                      fontFamily: 'NotoColorEmoji',
+                                      fontSize: 16,
+                                      height: 20 / 16,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text:
+                                        '  ${contactsController.country.value?.dialCode ?? ''}',
+                                    style: TextStyle(
+                                      color: context.isDarkMode
+                                          ? AppColors.neutralOffWhite
+                                          : AppColors.neutralActive,
+                                      fontSize: 14,
+                                      height: 24 / 14,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const Width(8),
+                    Expanded(
+                      child: Obx(
+                        () => CustomTextField(
+                          hintText: 'Phone Number',
+                          value: contactsController.phone.value,
+                          onChanged: (value) {
+                            contactsController.changePhone(value);
+                          },
+                          textInputAction: TextInputAction.next,
+                          keyboardType: TextInputType.phone,
+                          inputFormatters: [
+                            contactsController.phoneFormatter.value,
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
             const Height(32),
             Obx(
               () => CustomElevatedButton(
                 text: 'Send Friend Request',
-                onPressed: contactsController.username.value.isInvalid
-                    ? null
-                    : () {
-                        contactsController.addContact();
-                      },
+                onPressed: () {
+                  contactsController.addContact();
+                },
+              ),
+            ),
+            const Height(40),
+            Obx(
+              () => CustomTextButton(
+                text: contactsController.authMethod.value == AuthMethod.email
+                    ? 'Or continue with phone'
+                    : 'Or continue with email',
+                onPressed: () {
+                  contactsController.toggleAuthMethod();
+                },
               ),
             ),
           ],
