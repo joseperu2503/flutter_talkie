@@ -7,7 +7,7 @@ import 'package:talkie/app/features/contacts/controllers/contacts_controller.dar
 import 'package:talkie/app/features/contacts/widgets/add_contact_dialog.dart';
 import 'package:talkie/app/features/contacts/widgets/contact_item.dart';
 import 'package:get/get.dart';
-import 'package:talkie/app/shared/widgets/custom_text_field3.dart';
+import 'package:talkie/app/shared/widgets/custom_text_field.dart';
 
 class ContactsScreen extends StatefulWidget {
   const ContactsScreen({super.key});
@@ -90,7 +90,7 @@ class _ContactsScreenState extends State<ContactsScreen> {
               bottom: 16,
             ),
             sliver: SliverToBoxAdapter(
-              child: CustomTextField3(
+              child: CustomTextField(
                 hintText: 'Search',
                 prefixIcon: 'assets/icons/search.svg',
                 formControl: contactsController.search,

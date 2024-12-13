@@ -5,7 +5,7 @@ import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/auth/controllers/countries_controller.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
-import 'package:talkie/app/shared/widgets/custom_text_field3.dart';
+import 'package:talkie/app/shared/widgets/custom_text_field.dart';
 
 class CountriesDialog extends StatefulWidget {
   const CountriesDialog({super.key});
@@ -62,7 +62,7 @@ class _CountriesDialogState extends State<CountriesDialog> {
                     ),
                   ),
                   const Height(16),
-                  CustomTextField3(
+                  CustomTextField(
                     hintText: 'Search',
                     formControl: countriesController.search,
                   ),

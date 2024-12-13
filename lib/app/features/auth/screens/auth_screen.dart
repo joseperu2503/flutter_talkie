@@ -10,7 +10,7 @@ import 'package:get/get.dart';
 import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/shared/widgets/back_button.dart';
 import 'package:talkie/app/shared/widgets/custom_elevated_button.dart';
-import 'package:talkie/app/shared/widgets/custom_text_field3.dart';
+import 'package:talkie/app/shared/widgets/custom_text_field.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -120,7 +120,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         () {
                           if (_loginController.authMethod.value ==
                               AuthMethod.email) {
-                            return const CustomTextField3(
+                            return const CustomTextField(
                               hintText: 'Email',
                               formControlName: 'email',
                               textInputAction: TextInputAction.next,
@@ -197,7 +197,7 @@ class _AuthScreenState extends State<AuthScreen> {
                               ),
                               const Width(8),
                               Expanded(
-                                child: CustomTextField3(
+                                child: CustomTextField(
                                   hintText: 'Phone Number',
                                   formControlName: 'phone',
                                   textInputAction: TextInputAction.next,

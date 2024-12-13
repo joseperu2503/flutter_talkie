@@ -9,7 +9,7 @@ import 'package:talkie/app/features/contacts/controllers/contacts_controller.dar
 import 'package:talkie/app/shared/widgets/custom_elevated_button.dart';
 import 'package:talkie/app/shared/widgets/custom_text_button.dart';
 import 'package:get/get.dart';
-import 'package:talkie/app/shared/widgets/custom_text_field3.dart';
+import 'package:talkie/app/shared/widgets/custom_text_field.dart';
 
 class AddContactDialog extends StatefulWidget {
   const AddContactDialog({super.key});
@@ -75,7 +75,7 @@ class _AddContactDialogState extends State<AddContactDialog> {
               child: Obx(
                 () {
                   if (contactsController.authMethod.value == AuthMethod.email) {
-                    return const CustomTextField3(
+                    return const CustomTextField(
                       hintText: 'Email',
                       formControlName: 'email',
                       textInputAction: TextInputAction.next,
@@ -149,7 +149,7 @@ class _AddContactDialogState extends State<AddContactDialog> {
                       ),
                       const Width(8),
                       Expanded(
-                        child: CustomTextField3(
+                        child: CustomTextField(
                           hintText: 'Phone Number',
                           formControlName: 'phone',
                           textInputAction: TextInputAction.next,

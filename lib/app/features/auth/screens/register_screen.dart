@@ -6,7 +6,7 @@ import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/auth/controllers/register_controller.dart';
 import 'package:talkie/app/shared/widgets/back_button.dart';
 import 'package:talkie/app/shared/widgets/custom_elevated_button.dart';
-import 'package:talkie/app/shared/widgets/custom_text_field3.dart';
+import 'package:talkie/app/shared/widgets/custom_text_field.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -123,21 +123,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         ),
                       ),
                       const Height(40),
-                      const CustomTextField3(
+                      const CustomTextField(
                         hintText: 'Name',
                         formControlName: 'name',
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.name,
                       ),
                       const Height(18),
-                      const CustomTextField3(
+                      const CustomTextField(
                         hintText: 'Surname',
                         formControlName: 'surname',
                         textInputAction: TextInputAction.next,
                         keyboardType: TextInputType.name,
                       ),
                       const Height(18),
-                      const CustomTextField3(
+                      const CustomTextField(
                         hintText: 'Password',
                         formControlName: 'password',
                         textInputAction: TextInputAction.done,
