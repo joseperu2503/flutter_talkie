@@ -1,23 +1,34 @@
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:reactive_forms/reactive_forms.dart';
 import 'package:talkie/app/core/core.dart';
-import 'package:talkie/app/features/auth/components/countries_dialog.dart';
+import 'package:talkie/app/features/auth/widgets/countries_dialog.dart';
 import 'package:talkie/app/features/auth/models/country.dart';
 import 'package:talkie/app/features/auth/services/auth_service.dart';
 import 'package:talkie/app/features/contacts/controllers/contacts_controller.dart';
 import 'package:talkie/app/shared/widgets/custom_elevated_button.dart';
 import 'package:talkie/app/shared/widgets/custom_text_button.dart';
-import 'package:talkie/app/shared/widgets/custom_text_field.dart';
 import 'package:get/get.dart';
+import 'package:talkie/app/shared/widgets/custom_text_field3.dart';
 
-class AddContactDialog extends StatelessWidget {
+class AddContactDialog extends StatefulWidget {
   const AddContactDialog({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final ContactsController contactsController =
-        Get.find<ContactsController>();
+  State<AddContactDialog> createState() => _AddContactDialogState();
+}
 
+class _AddContactDialogState extends State<AddContactDialog> {
+  @override
+  void initState() {
+    contactsController.initDataDialog();
+    super.initState();
+  }
+
+  final ContactsController contactsController = Get.find<ContactsController>();
+
+  @override
+  Widget build(BuildContext context) {
     return Dialog(
       child: Container(
         padding: const EdgeInsets.only(
@@ -59,43 +70,39 @@ class AddContactDialog extends StatelessWidget {
               ),
             ),
             const Height(12),
-            Obx(
-              () {
-                if (contactsController.authMethod.value == AuthMethod.email) {
-                  return Obx(
-                    () => CustomTextField(
+            ReactiveForm(
+              formGroup: contactsController.form,
+              child: Obx(
+                () {
+                  if (contactsController.authMethod.value == AuthMethod.email) {
+                    return const CustomTextField3(
                       hintText: 'Email',
-                      value: contactsController.email.value,
-                      onChanged: (value) {
-                        contactsController.changeEmail(value);
-                      },
+                      formControlName: 'email',
                       textInputAction: TextInputAction.next,
                       keyboardType: TextInputType.emailAddress,
-                      autofillHints: const [AutofillHints.email],
-                    ),
-                  );
-                }
+                      autofillHints: [AutofillHints.email],
+                    );
+                  }
 
-                return Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.translucent,
-                        onTap: () async {
-                          final Country? country = await showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return const CountriesDialog();
-                            },
-                          );
+                  return Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.translucent,
+                          onTap: () async {
+                            final Country? country = await showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return const CountriesDialog();
+                              },
+                            );
 
-                          if (country != null) {
-                            contactsController.changeCountry(country);
-                          }
-                        },
-                        child: Obx(
-                          () => Container(
+                            if (country != null) {
+                              contactsController.changeCountry(country);
+                            }
+                          },
+                          child: Container(
                             height: 44,
                             decoration: BoxDecoration(
                               color: context.isDarkMode
@@ -140,16 +147,11 @@ class AddContactDialog extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ),
-                    const Width(8),
-                    Expanded(
-                      child: Obx(
-                        () => CustomTextField(
+                      const Width(8),
+                      Expanded(
+                        child: CustomTextField3(
                           hintText: 'Phone Number',
-                          value: contactsController.phone.value,
-                          onChanged: (value) {
-                            contactsController.changePhone(value);
-                          },
+                          formControlName: 'phone',
                           textInputAction: TextInputAction.next,
                           keyboardType: TextInputType.phone,
                           inputFormatters: [
@@ -157,19 +159,17 @@ class AddContactDialog extends StatelessWidget {
                           ],
                         ),
                       ),
-                    ),
-                  ],
-                );
-              },
-            ),
-            const Height(32),
-            Obx(
-              () => CustomElevatedButton(
-                text: 'Send Friend Request',
-                onPressed: () {
-                  contactsController.addContact();
+                    ],
+                  );
                 },
               ),
+            ),
+            const Height(32),
+            CustomElevatedButton(
+              text: 'Send Friend Request',
+              onPressed: () {
+                contactsController.addContact();
+              },
             ),
             const Height(40),
             Obx(

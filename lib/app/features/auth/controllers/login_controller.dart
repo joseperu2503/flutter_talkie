@@ -3,6 +3,7 @@ import 'package:mask_input_formatter/mask_input_formatter.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/auth/controllers/auth_controller.dart';
+import 'package:talkie/app/features/auth/controllers/countries_controller.dart';
 import 'package:talkie/app/features/auth/controllers/register_controller.dart';
 import 'package:talkie/app/features/auth/models/auth_user.dart';
 import 'package:talkie/app/features/auth/models/country.dart';
@@ -10,13 +11,15 @@ import 'package:talkie/app/features/auth/models/login_response.dart';
 import 'package:talkie/app/features/auth/models/phone_request.dart';
 import 'package:talkie/app/features/auth/models/verify_account_response.dart';
 import 'package:talkie/app/features/auth/services/auth_service.dart';
-import 'package:talkie/app/features/auth/services/countries_service.dart';
 import 'package:talkie/app/shared/services/ip_service.dart';
 import 'package:talkie/app/shared/widgets/snackbar.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginController extends GetxController {
+  final countriesController =
+      Get.put<CountriesController>(CountriesController());
+
   initData() {
     form.patchValue({
       'email': '',
@@ -57,6 +60,8 @@ class LoginController extends GetxController {
       'email': '',
       'phone': '',
     });
+
+    form.markAsUntouched();
   }
 
   login() async {
@@ -106,17 +111,6 @@ class LoginController extends GetxController {
     await StorageService.set<bool>(StorageKeys.rememberMe, rememberMe.value);
   }
 
-  RxList<Country> countries = <Country>[].obs;
-
-  List<Country> get filteredCountries {
-    final searchQuery = search.value?.trim().toLowerCase() ?? '';
-    return countries.where((c) {
-      return c.name.toLowerCase().contains(searchQuery);
-    }).toList();
-  }
-
-  final search = FormControl<String>();
-
   Rx<Country?> country = Rx<Country?>(null);
 
   Rx<MaskInputFormatter> phoneFormatter =
@@ -136,12 +130,13 @@ class LoginController extends GetxController {
 
   getCountries() async {
     try {
-      countries.value = await CountriesService.getCountries();
+      await countriesController.getCountries();
 
       final String? countryCode = await IpService.getCountryFromIP();
 
       if (countryCode != null) {
-        final country = countries.firstWhereOrNull((Country country) {
+        final country =
+            countriesController.countries.firstWhereOrNull((Country country) {
           return country.code == countryCode;
         });
 

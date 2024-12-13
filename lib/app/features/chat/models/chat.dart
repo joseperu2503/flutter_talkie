@@ -141,8 +141,8 @@ class Contact {
   String name;
   String surname;
   String? photo;
-  String phone;
-  String email;
+  String? phone;
+  String? email;
   bool isConnected;
   DateTime lastConnection;
   String chatId;

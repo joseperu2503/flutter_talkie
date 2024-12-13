@@ -2,18 +2,30 @@ import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:talkie/app/core/core.dart';
-import 'package:talkie/app/features/auth/controllers/login_controller.dart';
+import 'package:talkie/app/features/auth/controllers/countries_controller.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:talkie/app/shared/widgets/custom_text_field3.dart';
 
-class CountriesDialog extends StatelessWidget {
+class CountriesDialog extends StatefulWidget {
   const CountriesDialog({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final loginController = Get.find<LoginController>();
+  State<CountriesDialog> createState() => _CountriesDialogState();
+}
 
+class _CountriesDialogState extends State<CountriesDialog> {
+  @override
+  void initState() {
+    countriesController.initData();
+    countriesController.getCountries();
+    super.initState();
+  }
+
+  final countriesController = Get.find<CountriesController>();
+
+  @override
+  Widget build(BuildContext context) {
     return Dialog(
       clipBehavior: Clip.hardEdge,
       child: Container(
@@ -52,7 +64,7 @@ class CountriesDialog extends StatelessWidget {
                   const Height(16),
                   CustomTextField3(
                     hintText: 'Search',
-                    formControl: loginController.search,
+                    formControl: countriesController.search,
                   ),
                 ],
               ),
@@ -60,14 +72,15 @@ class CountriesDialog extends StatelessWidget {
             const Height(8),
             Expanded(
               child: ReactiveValueListenableBuilder(
-                formControl: loginController.search,
+                formControl: countriesController.search,
                 builder: (context, formGroup, child) {
                   return ListView.builder(
                     padding: const EdgeInsets.only(
                       bottom: 24,
                     ),
                     itemBuilder: (context, index) {
-                      final country = loginController.filteredCountries[index];
+                      final country =
+                          countriesController.filteredCountries[index];
                       return ListTile(
                         contentPadding: const EdgeInsets.only(
                           left: 32,
@@ -118,7 +131,7 @@ class CountriesDialog extends StatelessWidget {
                         ),
                       );
                     },
-                    itemCount: loginController.filteredCountries.length,
+                    itemCount: countriesController.filteredCountries.length,
                   );
                 },
               ),

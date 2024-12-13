@@ -1,54 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:mask_input_formatter/mask_input_formatter.dart';
+import 'package:reactive_forms/reactive_forms.dart';
 import 'package:talkie/app/core/core.dart';
+import 'package:talkie/app/features/auth/controllers/countries_controller.dart';
+import 'package:talkie/app/features/auth/controllers/login_controller.dart';
 import 'package:talkie/app/features/auth/models/country.dart';
 import 'package:talkie/app/features/auth/models/phone_request.dart';
 import 'package:talkie/app/features/auth/services/auth_service.dart';
-import 'package:talkie/app/features/auth/services/countries_service.dart';
+import 'package:talkie/app/features/chat/controllers/chat_controller.dart';
+import 'package:talkie/app/features/chat/models/chat.dart';
 import 'package:talkie/app/features/contacts/services/contacts_service.dart';
-import 'package:talkie/app/shared/plugins/formx/formx.dart';
 import 'package:talkie/app/shared/services/ip_service.dart';
 import 'package:talkie/app/shared/widgets/snackbar.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 class ContactsController extends GetxController {
-  Rx<FormxInput<String>> email = FormxInput<String>(
-    value: '',
-    validators: [Validators.required<String>(), Validators.email()],
-  ).obs;
+  final loginController = Get.put<LoginController>(LoginController());
+  final chatController = Get.put<ChatController>(ChatController());
+  final countriesController =
+      Get.put<CountriesController>(CountriesController());
 
   RxList<Country> countries = <Country>[].obs;
-
   Rx<Country?> country = Rx<Country?>(null);
-
-  Rx<FormxInput<String>> phone = FormxInput<String>(
-    value: '',
-    validators: [Validators.required<String>()],
-  ).obs;
-
   Rx<AuthMethod> authMethod = AuthMethod.phone.obs;
 
-  Rx<FormxInput<String>> search = const FormxInput<String>(
-    value: '',
-  ).obs;
+  final form = FormGroup({
+    'email': FormControl<String>(validators: [
+      Validators.required,
+      Validators.email,
+    ]),
+    'phone': FormControl<String>(validators: [Validators.required]),
+  });
 
-  resetUsername() {
-    email.value = email.value.unTouch().updateValue('');
-    phone.value = phone.value.unTouch().updateValue('');
+  initDataDialog() {
+    form.patchValue({
+      'email': '',
+      'phone': '',
+    });
+
+    form.markAsUntouched();
     getCountries();
-  }
-
-  changeEmail(FormxInput<String> value) {
-    email.value = value;
-  }
-
-  changeSearch(FormxInput<String> value) {
-    search.value = value;
-  }
-
-  changePhone(FormxInput<String> value) {
-    phone.value = value;
   }
 
   toggleAuthMethod() {
@@ -56,31 +48,57 @@ class ContactsController extends GetxController {
         ? AuthMethod.phone
         : AuthMethod.email;
 
-    email.value = email.value.unTouch().updateValue('');
-    phone.value = phone.value.unTouch().updateValue('');
+    form.patchValue({
+      'email': '',
+      'phone': '',
+    });
+
+    form.markAsUntouched();
+  }
+
+  getCountries() async {
+    try {
+      await countriesController.getCountries();
+
+      final String? countryCode = await IpService.getCountryFromIP();
+
+      if (countryCode != null) {
+        final country =
+            countriesController.countries.firstWhereOrNull((Country country) {
+          return country.code == countryCode;
+        });
+
+        changeCountry(country);
+      }
+    } on ServiceException catch (e) {
+      SnackbarService.show(e.message, type: SnackbarType.error);
+    }
   }
 
   addContact() async {
     FocusManager.instance.primaryFocus?.unfocus();
 
-    phone.value = phone.value.touch();
-    email.value = email.value.touch();
+    form.markAllAsTouched();
 
     if (authMethod.value == AuthMethod.phone) {
-      if (!Formx.validate([phone.value])) return;
+      if (form.control('phone').invalid) return;
       if (country.value == null) return;
     }
     if (authMethod.value == AuthMethod.email) {
-      if (!Formx.validate([email.value])) return;
+      if (form.control('email').invalid) return;
     }
 
     try {
       final response = await ContactsService.addContact(
-        email: email.value.value,
-        phone: PhoneRequest(
-          number: phone.value.value,
-          countryId: country.value!.id,
-        ),
+        email: authMethod.value == AuthMethod.email
+            ? form.control('email').value
+            : null,
+        phone: authMethod.value == AuthMethod.phone
+            ? PhoneRequest(
+                number: form.control('phone').value,
+                countryId: country.value!.id,
+              )
+            : null,
         type: authMethod.value,
       );
       SnackbarService.show(response.message, type: SnackbarType.success);
@@ -105,20 +123,30 @@ class ContactsController extends GetxController {
     }
   }
 
-  getCountries() async {
-    try {
-      countries.value = await CountriesService.getCountries();
+  final search = FormControl<String>();
 
-      final String? countryCode = await IpService.getCountryFromIP();
-      if (countryCode != null) {
-        final country = countries.firstWhereOrNull((Country country) {
-          return country.code == countryCode;
-        });
+  List<Chat> get filteredContacts {
+    final chats = [...chatController.chats];
+    final String searchQuery = search.value?.trim().toLowerCase() ?? '';
 
-        changeCountry(country);
-      }
-    } on ServiceException catch (e) {
-      SnackbarService.show(e.message, type: SnackbarType.error);
-    }
+    // Filtrar los chats según el nombre o apellido del receptor
+    final filteredChats = chats.where((chat) {
+      final receiverName = chat.receiver.name.toLowerCase();
+      final receiverSurname = chat.receiver.surname.toLowerCase();
+      // Retorna true si el nombre o apellido contiene el valor del buscador
+      return receiverName.contains(searchQuery) ||
+          receiverSurname.contains(searchQuery);
+    }).toList();
+
+    filteredChats.sort((a, b) {
+      // Obtener la primera letra de cada nombre del receiver
+      String initialA = a.receiver.name[0].toUpperCase();
+      String initialB = b.receiver.name[0].toUpperCase();
+
+      // Comparar las iniciales
+      return initialA.compareTo(initialB);
+    });
+
+    return filteredChats;
   }
 }

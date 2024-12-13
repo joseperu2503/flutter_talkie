@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:talkie/app/core/controllers/theme_controller.dart';
 import 'package:talkie/app/features/auth/controllers/auth_controller.dart';
+import 'package:talkie/app/features/auth/controllers/countries_controller.dart';
 import 'package:talkie/app/features/auth/controllers/register_controller.dart';
 import 'package:talkie/app/features/auth/services/auth_service.dart';
 import 'package:talkie/app/features/chat/controllers/chat_controller.dart';
@@ -39,6 +40,7 @@ class _AppState extends State<App> with WidgetsBindingObserver {
     Get.put<ChatController>(ChatController());
     Get.put<NotificationsController>(NotificationsController());
     Get.put(RegisterController());
+    Get.put(CountriesController());
 
     await themeController.getThemeModeFromStorage();
     Future.delayed(

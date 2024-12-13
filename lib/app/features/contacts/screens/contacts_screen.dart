@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:reactive_forms/reactive_forms.dart';
 import 'package:talkie/app/core/constants/app_colors.dart';
 import 'package:talkie/app/features/chat/controllers/chat_controller.dart';
 import 'package:talkie/app/features/contacts/controllers/contacts_controller.dart';
 import 'package:talkie/app/features/contacts/widgets/add_contact_dialog.dart';
 import 'package:talkie/app/features/contacts/widgets/contact_item.dart';
-import 'package:talkie/app/shared/widgets/custom_text_field.dart';
 import 'package:get/get.dart';
+import 'package:talkie/app/shared/widgets/custom_text_field3.dart';
 
 class ContactsScreen extends StatefulWidget {
   const ContactsScreen({super.key});
@@ -55,7 +56,6 @@ class _ContactsScreenState extends State<ContactsScreen> {
                           shape: const CircleBorder(),
                         ),
                         onPressed: () {
-                          contactsController.resetUsername();
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
@@ -90,48 +90,25 @@ class _ContactsScreenState extends State<ContactsScreen> {
               bottom: 16,
             ),
             sliver: SliverToBoxAdapter(
-              child: Obx(
-                () => CustomTextField(
-                  hintText: 'Search',
-                  prefixIcon: 'assets/icons/search.svg',
-                  value: contactsController.search.value,
-                  onChanged: (value) {
-                    contactsController.changeSearch(value);
-                  },
-                ),
+              child: CustomTextField3(
+                hintText: 'Search',
+                prefixIcon: 'assets/icons/search.svg',
+                formControl: contactsController.search,
               ),
             ),
           ),
-          Obx(() {
-            final chats = [...chatController.chats];
-            final String search = contactsController.search.value.value;
-
-            // Filtrar los chats según el nombre o apellido del receptor
-            final filteredChats = chats.where((chat) {
-              final receiverName = chat.receiver.name.toLowerCase();
-              final receiverSurname = chat.receiver.surname.toLowerCase();
-              // Retorna true si el nombre o apellido contiene el valor del buscador
-              return receiverName.contains(search) ||
-                  receiverSurname.contains(search);
-            }).toList();
-
-            filteredChats.sort((a, b) {
-              // Obtener la primera letra de cada nombre del receiver
-              String initialA = a.receiver.name[0].toUpperCase();
-              String initialB = b.receiver.name[0].toUpperCase();
-
-              // Comparar las iniciales
-              return initialA.compareTo(initialB);
-            });
-
-            return SliverList.builder(
-              itemBuilder: (context, index) {
-                final chat = filteredChats[index];
-                return ContactItem(chat: chat);
-              },
-              itemCount: filteredChats.length,
-            );
-          })
+          ReactiveValueListenableBuilder(
+            formControl: contactsController.search,
+            builder: (context, control, child) {
+              return SliverList.builder(
+                itemBuilder: (context, index) {
+                  final chat = contactsController.filteredContacts[index];
+                  return ContactItem(chat: chat);
+                },
+                itemCount: contactsController.filteredContacts.length,
+              );
+            },
+          )
         ],
       ),
     );
