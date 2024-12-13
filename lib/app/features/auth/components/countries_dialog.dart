@@ -11,7 +11,7 @@ class CountriesDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final _loginController = Get.find<LoginController>();
+    final loginController = Get.find<LoginController>();
 
     return Dialog(
       clipBehavior: Clip.hardEdge,
@@ -52,9 +52,9 @@ class CountriesDialog extends StatelessWidget {
                   Obx(
                     () => CustomTextField(
                       hintText: 'Search',
-                      value: _loginController.search.value,
+                      value: loginController.search.value,
                       onChanged: (value) {
-                        _loginController.changeSearch(value);
+                        loginController.changeSearch(value);
                       },
                     ),
                   ),
@@ -69,7 +69,7 @@ class CountriesDialog extends StatelessWidget {
                     bottom: 24,
                   ),
                   itemBuilder: (context, index) {
-                    final country = _loginController.filteredCountries[index];
+                    final country = loginController.filteredCountries[index];
                     return ListTile(
                       contentPadding: const EdgeInsets.only(
                         left: 32,
@@ -120,7 +120,7 @@ class CountriesDialog extends StatelessWidget {
                       ),
                     );
                   },
-                  itemCount: _loginController.filteredCountries.length,
+                  itemCount: loginController.filteredCountries.length,
                 ),
               ),
             ),

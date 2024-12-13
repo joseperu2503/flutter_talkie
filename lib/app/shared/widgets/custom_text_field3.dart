@@ -123,8 +123,8 @@ class _CustomTextField3State extends State<CustomTextField3> {
           color: AppColors.neutralDisabled,
         ),
         suffixIconConstraints: const BoxConstraints(
-          maxHeight: 32,
-          maxWidth: 32,
+          maxHeight: 40,
+          maxWidth: 40,
         ),
         suffixIcon: (widget.isPassword)
             ? IconButton(
@@ -141,8 +141,8 @@ class _CustomTextField3State extends State<CustomTextField3> {
                     AppColors.neutralDisabled,
                     BlendMode.srcIn,
                   ),
-                  width: 22,
-                  height: 22,
+                  width: 24,
+                  height: 24,
                 ),
               )
             : null,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:talkie/app/core/core.dart';
@@ -21,7 +22,27 @@ class _RegisterScreenState extends State<RegisterScreen> {
     super.initState();
   }
 
-  final registerController = Get.put(RegisterController());
+  final registerController = Get.put<RegisterController>(RegisterController());
+
+  bool get passwordMinLength {
+    final password =
+        registerController.form.control('password').value as String?;
+    return password != null && password.length >= 6;
+  }
+
+  bool get passwordLettersAndNumbers {
+    final password =
+        registerController.form.control('password').value as String?;
+    final regex = RegExp(r'^(?=.*[a-zA-Z])(?=.*\d).+$');
+    return (password != null && regex.hasMatch(password));
+  }
+
+  bool get passwordUppercaseLetter {
+    final password =
+        registerController.form.control('password').value as String?;
+    final regex = RegExp(r'[A-Z]');
+    return (password != null && regex.hasMatch(password));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,6 +145,113 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         isPassword: true,
                       ),
                       const Height(18),
+                      Text(
+                        'The password must have:',
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w400,
+                          height: 24 / 14,
+                          color: context.isDarkMode
+                              ? AppColors.neutralOffWhite
+                              : AppColors.neutralActive,
+                          leadingDistribution: TextLeadingDistribution.even,
+                        ),
+                      ),
+                      const Height(18),
+                      ReactiveFormConsumer(
+                        builder: (context, form, child) {
+                          return Column(
+                            children: [
+                              Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/icons/check-circle.svg',
+                                    width: 24,
+                                    colorFilter: ColorFilter.mode(
+                                      passwordMinLength
+                                          ? AppColors.accentSuccess
+                                          : AppColors.neutralWeak,
+                                      BlendMode.srcIn,
+                                    ),
+                                  ),
+                                  const Width(12),
+                                  Text(
+                                    'At least 6 characters',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      height: 24 / 14,
+                                      color: context.isDarkMode
+                                          ? AppColors.neutralOffWhite
+                                          : AppColors.neutralActive,
+                                      leadingDistribution:
+                                          TextLeadingDistribution.even,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const Height(8),
+                              Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/icons/check-circle.svg',
+                                    width: 24,
+                                    colorFilter: ColorFilter.mode(
+                                      passwordLettersAndNumbers
+                                          ? AppColors.accentSuccess
+                                          : AppColors.neutralWeak,
+                                      BlendMode.srcIn,
+                                    ),
+                                  ),
+                                  const Width(12),
+                                  Text(
+                                    'Letters and numbers',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      height: 24 / 14,
+                                      color: context.isDarkMode
+                                          ? AppColors.neutralOffWhite
+                                          : AppColors.neutralActive,
+                                      leadingDistribution:
+                                          TextLeadingDistribution.even,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const Height(8),
+                              Row(
+                                children: [
+                                  SvgPicture.asset(
+                                    'assets/icons/check-circle.svg',
+                                    width: 24,
+                                    colorFilter: ColorFilter.mode(
+                                      passwordUppercaseLetter
+                                          ? AppColors.accentSuccess
+                                          : AppColors.neutralWeak,
+                                      BlendMode.srcIn,
+                                    ),
+                                  ),
+                                  const Width(12),
+                                  Text(
+                                    '1 uppercase letter',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                      height: 24 / 14,
+                                      color: context.isDarkMode
+                                          ? AppColors.neutralOffWhite
+                                          : AppColors.neutralActive,
+                                      leadingDistribution:
+                                          TextLeadingDistribution.even,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          );
+                        },
+                      ),
                       const Height(81),
                       ReactiveFormConsumer(
                         builder: (context, form, child) {

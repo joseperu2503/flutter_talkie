@@ -27,7 +27,15 @@ class RegisterController extends GetxController {
   final form = FormGroup({
     'name': FormControl<String>(validators: [Validators.required]),
     'surname': FormControl<String>(validators: [Validators.required]),
-    'password': FormControl<String>(validators: [Validators.required]),
+    'password': FormControl<String>(validators: [
+      Validators.required,
+      Validators.minLength(6),
+      Validators.maxLength(50),
+      Validators.pattern(
+        r'(?:(?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*',
+        validationMessage: 'Invalid password',
+      ),
+    ]),
   });
 
   _verifyForm() {

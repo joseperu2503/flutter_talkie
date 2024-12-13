@@ -113,7 +113,7 @@ class LoginController extends GetxController {
 
   RxList<Country> countries = <Country>[].obs;
 
-  get filteredCountries {
+  List<Country> get filteredCountries {
     final searchQuery = search.value.value.trim().toLowerCase();
     return countries.where((c) {
       return c.name.toLowerCase().contains(searchQuery);
