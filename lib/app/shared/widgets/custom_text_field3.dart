@@ -9,6 +9,7 @@ class CustomTextField3 extends StatefulWidget {
   const CustomTextField3({
     super.key,
     this.formControlName,
+    this.formControl,
     this.hintText,
     this.focusNode,
     this.inputFormatters,
@@ -34,6 +35,7 @@ class CustomTextField3 extends StatefulWidget {
   final String? prefixIcon;
   final Iterable<String>? autofillHints;
   final String? formControlName;
+  final FormControl<dynamic>? formControl;
 
   @override
   State<CustomTextField3> createState() => _CustomTextField3State();
@@ -63,6 +65,7 @@ class _CustomTextField3State extends State<CustomTextField3> {
   Widget build(BuildContext context) {
     return ReactiveTextField(
       formControlName: widget.formControlName,
+      formControl: widget.formControl,
       style: TextStyle(
         color: context.isDarkMode
             ? AppColors.neutralOffWhite

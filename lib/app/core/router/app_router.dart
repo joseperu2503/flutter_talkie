@@ -11,7 +11,6 @@ import 'package:talkie/app/features/contacts/screens/contacts_screen.dart';
 import 'package:talkie/app/features/settings/screens/settings_screen.dart';
 import 'package:talkie/app/shared/layouts/internal_layout.dart';
 import 'package:go_router/go_router.dart';
-import 'package:talkie/app/features/auth/screens/login_screen.dart';
 import 'package:talkie/app/features/chat/screens/chats_screen.dart';
 
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
@@ -48,12 +47,6 @@ appRouterMobile(String initialLocation, RouterType routerType) {
       GoRoute(
         path: '/',
         builder: (context, state) => const HomeScreen(),
-        parentNavigatorKey: rootNavigatorKey,
-        redirect: unprotectedRoute,
-      ),
-      GoRoute(
-        path: '/login',
-        builder: (context, state) => const LoginScreen(),
         parentNavigatorKey: rootNavigatorKey,
         redirect: unprotectedRoute,
       ),

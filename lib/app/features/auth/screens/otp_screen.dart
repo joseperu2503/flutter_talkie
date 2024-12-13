@@ -116,8 +116,8 @@ class _OtpScreenState extends State<OtpScreen> {
                           () => Text(
                             _loginController.authMethod.value ==
                                     AuthMethod.email
-                                ? 'We have sent you an email with the code to ${_loginController.email.value.value}'
-                                : 'We have sent you an SMS with the code to ${_loginController.country.value?.dialCode} ${_loginController.phone.value.value}',
+                                ? 'We have sent you an email with the code to ${_loginController.form.control('email').value}'
+                                : 'We have sent you an SMS with the code to ${_loginController.country.value?.dialCode} ${_loginController.form.control('phone').value}',
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w400,

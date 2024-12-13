@@ -13,6 +13,8 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 class RegisterController extends GetxController {
+  final loginController = Get.put<LoginController>(LoginController());
+
   String? verificationCodeId;
   TextEditingController otp = TextEditingController();
 
@@ -44,41 +46,34 @@ class RegisterController extends GetxController {
     if (verificationCodeId == null) return false;
     if (otp.text.length != 4) return false;
 
-    if (!_verifyForm2()) return false;
+    if (!validateLoginForm()) return false;
 
     if (form.invalid) return false;
 
     return true;
   }
 
-  _verifyForm2() {
-    // final loginController = Get.find<LoginController>();
-
-    // if (loginController.authMethod.value == AuthMethod.phone) {
-    //   if (!Formx.validate([loginController.phone.value])) return false;
-    //   if (loginController.country.value == null) return false;
-    // }
-    // if (loginController.authMethod.value == AuthMethod.email) {
-    //   if (!Formx.validate([loginController.email.value])) return false;
-    // }
-
-    return true;
+  validateLoginForm() {
+    return loginController.validateAccount();
   }
 
   register() async {
     if (!_verifyForm()) return;
-    final loginController = Get.find<LoginController>();
 
     try {
       final LoginResponse loginResponse = await AuthService.register(
-        email: loginController.email.value.value,
+        email: loginController.authMethod.value == AuthMethod.email
+            ? loginController.form.control('email').value
+            : null,
+        phone: loginController.authMethod.value == AuthMethod.phone
+            ? PhoneRequest(
+                number: loginController.form.control('phone').value,
+                countryId: loginController.country.value!.id,
+              )
+            : null,
         password: form.control('password').value,
         name: form.control('name').value,
         surname: form.control('surname').value,
-        phone: PhoneRequest(
-          number: loginController.phone.value.value,
-          countryId: loginController.country.value!.id,
-        ),
         type: loginController.authMethod.value,
         verificationCode: VerificationCodeRequest(
           id: verificationCodeId!,
@@ -100,17 +95,20 @@ class RegisterController extends GetxController {
   }
 
   sendVerificationCode() async {
-    if (!_verifyForm2()) return;
-    final loginController = Get.find<LoginController>();
+    if (!validateLoginForm()) return;
     otp.text = '';
 
     try {
       final response = await AuthService.sendVerificationCode(
-        email: loginController.email.value.value,
-        phone: PhoneRequest(
-          number: loginController.phone.value.value,
-          countryId: loginController.country.value!.id,
-        ),
+        email: loginController.authMethod.value == AuthMethod.email
+            ? loginController.form.control('email').value
+            : null,
+        phone: loginController.authMethod.value == AuthMethod.phone
+            ? PhoneRequest(
+                number: loginController.form.control('phone').value,
+                countryId: loginController.country.value!.id,
+              )
+            : null,
         type: loginController.authMethod.value,
       );
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mask_input_formatter/mask_input_formatter.dart';
+import 'package:reactive_forms/reactive_forms.dart';
 import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/auth/controllers/auth_controller.dart';
 import 'package:talkie/app/features/auth/controllers/register_controller.dart';
@@ -10,38 +11,41 @@ import 'package:talkie/app/features/auth/models/phone_request.dart';
 import 'package:talkie/app/features/auth/models/verify_account_response.dart';
 import 'package:talkie/app/features/auth/services/auth_service.dart';
 import 'package:talkie/app/features/auth/services/countries_service.dart';
-import 'package:talkie/app/shared/plugins/formx/formx.dart';
 import 'package:talkie/app/shared/services/ip_service.dart';
 import 'package:talkie/app/shared/widgets/snackbar.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 
 class LoginController extends GetxController {
-  Rx<FormxInput<String>> email = FormxInput<String>(
-    value: '',
-    validators: [Validators.required<String>(), Validators.email()],
-  ).obs;
+  initData() {
+    form.patchValue({
+      'email': '',
+      'phone': '',
+      'password': '',
+    });
 
-  Rx<FormxInput<String>> password = FormxInput<String>(
-    value: '',
-    validators: [Validators.required()],
-  ).obs;
+    form.markAsUntouched();
+  }
+
+  final form = FormGroup({
+    'email': FormControl<String>(validators: [
+      Validators.required,
+      Validators.email,
+    ]),
+    'phone': FormControl<String>(validators: [Validators.required]),
+    'password': FormControl<String>(validators: [Validators.required]),
+  });
 
   Rx<bool> rememberMe = false.obs;
+
   Rx<AuthMethod> authMethod = AuthMethod.email.obs;
 
-  initData() {
-    email.value = email.value.unTouch().updateValue('');
-    phone.value = phone.value.unTouch().updateValue('');
-    password.value = password.value.unTouch().updateValue('');
-  }
-
   resetPassword() {
-    password.value = password.value.unTouch().updateValue('');
-  }
+    form.patchValue({
+      'password': '',
+    });
 
-  changeEmail(FormxInput<String> value) {
-    email.value = value;
+    form.control('password').markAsUntouched();
   }
 
   toggleAuthMethod() {
@@ -49,36 +53,32 @@ class LoginController extends GetxController {
         ? AuthMethod.phone
         : AuthMethod.email;
 
-    email.value = email.value.unTouch().updateValue('');
-    phone.value = phone.value.unTouch().updateValue('');
-  }
-
-  changePassword(FormxInput<String> value) {
-    password.value = value;
+    form.patchValue({
+      'email': '',
+      'phone': '',
+    });
   }
 
   login() async {
     FocusManager.instance.primaryFocus?.unfocus();
 
-    phone.value = phone.value.touch();
-    email.value = email.value.touch();
+    form.markAllAsTouched();
 
-    if (authMethod.value == AuthMethod.phone) {
-      if (!Formx.validate([phone.value])) return;
-      if (country.value == null) return;
-    }
-    if (authMethod.value == AuthMethod.email) {
-      if (!Formx.validate([email.value])) return;
-    }
+    if (!validateAccount()) return;
+    if (form.control('password').invalid) return;
 
     try {
       final LoginResponse loginResponse = await AuthService.login(
-        email: email.value.value,
-        phone: PhoneRequest(
-          number: phone.value.value,
-          countryId: country.value!.id,
-        ),
-        password: password.value.value,
+        email: authMethod.value == AuthMethod.email
+            ? form.control('email').value
+            : null,
+        phone: authMethod.value == AuthMethod.phone
+            ? PhoneRequest(
+                number: form.control('phone').value,
+                countryId: country.value!.id,
+              )
+            : null,
+        password: form.control('password').value,
         type: authMethod.value,
       );
 
@@ -98,34 +98,26 @@ class LoginController extends GetxController {
 
   _setRemember() async {
     if (rememberMe.value) {
-      await StorageService.set<String>(StorageKeys.email, email.value.value);
+      await StorageService.set<String>(
+        StorageKeys.email,
+        form.control('email').value,
+      );
     }
     await StorageService.set<bool>(StorageKeys.rememberMe, rememberMe.value);
-  }
-
-  Rx<FormxInput<String>> search = const FormxInput<String>(
-    value: '',
-  ).obs;
-
-  changeSearch(FormxInput<String> value) {
-    search.value = value;
   }
 
   RxList<Country> countries = <Country>[].obs;
 
   List<Country> get filteredCountries {
-    final searchQuery = search.value.value.trim().toLowerCase();
+    final searchQuery = search.value?.trim().toLowerCase() ?? '';
     return countries.where((c) {
       return c.name.toLowerCase().contains(searchQuery);
     }).toList();
   }
 
-  Rx<Country?> country = Rx<Country?>(null);
+  final search = FormControl<String>();
 
-  Rx<FormxInput<String>> phone = FormxInput<String>(
-    value: '',
-    validators: [Validators.required<String>()],
-  ).obs;
+  Rx<Country?> country = Rx<Country?>(null);
 
   Rx<MaskInputFormatter> phoneFormatter =
       Rx<MaskInputFormatter>(MaskInputFormatter(
@@ -140,10 +132,6 @@ class LoginController extends GetxController {
         mask: newCountry.mask.replaceAll('9', '#'),
       );
     }
-  }
-
-  changePhone(FormxInput<String> value) {
-    phone.value = value;
   }
 
   getCountries() async {
@@ -164,26 +152,33 @@ class LoginController extends GetxController {
     }
   }
 
+  bool validateAccount() {
+    if (authMethod.value == AuthMethod.phone) {
+      if (form.control('phone').invalid) return false;
+      if (country.value == null) return false;
+    }
+    if (authMethod.value == AuthMethod.email) {
+      if (form.control('email').invalid) return false;
+    }
+
+    return true;
+  }
+
   verifyAccount() async {
     FocusManager.instance.primaryFocus?.unfocus();
 
-    phone.value = phone.value.touch();
-    email.value = email.value.touch();
+    form.markAllAsTouched();
 
-    if (authMethod.value == AuthMethod.phone) {
-      if (!Formx.validate([phone.value])) return;
-      if (country.value == null) return;
-    }
-    if (authMethod.value == AuthMethod.email) {
-      if (!Formx.validate([email.value])) return;
-    }
+    if (!validateAccount()) return;
 
     try {
       final VerifyAccountResponse response = await AuthService.verifyAccount(
-        email: authMethod.value == AuthMethod.email ? email.value.value : null,
+        email: authMethod.value == AuthMethod.email
+            ? form.control('email').value
+            : null,
         phone: authMethod.value == AuthMethod.phone
             ? PhoneRequest(
-                number: phone.value.value,
+                number: form.control('phone').value,
                 countryId: country.value!.id,
               )
             : null,

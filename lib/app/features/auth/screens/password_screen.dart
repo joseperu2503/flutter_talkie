@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:talkie/app/shared/widgets/custom_text_field.dart';
+import 'package:reactive_forms/reactive_forms.dart';
 import 'package:get/get.dart';
 import 'package:talkie/app/core/core.dart';
 import 'package:talkie/app/features/auth/controllers/login_controller.dart';
 import 'package:talkie/app/shared/widgets/back_button.dart';
 import 'package:talkie/app/shared/widgets/custom_elevated_button.dart';
+import 'package:talkie/app/shared/widgets/custom_text_field3.dart';
 
 class PasswordScreen extends StatefulWidget {
   const PasswordScreen({super.key});
@@ -99,13 +100,11 @@ class _PasswordScreenState extends State<PasswordScreen> {
                       ),
                     ),
                     const Height(40),
-                    Obx(
-                      () => CustomTextField(
+                    ReactiveForm(
+                      formGroup: _loginController.form,
+                      child: CustomTextField3(
                         hintText: 'Password',
-                        value: _loginController.password.value,
-                        onChanged: (value) {
-                          _loginController.changePassword(value);
-                        },
+                        formControlName: 'password',
                         textInputAction: TextInputAction.done,
                         keyboardType: TextInputType.visiblePassword,
                         autofillHints: const [AutofillHints.password],
