@@ -97,11 +97,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             ),
                             const Height(2),
                             Text(
-                              user == null ? '' : user.phone?.number ?? '',
+                              user == null
+                                  ? ''
+                                  : user.phone?.number ?? user.email ?? '',
                               style: const TextStyle(
                                 fontSize: 12,
                                 fontWeight: FontWeight.w600,
-                                color: AppColors.neutralDisabled,
+                                color: AppColors.neutralWeak,
                                 height: 20 / 12,
                                 leadingDistribution:
                                     TextLeadingDistribution.even,
