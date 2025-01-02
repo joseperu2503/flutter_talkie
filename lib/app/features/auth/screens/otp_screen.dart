@@ -31,15 +31,19 @@ class _OtpScreenState extends State<OtpScreen> {
     final defaultPinTheme = PinTheme(
       width: 64,
       height: 64,
-      textStyle: const TextStyle(
+      textStyle: TextStyle(
         fontSize: 32,
         height: 1,
-        color: AppColors.neutralActive,
+        color: context.isDarkMode
+            ? AppColors.neutralOffWhite
+            : AppColors.neutralActive,
         fontWeight: FontWeight.w600,
       ),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(4),
-        color: AppColors.neutralOffWhite,
+        color: context.isDarkMode
+            ? AppColors.neutralDark
+            : AppColors.neutralOffWhite,
       ),
       padding: const EdgeInsets.only(bottom: 16, top: 16),
     );
@@ -51,7 +55,9 @@ class _OtpScreenState extends State<OtpScreen> {
 
     final submittedPinTheme = defaultPinTheme.copyWith(
       decoration: defaultPinTheme.decoration!.copyWith(
-        color: AppColors.neutralOffWhite,
+        color: context.isDarkMode
+            ? AppColors.neutralDark
+            : AppColors.neutralOffWhite,
       ),
     );
 
