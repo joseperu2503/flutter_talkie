@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -105,13 +106,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
           borderSide: BorderSide.none,
         ),
         contentPadding: const EdgeInsets.only(
-          top: 9,
+          top: kIsWeb ? 14 : 10,
           left: 12,
           right: 12,
-          bottom: 9,
+          bottom: kIsWeb ? 14 : 10,
         ),
         constraints: const BoxConstraints(
-          minHeight: 42,
+          minHeight: 36,
         ),
         isDense: true,
         filled: true,
